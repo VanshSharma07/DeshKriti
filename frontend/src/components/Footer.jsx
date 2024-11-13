@@ -16,8 +16,8 @@ const Footer = () => {
         <footer className='bg-[#f3f6fa]'>
             <div className='w-[85%] flex flex-wrap mx-auto border-b py-16 md-lg:pb-10 sm:pb-6'>
                 <div className='w-3/12 lg:w-4/12 sm:w-full'>
-                    <div className='flex  flex-col gap-3'>
-                        <img className='mb-10' src="/images/logo.png" alt="logo" />
+                    <div className='flex mt-0 flex-col gap-3'>
+                        <img className='mb-10 h-auto w-[200px] ' src="/images/logo.png" alt="logo" />
                     </div> 
                 </div>
 

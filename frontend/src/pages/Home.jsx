@@ -26,7 +26,6 @@ const Home = () => {
     return (
         <div className='w-full'>
             <Header />
-            <Banner/>
             <Categorys />
             <div className='py-[45px]'>
             <FeatureProducts products={products} />

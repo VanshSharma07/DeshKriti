@@ -135,7 +135,8 @@ class authControllers {
                 responseReturn(res, 200, { userInfo: user });
             } else {
                 const seller = await sellerModel.findById(id);
-                responseReturn(res, 200, { userInfo: seller });
+                const shopInfo = seller.shopInfo || {}; // Ensure shopInfo is not empty
+                responseReturn(res, 200, { userInfo: { ...seller.toObject(), shopInfo } });
             }
         } catch (error) {
             responseReturn(res, 500, { error: 'Internal Server Error' });

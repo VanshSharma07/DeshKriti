@@ -26,10 +26,8 @@ const Header = () => {
   const { card_product_count, wishlist_count } = useSelector(
     (state) => state.card
   );
-
   const navigate = useNavigate();
   const { categorys } = useSelector((state) => state.home);
-
   const { pathname } = useLocation();
 
   const [searchValue, setSearchValue] = useState("");
@@ -44,27 +42,84 @@ const Header = () => {
       navigate("/login");
     }
   };
+
   const search = () => {
     navigate(`/products/search?category=${category}&&value=${searchValue}`);
   };
+
   useEffect(() => {
     if (userInfo) {
       dispatch(get_card_products(userInfo.id));
       dispatch(get_wishlist_products(userInfo.id));
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch]);
+
+  // Text Animation Logic
+  const textArray = [
+    "Welcome to DeshKriti!",
+    "India's Heritage at Your Doorstep!",
+    "Discover Ethnic Indian Products!",
+    "Bring Home the Heart of India!",
+    "A Touch of India, Wherever Life Takes You!",
+    "Feel at Home, Wherever You Roam!",
+    "Stay Close to Culture, No Matter the Distance!",
+    "Treasures of India, Across the Miles!",
+    "India's Best, Delivered to Your Doorstep!",
+
+  ];
+  const [currentText, setCurrentText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [typing, setTyping] = useState(true);
+
+  useEffect(() => {
+    let timeout;
+    if (typing) {
+      timeout = setTimeout(() => {
+        setCurrentText(
+          textArray[currentIndex].slice(0, currentText.length + 1)
+        );
+        if (currentText === textArray[currentIndex]) {
+          setTyping(false);
+        }
+      }, 100);
+    } else {
+      timeout = setTimeout(() => {
+        setTyping(true);
+        setCurrentText("");
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % textArray.length);
+      }, 2000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [currentText, typing, currentIndex, textArray]);
+
   return (
     <div className="w-full bg-white">
-      <div className="w-white">
-        <div className="w-[85%] lg:w-[90%] mx-auto">
-          <div className="h-[80px] md-lg:h-[100px] flex justify-between items-center">
+      {/* Background Video */}
+      <video
+        className="absolute top-0 left-0 w-full h-screen object-cover"
+        src="/videos/v1.mp4"
+        autoPlay
+        loop
+        muted></video>
+
+      {/* Overlay Text with Animated Text */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 flex justify-center items-center">
+        <h1 className="text-white text-4xl md:text-5xl font-bold">
+          {currentText}
+          <span className="animate-blink">|</span>
+        </h1>
+      </div>
+      <div className="w-full relative z-10">
+        <div className="mx-auto">
+          <div className="h-[80px] md-lg:h-[100px] flex justify-between items-center px-4">
             {/* Logo Section */}
             <div className="flex items-center gap-4">
               <Link to="/">
                 <img
-                  src="http://localhost:3000/images/logo.png"
+                  src="http://localhost:3000/images/logo2.png"
                   alt="Logo"
-                  className="w-24 h-auto"
+                  className="w-[100px] h-auto"
                 />
               </Link>
               <div
@@ -77,13 +132,13 @@ const Header = () => {
             </div>
 
             {/* Navigation and User Actions */}
-            <div className="flex items-center justify-between flex-1">
+            <div className="flex items-center justify-between flex-1 px-4">
               {/* Navigation Menu */}
-              <ul className="flex items-center gap-8 text-sm font-bold uppercase md-lg:hidden mx-8">
+              <ul className="flex items-center gap-8 text-sm  font-bold uppercase md-lg:hidden mx-8">
                 <li>
                   <Link
                     className={`p-2 ${
-                      pathname === "/" ? "text-[#059473]" : "text-slate-600"
+                      pathname === "/" ? "text-white" : "text-white"
                     }`}
                     to="/">
                     Home
@@ -92,9 +147,7 @@ const Header = () => {
                 <li>
                   <Link
                     className={`p-2 ${
-                      pathname === "/shops"
-                        ? "text-[#059473]"
-                        : "text-slate-600"
+                      pathname === "/shops" ? "text-white" : "text-white"
                     }`}
                     to="/shops">
                     Shop
@@ -103,7 +156,7 @@ const Header = () => {
                 <li>
                   <Link
                     className={`p-2 ${
-                      pathname === "/blog" ? "text-[#059473]" : "text-slate-600"
+                      pathname === "/blog" ? "text-white" : "text-white"
                     }`}
                     to="/blog">
                     Blog
@@ -112,33 +165,59 @@ const Header = () => {
                 <li>
                   <Link
                     className={`p-2 ${
-                      pathname === "/about"
-                        ? "text-[#059473]"
-                        : "text-slate-600"
+                      pathname === "/about" ? "text-white" : "text-white"
                     }`}
                     to="/about">
-                    About Us
+                    About
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={`p-2 ${
-                      pathname === "/contact"
-                        ? "text-[#059473]"
-                        : "text-slate-600"
+                      pathname === "/contact" ? "text-white" : "text-white"
                     }`}
                     to="/contact">
-                    Contact Us
+                    Contact
                   </Link>
                 </li>
               </ul>
 
-              {/* User Actions */}
-              <div className="flex  items-center gap-4">
+              {/* Icons and Buttons Section - Aligned Right */}
+              <div className="flex items-center gap-4 justify-end w-full">
+                {/* Wishlist Icon */}
+                <div
+                  onClick={() =>
+                    navigate(userInfo ? "/dashboard/my-wishlist" : "/login")
+                  }
+                  className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
+                  <span className="text-xl text-green-500">
+                    <FaHeart />
+                  </span>
+                  {wishlist_count !== 0 && (
+                    <div className="w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+                      {wishlist_count}
+                    </div>
+                  )}
+                </div>
+
+                {/* Cart Icon */}
+                <div
+                  onClick={redirect_card_page}
+                  className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
+                  <span className="text-xl text-green-500">
+                    <PiShoppingCartFill />
+                  </span>
+                  {card_product_count !== 0 && (
+                    <div className="w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+                      {card_product_count}
+                    </div>
+                  )}
+                </div>
+
                 {/* Login/Profile Button */}
                 {userInfo ? (
                   <Link
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-black border rounded-full hover:bg-gray-100"
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-base text-white border rounded-full hover:bg-gray-100 hover:text-black"
                     to="/dashboard">
                     <FaUserCog />
                     <span>{userInfo.name}</span>
@@ -146,7 +225,7 @@ const Header = () => {
                 ) : (
                   <Link
                     to="/login"
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-black border rounded-full hover:bg-gray-100">
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-base text-white border rounded-full hover:bg-gray-100">
                     <IoIosLock />
                     <span>Login / Signup</span>
                   </Link>
@@ -157,7 +236,7 @@ const Header = () => {
                   target="_blank"
                   href="http://localhost:3001/register"
                   rel="noopener noreferrer">
-                  <div className="px-6 py-2 bg-[#ad2cc4] shadow hover:shadow-red-500/50 text-white rounded-md flex justify-center items-center gap-2">
+                  <div className="px-6 py-2 bg-[#f07b28] shadow hover:shadow-red-500/50 text-white rounded-full flex justify-center items-center gap-2 hover:bg-red-600">
                     Join As a Seller
                   </div>
                 </a>
@@ -166,7 +245,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-
       {/* mobile design */}
       <div className="hidden md-lg:block">
         <div
@@ -268,7 +346,7 @@ const Header = () => {
               </li>
             </ul>
 
-            <div className="flex justify-start items-center gap-4 text-black">
+            {/* <div className="flex justify-start items-center gap-4 text-black">
               <a href="https://www.facebook.com/fourat.toumi.71/">
                 <FaFacebook />
               </a>
@@ -281,9 +359,9 @@ const Header = () => {
               <a href="https://github.com/ToumiFourat">
                 <FaGithub />{" "}
               </a>
-            </div>
+            </div> */}
 
-            <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
+            {/* <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
               <div className="w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center ">
                 <span>
                   <FaPhoneAlt />
@@ -295,23 +373,23 @@ const Header = () => {
                 </h2>
                 <span className="text-xs">Support 24/7</span>
               </div>
-            </div>
+            </div> */}
 
-            <ul className="flex flex-col justify-start items-start gap-3 text-[#1c1c1c]">
+            {/* <ul className="flex flex-col justify-start items-start gap-3 text-[#1c1c1c]">
               <li className="flex justify-start items-center gap-2 text-sm">
                 <span>
                   <MdMarkEmailUnread />
                 </span>
                 <span>support@bimastore.com</span>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>
 
       <div className="w-[85%] lg:w-[90%] mx-auto mt-8">
         <div className="flex w-full flex-wrap md-lg:gap-8">
-          <div className="w-3/12 md-lg:w-full">
+          {/* <div className="w-3/12 md-lg:w-full">
             <div className="bg-white relative">
               <div
                 onClick={() => setCategoryShow(!categoryShow)}
@@ -354,88 +432,55 @@ const Header = () => {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="w-9/12 pl-8 md-lg:pl-0 md-lg:w-full">
-            <div className="flex flex-wrap w-full justify-between items-center md-lg:gap-6">
-              <div className="w-8/12 md:w-full">
-                <div className="flex items-center h-[50px] rounded-full bg-[#f8f8f8] shadow-inner pl-4 pr-2 relative">
-                  {/* Category Dropdown */}
-                  <div className="relative md:hidden after:absolute after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:right-0 after:top-1/2 after:-translate-y-1/2 pr-4">
-                    <select
-                      onChange={(e) => setCategory(e.target.value)}
-                      className="w-[150px] text-slate-600 font-semibold bg-transparent outline-none border-none"
-                      name=""
-                      id="">
-                      <option value="">Select Category</option>
-                      {categorys.map((c, i) => (
-                        <option key={i} value={c.name}>
-                          {c.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {/* Search Input */}
-                  <input
-                    className="w-full bg-transparent text-slate-500 outline-none px-3 h-full"
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    type="text"
+          <div className="w-full flex justify-center items-center mt-4">
+            <div className="w-10/12 h-lvh md:w-full md-lg:w-11/12">
+              <div className="flex items-center h-[50px] rounded-full shadow-lg border border-gray-300 bg-white bg-opacity-60 pl-4 pr-2 relative">
+                {/* Category Dropdown */}
+                <div className="relative md:hidden after:absolute after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:right-0 after:top-1/2 after:-translate-y-1/2 pr-4">
+                  <select
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-[150px] text-slate-600 font-semibold bg-transparent outline-none border-none"
                     name=""
-                    id=""
-                    placeholder="Search for Product"
-                  />
-                  {/* Search Button with Icon */}
-                  <button
-                    onClick={search}
-                    className="text-gray-500 h-full flex items-center justify-center pr-3 pl-2 outline-none border-none bg-transparent">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 10.5 18a7.5 7.5 0 0 0 6.15-3.35l4.35 4.35z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* Icons Container */}
-              <div className="flex mr-8 items-center gap-4">
-                {/* Wishlist Icon */}
-                <div
-                  onClick={() =>
-                    navigate(userInfo ? "/dashboard/my-wishlist" : "/login")
-                  }
-                  className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
-                  <span className="text-xl text-green-500">
-                    <FaHeart />
-                  </span>
-                  {wishlist_count !== 0 && (
-                    <div className="w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
-                      {wishlist_count}
-                    </div>
-                  )}
+                    id="">
+                    <option value="">Select Category</option>
+                    {categorys.map((c, i) => (
+                      <option key={i} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
-                {/* Cart Icon */}
-                <div
-                  onClick={redirect_card_page}
-                  className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300 ml-1">
-                  <span className="text-xl text-green-500">
-                    <PiShoppingCartFill />
-                  </span>
-                  {card_product_count !== 0 && (
-                    <div className="w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
-                      {card_product_count}
-                    </div>
-                  )}
-                </div>
+                {/* Search Input */}
+                <input
+                  className="flex-grow bg-transparent text-slate-700 placeholder-gray-500 outline-none px-3 h-full"
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Search for Product"
+                />
+
+                {/* Search Button with Icon */}
+                <button
+                  onClick={search}
+                  className="text-gray-500 h-full flex items-center justify-center pr-3 pl-2 outline-none border-none bg-transparent">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 10.5 18a7.5 7.5 0 0 0 6.15-3.35l4.35 4.35z"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>

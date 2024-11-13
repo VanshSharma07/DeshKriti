@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { customer_login, messageClear } from "../store/reducers/authReducer";
 import toast from "react-hot-toast";
 import { FadeLoader } from "react-spinners";
+import Header2 from "../components/Header2";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Login = () => {
         </div>
       )}
 
-      <Header />
+      <Header2 />
       <div className="bg-slate-200 mt-4">
         <div className="w-full justify-center items-center p-10">
           <div className="grid grid-cols-2 w-[60%] mx-auto bg-white rounded-md">

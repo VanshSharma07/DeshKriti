@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { customer_register, messageClear } from "../store/reducers/authReducer";
 import toast from "react-hot-toast";
 import FadeLoader from "react-spinners/FadeLoader";
+import Header2 from "../components/Header2";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const Register = () => {
         </div>
       )}
 
-      <Header />
+      <Header2 />
 
       <div className="bg-slate-200 mt-4">
         <div className="w-full justify-center items-center p-10">

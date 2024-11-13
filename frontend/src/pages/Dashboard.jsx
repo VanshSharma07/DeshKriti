@@ -13,6 +13,7 @@ import api from '../api/api';
 import { useDispatch } from 'react-redux';
 import { user_reset } from '../store/reducers/authReducer'
 import { reset_count } from '../store/reducers/cardReducer'
+import Header2 from '../components/Header2';
 const Dashboard = () => {
     const [filterShow, setFilterShow] =  useState(false)
     const navigate = useNavigate()
@@ -32,7 +33,7 @@ const Dashboard = () => {
 
     return (
         <div>
-           <Header/>
+           <Header2/>
            <div className='bg-slate-200 mt-5'>
                 <div className='w-[90%] mx-auto md-lg:block hidden'>
                     <div>

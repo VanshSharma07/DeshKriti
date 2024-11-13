@@ -13,6 +13,7 @@ import ShopProducts from '../components/products/ShopProducts';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { price_range_product,query_products } from '../store/reducers/homeReducer';
+import Header2 from '../components/Header2';
 const SearchProducts = () => {
     let [searchParams, setSearchParams] = useSearchParams()
     const category = searchParams.get('category')
@@ -65,7 +66,7 @@ const SearchProducts = () => {
     
     return (
         <div>
-           <Header/>
+           <Header2/>
            <section className='bg-[url("http://localhost:3000/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
             <div className='absolute left-0 top-0 w-full h-full bg-[#2422228a]'>
                 <div className='w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto'>

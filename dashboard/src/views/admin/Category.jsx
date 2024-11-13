@@ -47,13 +47,13 @@ const Category = () => {
 
 
     const addOrUpdateCategory = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        console.log("Form data:", state);
         if (isEdit) {
-            dispatch(updateCategory({ id:editId, ...state }))
-        }else{
-            dispatch(categoryAdd(state))
+            dispatch(updateCategory({ id: editId, ...state }));
+        } else {
+            dispatch(categoryAdd(state));
         }
-        // console.log(state)
     }
 
     useEffect(() => {
