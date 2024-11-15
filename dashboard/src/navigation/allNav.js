@@ -4,6 +4,7 @@ import { FaUserTimes, FaUsers } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { IoIosChatbubbles } from "react-icons/io";
+import { MdOutlineLiveTv } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { MdViewList } from "react-icons/md";
 
@@ -70,21 +71,28 @@ export const allNav = [
         path: '/admin/dashboard/chat-sellers'
     },
     {
-        id : 9,
+    id : 9,
+    title : 'Virtual Events',
+    icon : <MdOutlineLiveTv />,
+    role : 'admin',
+    path: '/admin/dashboard/virtual-events'
+      },
+    {
+        id : 10,
         title : 'Dashboard',
         icon : <AiOutlineDashboard />,
         role : 'seller',
         path: '/seller/dashboard'
     },
     {
-        id : 10,
+        id : 11,
         title : 'Add Product',
         icon : <IoMdAdd />,
         role : 'seller',
         path: '/seller/dashboard/add-product'
     },     
     {
-        id : 11,
+        id : 12,
         title : 'All Product',
         icon : <MdViewList />,
         role : 'seller',
@@ -92,35 +100,35 @@ export const allNav = [
     },
     
     {
-        id : 12,
+        id : 13,
         title : 'Orders',
         icon : <BsCartCheck />,
         role : 'seller',
         path: '/seller/dashboard/orders'
     },
     {
-        id : 13,
+        id : 14,
         title : 'Payments',
         icon : <MdPayment />,
         role : 'seller',
         path: '/seller/dashboard/payments'
     },
     {
-        id : 14,
+        id : 15,
         title : 'Chat-Customer',
         icon : <IoChatbubbles />,
         role : 'seller',
         path: '/seller/dashboard/chat-customer'
     },
     {
-        id : 15,
+        id : 16,
         title : 'Chat-Support',
         icon : <BsFillChatQuoteFill />,
         role : 'seller',
         path: '/seller/dashboard/chat-support'
     },
     {
-        id : 16,
+        id : 17,
         title : 'Profile',
         icon : <CgProfile />,
         role : 'seller',

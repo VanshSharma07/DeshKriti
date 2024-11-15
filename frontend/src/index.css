@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background-color: #FFF5EE
+    ; /* Set a light gray background */
+    /* Or, you can use an image */
+    /* background-image: url('path/to/your/image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; */
+  }

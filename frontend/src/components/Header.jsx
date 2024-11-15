@@ -94,7 +94,7 @@ const Header = () => {
   }, [currentText, typing, currentIndex, textArray]);
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full h-auto ">
       {/* Background Video */}
       <video
         className="absolute top-0 left-0 w-full h-screen object-cover"
@@ -435,7 +435,7 @@ const Header = () => {
           </div> */}
 
           <div className="w-full flex justify-center items-center mt-4">
-            <div className="w-10/12 h-lvh md:w-full md-lg:w-11/12">
+            <div className="w-10/12 h-[90vh] md:w-full md-lg:w-11/12">
               <div className="flex items-center h-[50px] rounded-full shadow-lg border border-gray-300 bg-white bg-opacity-60 pl-4 pr-2 relative">
                 {/* Category Dropdown */}
                 <div className="relative md:hidden after:absolute after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:right-0 after:top-1/2 after:-translate-y-1/2 pr-4">

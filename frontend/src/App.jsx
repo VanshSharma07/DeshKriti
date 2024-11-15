@@ -25,6 +25,7 @@ import Chat from './components/dashboard/Chat';
 import ConfirmOrder from './pages/ConfirmOrder';
 import ScrollToTop from './components/FixTopPage/ScrollToTop';
 import Blog from './pages/Blog';
+import VirtualEventPage from './pages/VirtualEventPage';
 
 function App() {
 
@@ -56,6 +57,7 @@ const ScrollToTopOnlyForDetails = () => {
       <Route path='/products?' element={<CategoryShop/>} />
       <Route path='/product/details/:slug' element={<Details/>} />
       <Route path='/order/confirm?' element={<ConfirmOrder/>} /> 
+      <Route path='/virtualevents' element={<VirtualEventPage/>} />
       
       <Route path='/products/search?' element={<SearchProducts/>} />
       <Route path='/payment' element={<Payment/>} />
