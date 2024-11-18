@@ -9,6 +9,7 @@ const http = require('http');
 const path = require('path');
 const multer = require('multer');
 require('dotenv').config();
+const communityRoutes = require('./routes/community/communityRoutes');
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -131,6 +132,8 @@ app.use('/api', require('./routes/chatRoutes'));
 app.use('/api', require('./routes/paymentRoutes'));
 app.use('/api', require('./routes/dashboard/dashboardRoutes'));
 app.use('/api', require('./routes/dashboard/eventRoutes'));
+app.use('/api', require('./routes/community/communityRoutes'));
+app.use('/api/community', communityRoutes);
 
 // Basic route
 app.get('/', (req, res) => res.send('Hello Server'));
@@ -153,6 +156,13 @@ const port = process.env.PORT || 8000;
 const startServer = async () => {
     try {
         await dbConnect();
+        
+        // Register models
+        require('./models/sellerModel');
+        require('./models/customerModel');
+        require('./models/community/Topic');
+        require('./models/community/Comment');
+
         server.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });

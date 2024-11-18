@@ -129,10 +129,17 @@ const handleFileChange = async (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const dataToSend = {
+        ...eventData,
+        ...(eventData.thumbnailImage && eventData.thumbnailImage.startsWith('data:image') 
+          ? { thumbnailImage: eventData.thumbnailImage }
+          : {})
+      };
+
       if (isEditing) {
-        await api.put(`/events/${editingId}`, eventData);
+        await api.put(`/events/${editingId}`, dataToSend);
       } else {
-        await api.post("/events", eventData);
+        await api.post("/events", dataToSend);
       }
 
       resetForm();

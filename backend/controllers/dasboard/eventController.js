@@ -48,17 +48,28 @@ exports.updateEvent = async (req, res) => {
           return res.status(404).json({ error: 'Event not found' });
       }
 
-      // If new image is provided, upload to Cloudinary and delete old image
-      if (thumbnailImage) {
-          // Delete old image from Cloudinary
-          const oldImagePublicId = getPublicIdFromUrl(event.thumbnailImage);
-          await cloudinary.uploader.destroy(oldImagePublicId);
+      // Only handle image upload if new image is provided
+      if (thumbnailImage && thumbnailImage !== event.thumbnailImage) {
+          try {
+              // Delete old image from Cloudinary if it exists
+              if (event.thumbnailImage) {
+                  const oldImagePublicId = getPublicIdFromUrl(event.thumbnailImage);
+                  await cloudinary.uploader.destroy(oldImagePublicId);
+              }
 
-          // Upload new image
-          const result = await cloudinary.uploader.upload(thumbnailImage, {
-              folder: "events",
-          });
-          updateData.thumbnailImage = result.url;
+              // Upload new image
+              const result = await cloudinary.uploader.upload(thumbnailImage, {
+                  folder: "events",
+                  timestamp: Math.floor(Date.now() / 1000)
+              });
+              updateData.thumbnailImage = result.url;
+          } catch (error) {
+              console.error('Error handling image:', error);
+              return res.status(400).json({ error: 'Error processing image' });
+          }
+      } else {
+          // Keep existing image if no new image is provided
+          updateData.thumbnailImage = event.thumbnailImage;
       }
 
       const updatedEvent = await Event.findByIdAndUpdate(
@@ -94,40 +105,6 @@ exports.getEvent = async (req, res) => {
   } catch (error) {
     console.error('Error fetching event:', error);
     res.status(500).json({ error: 'Error fetching event' });
-  }
-};
-
-exports.updateEvent = async (req, res) => {
-  try {
-    const event = await Event.findById(req.params.id);
-    if (!event) {
-      if (req.file) {
-        await deleteFile(req.file.filename);
-      }
-      return res.status(404).json({ error: 'Event not found' });
-    }
-
-    const updateData = { ...req.body };
-    
-    if (req.file) {
-      // Delete old image
-      await deleteFile(event.thumbnailImage);
-      updateData.thumbnailImage = req.file.filename;
-    }
-
-    const updatedEvent = await Event.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true, runValidators: true }
-    );
-
-    res.status(200).json(updatedEvent);
-  } catch (error) {
-    if (req.file) {
-      await deleteFile(req.file.filename);
-    }
-    console.error('Error updating event:', error);
-    res.status(400).json({ error: error.message });
   }
 };
 
