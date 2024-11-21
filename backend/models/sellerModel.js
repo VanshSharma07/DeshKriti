@@ -1,6 +1,6 @@
-const {Schema, model} = require("mongoose");
+const mongoose = require('mongoose');
 
-const sellerSchema = new Schema({
+const sellerSchema = new mongoose.Schema({
     name: {
         type: String,
         required : true
@@ -38,6 +38,21 @@ const sellerSchema = new Schema({
         type: Object,
         default : {}
     },
+    creditScore: {
+        type: Number,
+        default: 0
+    },
+    activeLoans: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'MicroLoan'
+    }],
+    loanHistory: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'MicroLoan'
+    }],
+    walletAddress: {
+        type: String
+    }
 },{ timestamps: true })
 
 sellerSchema.index({
@@ -52,4 +67,4 @@ sellerSchema.index({
     }
 })
 
-module.exports = model('sellers',sellerSchema)
+module.exports = mongoose.model('sellers',sellerSchema)

@@ -10,6 +10,7 @@ const path = require('path');
 const multer = require('multer');
 require('dotenv').config();
 const communityRoutes = require('./routes/community/communityRoutes');
+const loanRoutes = require('./routes/loanRoutes');
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -134,6 +135,7 @@ app.use('/api', require('./routes/dashboard/dashboardRoutes'));
 app.use('/api', require('./routes/dashboard/eventRoutes'));
 app.use('/api', require('./routes/community/communityRoutes'));
 app.use('/api/community', communityRoutes);
+app.use('/api/loan', loanRoutes);
 
 // Basic route
 app.get('/', (req, res) => res.send('Hello Server'));

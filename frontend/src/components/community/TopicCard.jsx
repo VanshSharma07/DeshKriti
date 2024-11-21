@@ -5,7 +5,7 @@ import moment from 'moment';
 
 const TopicCard = ({ topic }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition border border-purple-100">
+    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition border border-[#FF9933]/20">
       {topic.images?.length > 0 && (
         <img 
           src={topic.images[0]} 
@@ -19,7 +19,7 @@ const TopicCard = ({ topic }) => {
           {topic.tags.map((tag, index) => (
             <span 
               key={index}
-              className="px-2 py-1 bg-purple-100 text-purple-600 rounded-full text-xs"
+              className="px-2 py-1 bg-orange-50 text-[#FF9933] rounded-full text-xs"
             >
               {tag}
             </span>
@@ -27,7 +27,7 @@ const TopicCard = ({ topic }) => {
         </div>
 
         <Link to={`/community/topic/${topic._id}`}>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2 hover:text-purple-600">
+          <h3 className="text-xl font-semibold text-gray-800 mb-2 hover:text-[#138808]">
             {topic.title}
           </h3>
         </Link>

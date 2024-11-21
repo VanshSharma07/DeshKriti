@@ -32,12 +32,12 @@ const CommunityPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header2 />
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-16">
+      <div className="bg-gradient-to-r from-[#FF9933]/90 via-[#FFFFFF]/40 to-[#138808]/90 py-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4 text-center">
+          <h1 className="text-4xl font-bold mb-4 text-gray-800 text-center drop-shadow-lg">
             Connect with Your Indian Community
           </h1>
-          <p className="text-xl text-center mb-8">
+          <p className="text-xl text-center mb-8 text-gray-700 drop-shadow">
             Share stories, experiences, and stay connected with your roots
           </p>
           
@@ -46,15 +46,15 @@ const CommunityPage = () => {
               <input
                 type="text"
                 placeholder="Search discussions..."
-                className="w-full px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                className="w-full px-4 py-3 rounded-lg text-gray-800 bg-white/90 backdrop-blur-sm border border-[#FF9933]/20 focus:outline-none focus:ring-2 focus:ring-[#FF9933] shadow-md"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <FaSearch className="absolute right-3 top-4 text-gray-400" />
+              <FaSearch className="absolute right-3 top-4 text-[#FF9933]" />
             </div>
             <button
               onClick={handleCreateTopic}
-              className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-purple-50 transition flex items-center gap-2"
+              className="bg-[#FF9933] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#E88822] transition flex items-center gap-2 shadow-md"
             >
               <FaPlus /> New Topic
             </button>
@@ -70,9 +70,9 @@ const CommunityPage = () => {
               onClick={() => setSelectedTag(tag === selectedTag ? '' : tag)}
               className={`px-4 py-2 rounded-full ${
                 tag === selectedTag
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-purple-50'
-              } border border-purple-200 transition`}
+                  ? 'bg-teal-500 text-white'
+                  : 'bg-white text-gray-700 hover:bg-teal-50'
+              } border border-teal-200 transition`}
             >
               {tag}
             </button>

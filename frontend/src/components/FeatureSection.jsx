@@ -16,10 +16,10 @@ const FeatureSection = () => {
       route: "/community"
     },
     {
-      title: "Feature 3",
-      description: "Description for feature 3",
+      title: "3D Cultural Map",
+      description: "Explore India's rich cultural heritage through an interactive 3D map",
       image: "/images/banner/3.jpg",
-      route: "/feature3"
+      route: "/3dmap"
     },
     {
       title: "Feature 4",

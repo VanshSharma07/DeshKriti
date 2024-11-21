@@ -8,133 +8,160 @@ import { MdOutlineLiveTv } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { MdViewList } from "react-icons/md";
 
-import { BsCartCheck } from "react-icons/bs"; 
+import { BsCartCheck } from "react-icons/bs";
 import { IoChatbubbles } from "react-icons/io5";
 import { BsFillChatQuoteFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
+import { MdCurrencyExchange } from 'react-icons/md';
 
 export const allNav = [
-    {
-        id : 1,
-        title : 'Dashboard',
-        icon : <AiOutlineDashboard />,
-        role : 'admin',
-        path: '/admin/dashboard'
-    },
-    {
-        id : 2,
-        title : 'Orders',
-        icon : <AiOutlineShoppingCart />,
-        role : 'admin',
-        path: '/admin/dashboard/orders'
-    },
-    {
-        id : 3,
-        title : 'Category',
-        icon : <BiCategory  />,
-        role : 'admin',
-        path: '/admin/dashboard/category'
-    },
-    {
-        id : 4,
-        title : 'Sellers',
-        icon : <FaUsers   />,
-        role : 'admin',
-        path: '/admin/dashboard/sellers'
-    },
-    {
-        id : 5,
-        title : 'Payment Request',
-        icon : <MdPayment />,
-        role : 'admin',
-        path: '/admin/dashboard/payment-request'
-    },
-    {
-        id : 6,
-        title : 'Deactive Sellers',
-        icon : <FaUserTimes />,
-        role : 'admin',
-        path: '/admin/dashboard/deactive-sellers'
-    },
-    {
-        id : 7,
-        title : 'Seller Request',
-        icon : <FaCodePullRequest />,
-        role : 'admin',
-        path: '/admin/dashboard/sellers-request'
-    },
-    {
-        id : 8,
-        title : 'Live Chat',
-        icon : <IoIosChatbubbles />,
-        role : 'admin',
-        path: '/admin/dashboard/chat-sellers'
-    },
-    {
-    id : 9,
-    title : 'Virtual Events',
-    icon : <MdOutlineLiveTv />,
-    role : 'admin',
-    path: '/admin/dashboard/virtual-events'
+  {
+    id: 1,
+    title: "Dashboard",
+    icon: <AiOutlineDashboard />,
+    role: "admin",
+    path: "/admin/dashboard",
+  },
+  {
+    id: 2,
+    title: "Orders",
+    icon: <AiOutlineShoppingCart />,
+    role: "admin",
+    path: "/admin/dashboard/orders",
+  },
+  {
+    id: 3,
+    title: "Category",
+    icon: <BiCategory />,
+    role: "admin",
+    path: "/admin/dashboard/category",
+  },
+  {
+    id: 4,
+    title: "Sellers",
+    icon: <FaUsers />,
+    role: "admin",
+    path: "/admin/dashboard/sellers",
+  },
+  {
+    id: 5,
+    title: "Payment Request",
+    icon: <MdPayment />,
+    role: "admin",
+    path: "/admin/dashboard/payment-request",
+  },
+  {
+    id: 6,
+    title: "Deactive Sellers",
+    icon: <FaUserTimes />,
+    role: "admin",
+    path: "/admin/dashboard/deactive-sellers",
+  },
+  {
+    id: 7,
+    title: "Seller Request",
+    icon: <FaCodePullRequest />,
+    role: "admin",
+    path: "/admin/dashboard/sellers-request",
+  },
+  {
+    id: 8,
+    title: "Live Chat",
+    icon: <IoIosChatbubbles />,
+    role: "admin",
+    path: "/admin/dashboard/chat-sellers",
+  },
+  {
+    id: 9,
+    title: "Virtual Events",
+    icon: <MdOutlineLiveTv />,
+    role: "admin",
+    path: "/admin/dashboard/virtual-events",
+  },
+  {
+    id: 10,
+    title: "Dashboard",
+    icon: <AiOutlineDashboard />,
+    role: "seller",
+    path: "/seller/dashboard",
+  },
+  {
+    id: 11,
+    title: "Add Product",
+    icon: <IoMdAdd />,
+    role: "seller",
+    path: "/seller/dashboard/add-product",
+  },
+  {
+    id: 12,
+    title: "All Product",
+    icon: <MdViewList />,
+    role: "seller",
+    path: "/seller/dashboard/products",
+  },
+
+  {
+    id: 13,
+    title: "Orders",
+    icon: <BsCartCheck />,
+    role: "seller",
+    path: "/seller/dashboard/orders",
+  },
+  {
+    id: 14,
+    title: "Payments",
+    icon: <MdPayment />,
+    role: "seller",
+    path: "/seller/dashboard/payments",
+  },
+  {
+    id: 15,
+    title: "Chat-Customer",
+    icon: <IoChatbubbles />,
+    role: "seller",
+    path: "/seller/dashboard/chat-customer",
+  },
+  {
+    id: 16,
+    title: "Chat-Support",
+    icon: <BsFillChatQuoteFill />,
+    role: "seller",
+    path: "/seller/dashboard/chat-support",
+  },
+  {
+    id: 17,
+    title: "Profile",
+    icon: <CgProfile />,
+    role: "seller",
+    path: "/seller/dashboard/profile",
+  },
+  {
+    id: 18,
+    title: "Micro Loans",
+    icon: <MdCurrencyExchange />,
+    role: "seller",
+    subMenu: [
+      {
+        id: 1,
+        title: "Request Loan",
+        path: "/seller/dashboard/loan/request",
+        status: 'active'
       },
-    {
-        id : 10,
-        title : 'Dashboard',
-        icon : <AiOutlineDashboard />,
-        role : 'seller',
-        path: '/seller/dashboard'
-    },
-    {
-        id : 11,
-        title : 'Add Product',
-        icon : <IoMdAdd />,
-        role : 'seller',
-        path: '/seller/dashboard/add-product'
-    },     
-    {
-        id : 12,
-        title : 'All Product',
-        icon : <MdViewList />,
-        role : 'seller',
-        path: '/seller/dashboard/products'
-    },
-    
-    {
-        id : 13,
-        title : 'Orders',
-        icon : <BsCartCheck />,
-        role : 'seller',
-        path: '/seller/dashboard/orders'
-    },
-    {
-        id : 14,
-        title : 'Payments',
-        icon : <MdPayment />,
-        role : 'seller',
-        path: '/seller/dashboard/payments'
-    },
-    {
-        id : 15,
-        title : 'Chat-Customer',
-        icon : <IoChatbubbles />,
-        role : 'seller',
-        path: '/seller/dashboard/chat-customer'
-    },
-    {
-        id : 16,
-        title : 'Chat-Support',
-        icon : <BsFillChatQuoteFill />,
-        role : 'seller',
-        path: '/seller/dashboard/chat-support'
-    },
-    {
-        id : 17,
-        title : 'Profile',
-        icon : <CgProfile />,
-        role : 'seller',
-        path: '/seller/dashboard/profile'
-    }
-
-
-
-]
+      {
+        id: 2,
+        title: "My Loans",
+        path: "/seller/dashboard/loans",
+        status: 'active'
+      }
+    ],
+    status: 'active'
+  },
+  // Add to admin menu items array
+  {
+    id: 19,
+    title: "Loan Requests",
+    icon: <MdCurrencyExchange />,
+    role: "admin",
+    path: "/admin/dashboard/loan-requests",
+  },
+];

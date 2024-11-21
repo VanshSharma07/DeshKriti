@@ -123,13 +123,13 @@ const Payments = () => {
             </div>
 
         <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-2 pb-4'>
-        <div className='bg-[#6a5fdf] text-[#d0d2d6] rounded-md p-5'>
-    <h2 className='text-lg'>Send Request</h2>
+        <div className='bg-white shadow-sm rounded-lg p-5 border border-slate-200'>
+    <h2 className='text-lg text-slate-700 font-semibold'>Send Request</h2>
     <div className='pt-5 mb-5'>
         <form onSubmit={sendRequest}>
             <div className='flex gap-3 flex-wrap'>
-                <input onChange={(e) => setAmount(e.target.value)} value={amount} min='0' type="number" className='px-3 py-2 md:w-[75%] focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' name='amount' />
-                <button disabled={loader} className='bg-red-500  hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2'>{loader ? 'loading..' : 'Submit'}</button>
+                <input onChange={(e) => setAmount(e.target.value)} value={amount} min='0' type="number" className='px-3 py-2 md:w-[75%] focus:ring-2 focus:ring-slate-500 outline-none bg-white border border-slate-200 rounded-lg text-slate-700' name='amount' />
+                <button disabled={loader} className='bg-slate-700 hover:bg-slate-800 text-white rounded-lg px-7 py-2 transition-colors'>{loader ? 'Loading...' : 'Submit'}</button>
             </div>
         </form> 
     </div>

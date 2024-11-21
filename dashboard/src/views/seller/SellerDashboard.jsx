@@ -161,9 +161,15 @@ const SellerDashboard = () => {
 
       <div className="w-full flex flex-wrap mt-7">
         <div className="w-full lg:w-7/12 lg:pr-3">
-          <div className="w-full bg-[#6a5fdf] p-4 rounded-md">
+          <div className="w-full bg-white shadow-lg rounded-lg p-4">
             <Chart
-              options={state.options}
+              options={{
+                ...state.options,
+                theme: {
+                  mode: 'light',
+                  palette: 'palette8'
+                }
+              }}
               series={state.series}
               type="bar"
               height={350}

@@ -1,4 +1,5 @@
 import { lazy } from "react";         
+import LoanRequests from "../../views/admin/LoanRequests";
 const AdminDashboard = lazy(()=> import('../../views/admin/AdminDashboard'))  
 const Orders = lazy(()=> import('../../views/admin/Orders')) 
 const Category = lazy(()=> import('../../views/admin/Category'))  
@@ -10,6 +11,7 @@ const SellerDetails = lazy(()=> import('../../views/admin/SellerDetails'))
 const ChatSeller = lazy(()=> import('../../views/admin/ChatSeller'))   
 const OrderDetails = lazy(()=> import('../../views/admin/OrderDetails'))  
 const VirtualEvents = lazy(()=> import('../../views/admin/VirtualEvents'))  
+
 
 export const adminRoutes = [
     {
@@ -71,6 +73,11 @@ export const adminRoutes = [
         path: 'admin/dashboard/virtual-events',
         element : <VirtualEvents/> ,
         role : 'admin'
+    },
+    {
+        path: '/admin/dashboard/loan-requests',
+        element: <LoanRequests />,
+        role: 'admin'
     }
  
 ]

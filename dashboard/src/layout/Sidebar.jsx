@@ -50,16 +50,44 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           <ul>
             {allNav.map((n, i) => (
               <li key={i}>
-                <Link
-                  to={n.path}
-                  className={`${
-                    pathname === n.path
-                      ? "bg-blue-600 shadow-indigo-500/50 text-white duration-500"
-                      : "text-[#030811] font-bold duration-200"
-                  } px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1`}>
-                  <span>{n.icon}</span>
-                  <span>{n.title}</span>
-                </Link>
+                {n.subMenu ? (
+                  // Render submenu items
+                  <div>
+                    <div className="text-[#030811] font-bold px-[12px] py-[9px] flex items-center gap-[12px]">
+                      <span>{n.icon}</span>
+                      <span>{n.title}</span>
+                    </div>
+                    <ul className="pl-8">
+                      {n.subMenu.map((sub) => (
+                        <li key={sub.id}>
+                          <Link
+                            to={sub.path}
+                            className={`${
+                              pathname === sub.path
+                                ? "bg-blue-600 shadow-indigo-500/50 text-white"
+                                : "text-[#030811]"
+                            } px-[12px] py-[9px] rounded-sm flex items-center gap-[12px] hover:pl-4 transition-all w-full mb-1`}
+                          >
+                            {sub.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  // Render regular menu items
+                  <Link
+                    to={n.path}
+                    className={`${
+                      pathname === n.path
+                        ? "bg-blue-600 shadow-indigo-500/50 text-white"
+                        : "text-[#030811]"
+                    } px-[12px] py-[9px] rounded-sm flex items-center gap-[12px] hover:pl-4 transition-all w-full mb-1`}
+                  >
+                    <span>{n.icon}</span>
+                    <span>{n.title}</span>
+                  </Link>
+                )}
               </li>
             ))}
 

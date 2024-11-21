@@ -1,4 +1,8 @@
 import { lazy } from "react";   
+import LoanManagement from "../../views/seller/LoanManagement";
+import LoanRequest from "../../views/seller/MicroLoan/LoanRequest";
+import LoanDetails from "../../views/seller/LoanDetails";
+import LoanRepayment from "../../views/seller/LoanRepayment";
 const SellerDashboard = lazy(()=> import('../../views/seller/SellerDashboard'))   
 const AddProduct = lazy(()=> import('../../views/seller/AddProduct'))   
 const Products = lazy(()=> import('../../views/seller/Products')) 
@@ -13,6 +17,8 @@ const OrderDetails = lazy(()=> import('../../views/seller/OrderDetails'))
 const Pending = lazy(()=> import('./../../views/Pending')) 
 const Deactive = lazy(()=> import('./../../views/Deactive')) 
 const AddBanner = lazy(()=> import('../../views/seller/AddBanner')) 
+
+
 export const sellerRoutes = [
     
     {
@@ -97,7 +103,27 @@ export const sellerRoutes = [
         element : <AddBanner/>,
         role : 'seller',
         status : 'active'
-    }
-    
+    },
+    {
+        path: '/seller/dashboard/loans',
+        element: <LoanManagement />,
+        role: 'seller'
+    },
+    {
+        path: '/seller/dashboard/loan/request',
+        element: <LoanRequest />,
+        role: 'seller'
+    },
+    {
+        path: '/seller/dashboard/loan/:loanId',
+        element: <LoanDetails />,
+        role: 'seller'
+    },
+    {
+        path: '/seller/dashboard/loan/repayment',
+        element: <LoanRepayment />,
+        role: 'seller'
+    },
+
 
 ]

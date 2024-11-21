@@ -1,4 +1,3 @@
-
 import './App.css';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
@@ -28,15 +27,14 @@ import Blog from './pages/Blog';
 import VirtualEventPage from './pages/VirtualEventPage';
 import CommunityPage from './components/community/CommunityPage';
 import TopicDetailPage from './components/community/TopicDetailPage';
+import MainPage from './3dmap/pages/MainPage';
 
 function App() {
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(get_category())
-   
-
-},[])
+  }, [dispatch])
 
 // Custom component to conditionally render ScrollToTop
 const ScrollToTopOnlyForDetails = () => {
@@ -65,16 +63,17 @@ const ScrollToTopOnlyForDetails = () => {
       
       <Route path='/products/search?' element={<SearchProducts/>} />
       <Route path='/payment' element={<Payment/>} />
-      <Route path='/dashboard' element={<ProtectUser/>} >
-      <Route path='' element={<Dashboard/>} >        
-      <Route path='' element={<Index/>} />
-      <Route path='my-orders' element={<Orders/>} /> 
-      <Route path='change-password' element={<ChangePassword/>} />
-      <Route path='my-wishlist' element={<Wishlist/>} /> 
-      <Route path='order/details/:orderId' element={<OrderDetails/>} /> 
-      <Route path='chat' element={<Chat/>} /> 
-      <Route path='chat/:sellerId' element={<Chat/>} /> 
-      </Route> 
+      <Route path="/3dmap/*" element={<MainPage />} />
+      <Route path='/dashboard' element={<ProtectUser/>}>
+        <Route path='' element={<Dashboard/>}>
+          <Route path='' element={<Index/>} />
+          <Route path='my-orders' element={<Orders/>} />
+          <Route path='change-password' element={<ChangePassword/>} />
+          <Route path='my-wishlist' element={<Wishlist/>} />
+          <Route path='order/details/:orderId' element={<OrderDetails/>} />
+          <Route path='chat' element={<Chat/>} />
+          <Route path='chat/:sellerId' element={<Chat/>} />
+        </Route>
       </Route>
     </Routes>
     </BrowserRouter>

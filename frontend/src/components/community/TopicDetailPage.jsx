@@ -104,7 +104,7 @@ const TopicDetailPage = () => {
                   {currentTopic.tags?.map((tag, index) => (
                     <span 
                       key={index}
-                      className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm"
+                      className="px-3 py-1 bg-orange-50 text-[#FF9933] rounded-full text-sm"
                     >
                       {tag}
                     </span>
@@ -114,7 +114,7 @@ const TopicDetailPage = () => {
               <div className="flex gap-3">
                 <button 
                   onClick={handleLike}
-                  className="flex items-center gap-1 text-gray-500 hover:text-red-500 transition"
+                  className="flex items-center gap-1 text-gray-500 hover:text-[#E6873C] transition"
                 >
                   {isLikedByUser ? (
                     <FaHeart className="text-red-500" size={24} />
@@ -172,7 +172,7 @@ const TopicDetailPage = () => {
                 <div className="flex justify-end mt-3">
                   <button
                     type="submit"
-                    className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+                    className="px-6 py-2 bg-[#138808] text-white rounded-lg hover:bg-[#0F6E06] transition"
                   >
                     Post Comment
                   </button>

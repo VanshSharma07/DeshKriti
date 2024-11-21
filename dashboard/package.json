@@ -7,8 +7,11 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@web3-react/core": "^8.2.3",
+    "@web3-react/injected-connector": "^6.0.7",
     "apexcharts": "^3.44.1",
     "axios": "^1.6.2",
+    "ethers": "^6.13.4",
     "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
@@ -26,7 +29,8 @@
     "redux-thunk": "^3.1.0",
     "socket.io-client": "^4.7.2",
     "toast": "^0.5.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "web3": "^4.15.0"
   },
   "scripts": {
     "start": "react-scripts start --port 3001",
