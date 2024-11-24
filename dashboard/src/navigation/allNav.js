@@ -13,6 +13,8 @@ import { IoChatbubbles } from "react-icons/io5";
 import { BsFillChatQuoteFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { MdCurrencyExchange } from 'react-icons/md';
+import { MdDashboard } from 'react-icons/md';
+import { FaHandHoldingHeart } from 'react-icons/fa';
 
 export const allNav = [
   {
@@ -164,4 +166,30 @@ export const allNav = [
     role: "admin",
     path: "/admin/dashboard/loan-requests",
   },
+  {
+    id: 20,
+    title: 'Donate India',
+    icon: <FaHandHoldingHeart />,
+    role: 'admin',
+    subMenu: [
+      {
+        id: 1,
+        title: 'All Campaigns',
+        path: '/admin/dashboard/campaigns',
+        status: 'active'
+      },
+      {
+        id: 2,
+        title: 'Create Campaign',
+        path: '/admin/dashboard/campaigns/create',
+        status: 'active'
+      },
+      {
+        id: 3,
+        title: 'Donations',
+        path: '/admin/dashboard/campaigns/donations',
+        status: 'active'
+      }
+    ]
+  }
 ];

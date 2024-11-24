@@ -13,6 +13,7 @@ import { PiShoppingCartFill } from "react-icons/pi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsFillTelephoneInboundFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaHandsHelping } from "react-icons/fa";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -114,10 +115,10 @@ const Header = () => {
         <div className="mx-auto">
           <div className="h-[80px] md-lg:h-[100px] flex justify-between items-center px-4">
             {/* Logo Section */}
-            <div className="flex items-center gap-4">
+            <div className="flex mt-4 items-center gap-4">
               <Link to="/">
                 <img
-                  src="http://localhost:3000/images/logo2.png"
+                  src="http://localhost:3000/images/logo.png"
                   alt="Logo"
                   className="w-[100px] h-auto"
                 />
@@ -240,6 +241,16 @@ const Header = () => {
                     Join As a Seller
                   </div>
                 </a>
+
+                <Link
+                  to="/donate-india"
+                  className="flex items-center gap-2 text-slate-600 hover:text-[#059473] transition-all"
+                >
+                  <div className="px-6 py-2 bg-green-500 shadow hover:shadow-red-500/50 text-white rounded-full flex justify-center items-center gap-2 hover:bg-red-600">
+                    <FaHandsHelping className="text-2xl" />
+                    <span className="text-sm font-medium">Help India</span>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

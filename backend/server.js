@@ -11,6 +11,7 @@ const multer = require('multer');
 require('dotenv').config();
 const communityRoutes = require('./routes/community/communityRoutes');
 const loanRoutes = require('./routes/loanRoutes');
+const campaignRoutes = require('./routes/dashboard/campaignRoutes');
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -114,7 +115,6 @@ io.on('connection', (soc) => {
 // Middleware setup
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve uploaded files
@@ -136,6 +136,8 @@ app.use('/api', require('./routes/dashboard/eventRoutes'));
 app.use('/api', require('./routes/community/communityRoutes'));
 app.use('/api/community', communityRoutes);
 app.use('/api/loan', loanRoutes);
+app.use('/api/dashboard', campaignRoutes);
+app.use('/api', campaignRoutes);
 
 // Basic route
 app.get('/', (req, res) => res.send('Hello Server'));
@@ -164,6 +166,7 @@ const startServer = async () => {
         require('./models/customerModel');
         require('./models/community/Topic');
         require('./models/community/Comment');
+        require('./models/Campaign');
 
         server.listen(port, () => {
             console.log(`Server is running on port ${port}`);
@@ -182,5 +185,4 @@ process.on('unhandledRejection', (err) => {
     // In production, you might want to do some cleanup here
     // server.close(() => process.exit(1));
 });
-
 module.exports = { app, server, io }; // Export for testing purposes

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_products } from '../store/reducers/homeReducer';
 import { useNavigate } from 'react-router-dom';
 import FeatureSection from '../components/FeatureSection';
+import MainPage from '../3dmap/pages/MainPage';
 
 
 const Home = () => {
@@ -28,6 +29,7 @@ const Home = () => {
     return (
         <div className='w-full'>
             <Header />
+            <MainPage />
             <FeatureSection/>
             <Categorys />
             <div className='py-[45px]'>

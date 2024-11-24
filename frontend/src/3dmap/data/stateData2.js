@@ -111,7 +111,7 @@ export const stateData = {
     places: "Tirupati, Araku Valley",
     explore: "#"
   },
-  "model_0": {
+  "model_00": {
     name: "Tamil Nadu",
     products: "Tanjore Paintings, Kanjivaram Sarees",
     food: "Idli, Dosa, Sambhar",
@@ -3265,7 +3265,7 @@ export const detailedStateData = {
     state_thumbnail: "https://images.example.com/mizoram/thumbnail.jpg"
   }
 },
-"model_0": {
+"model_00": {
     name: "Tamil Nadu",
     description: "Tamil Nadu, the land of Tamils, is renowned for its Dravidian culture, classical arts, magnificent temples, diverse cuisine, and vibrant film industry. The state seamlessly blends tradition with modernity, offering rich cultural experiences and technological advancement.",
     

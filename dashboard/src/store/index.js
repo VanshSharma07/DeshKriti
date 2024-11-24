@@ -6,10 +6,23 @@ const store = configureStore({
     reducer : rootReducer,
     middleware : getDefaultMiddleware => {
         return getDefaultMiddleware({
-            serializableCheck : false
+            serializableCheck : {
+                ignoredActions : [
+                    'campaign/createCampaign/fulfilled',
+                    'campaign/updateCampaign/fulfilled',
+                    'campaign/updateCampaignImages/fulfilled',
+                    'dashboard/get_admin_dashboard_data/fulfilled',
+                    'dashboard/get_seller_dashboard_data/fulfilled'
+                ],
+                ignoredPaths : [
+                    'campaign.formData',
+                    'campaign.images',
+                    'dashboard.recentMessage'
+                ]
+            }
         })
     },
-    devTools : true
+    devTools : process.env.NODE_ENV !== 'production'
 
 })
 export default store

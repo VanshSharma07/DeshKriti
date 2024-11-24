@@ -5,7 +5,7 @@ import * as THREE from "three";
 import StatePopup from './StatePopup';
 import { stateData } from '../data/stateData';
 
-function Model(props) {
+function Model({ isExploreMode, ...props }) {
   const { nodes, materials } = useGLTF("/india.glb");
   const [hoveredState, setHoveredState] = useState(null);
   const [clickedState, setClickedState] = useState(null);
@@ -49,20 +49,35 @@ function Model(props) {
 
   // Get state data with proper ID and validation
   const getStateData = (modelId) => {
-    const cleanId = modelId.replace(/^model_0+/, 'model_');
-    const stateInfo = stateData[cleanId];
+    // Try different ID formats
+    const possibleIds = [
+      modelId,                                    // Original ID
+      modelId.replace(/^model_0+/, 'model_'),    // Remove leading zeros
+      `model_${modelId.split('_')[1].replace(/^0+/, '')}` // Remove all leading zeros after model_
+    ];
+
+    let stateInfo = null;
+    for (const id of possibleIds) {
+      if (stateData[id]) {
+        stateInfo = stateData[id];
+        break;
+      }
+    }
+
     if (!stateInfo) {
-      console.warn(`No data found for state with ID: ${modelId}`);
+      console.warn(`No data found for state with ID: ${modelId} (tried: ${possibleIds.join(', ')})`);
       return null;
     }
+
     return {
       ...stateInfo,
-      modelId: cleanId
+      modelId: modelId // Keep original modelId for reference
     };
   };
 
   // Event Handlers
   const handlePointerEnter = (e, name) => {
+    if (!isExploreMode) return;
     e.stopPropagation();
     setHoveredState(name);
     if (clickedState && name !== clickedState) {
@@ -72,12 +87,14 @@ function Model(props) {
   };
 
   const handlePointerLeave = (e) => {
+    if (!isExploreMode) return;
     e.stopPropagation();
     setHoveredState(null);
     document.body.style.cursor = 'default';
   };
 
   const handleClick = (e, name) => {
+    if (!isExploreMode) return;
     e.stopPropagation();
     const stateInfo = getStateData(name);
     if (stateInfo) {
@@ -93,7 +110,7 @@ function Model(props) {
       {Object.entries(nodes).map(([name, node]) => {
         if (!name.startsWith('model_')) return null;
         
-        const isActive = hoveredState === name || clickedState === name;
+        const isActive = isExploreMode && (hoveredState === name || clickedState === name);
         const stateInfo = getStateData(name);
         
         return (
@@ -112,14 +129,14 @@ function Model(props) {
               onPointerLeave={handlePointerLeave}
               onClick={(e) => handleClick(e, name)}
             />
-            {(hoveredState === name || clickedState === name) && stateInfo && (
+            {isExploreMode && (hoveredState === name || clickedState === name) && stateInfo && (
               <StatePopup 
                 stateName={name}
                 visible={true}
                 isClicked={clickedState === name}
                 data={{
                   ...stateInfo,
-                  modelId: name // Ensure modelId is passed
+                  modelId: name
                 }}
                 position={[
                   node.position.x,

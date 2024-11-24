@@ -28,6 +28,8 @@ import VirtualEventPage from './pages/VirtualEventPage';
 import CommunityPage from './components/community/CommunityPage';
 import TopicDetailPage from './components/community/TopicDetailPage';
 import MainPage from './3dmap/pages/MainPage';
+import DonateIndia from './pages/DonateIndia';
+import CampaignDetails from './pages/CampaignDetails';
 
 function App() {
 
@@ -64,6 +66,8 @@ const ScrollToTopOnlyForDetails = () => {
       <Route path='/products/search?' element={<SearchProducts/>} />
       <Route path='/payment' element={<Payment/>} />
       <Route path="/3dmap/*" element={<MainPage />} />
+      <Route path="/donate-india" element={<DonateIndia />} />
+      <Route path="/campaign/:slug" element={<CampaignDetails />} />
       <Route path='/dashboard' element={<ProtectUser/>}>
         <Route path='' element={<Dashboard/>}>
           <Route path='' element={<Index/>} />

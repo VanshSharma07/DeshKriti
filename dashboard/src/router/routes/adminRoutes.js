@@ -11,7 +11,10 @@ const SellerDetails = lazy(()=> import('../../views/admin/SellerDetails'))
 const ChatSeller = lazy(()=> import('../../views/admin/ChatSeller'))   
 const OrderDetails = lazy(()=> import('../../views/admin/OrderDetails'))  
 const VirtualEvents = lazy(()=> import('../../views/admin/VirtualEvents'))  
-
+const Campaigns = lazy(() => import('../../views/admin/campaign/Campaigns'))
+const CreateCampaign = lazy(() => import('../../views/admin/campaign/CreateCampaign'))
+const CampaignDonations = lazy(() => import('../../views/admin/campaign/CampaignDonations'))
+const EditCampaign = lazy(() => import('../../views/admin/campaign/EditCampaign'))
 
 export const adminRoutes = [
     {
@@ -78,6 +81,25 @@ export const adminRoutes = [
         path: '/admin/dashboard/loan-requests',
         element: <LoanRequests />,
         role: 'admin'
+    },
+    {
+        path: 'admin/dashboard/campaigns',
+        element: <Campaigns />,
+        role: 'admin'
+    },
+    {
+        path: 'admin/dashboard/campaigns/create',
+        element: <CreateCampaign />,
+        role: 'admin'
+    },
+    {
+        path: 'admin/dashboard/campaigns/edit/:campaignId',
+        element: <EditCampaign />,
+        role: 'admin'
+    },
+    {
+        path: 'admin/dashboard/campaigns/donations',
+        element: <CampaignDonations />,
+        role: 'admin'
     }
- 
 ]
