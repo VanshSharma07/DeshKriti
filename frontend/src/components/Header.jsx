@@ -157,6 +157,15 @@ const Header = () => {
                 <li>
                   <Link
                     className={`p-2 ${
+                      pathname === "/regional-products" ? "text-white" : "text-white"
+                    }`}
+                    to="/regional-products">
+                    Regional Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className={`p-2 ${
                       pathname === "/blog" ? "text-white" : "text-white"
                     }`}
                     to="/blog">
@@ -324,6 +333,15 @@ const Header = () => {
                     pathname === "/shops" ? "text-[#059473]" : "text-slate-600"
                   }`}>
                   Shop
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/regional-products"
+                  className={`py-2 block ${
+                    pathname === "/regional-products" ? "text-[#059473]" : "text-slate-600"
+                  }`}>
+                  Regional Products
                 </Link>
               </li>
               <li>

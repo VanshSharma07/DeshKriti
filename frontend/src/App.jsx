@@ -30,6 +30,16 @@ import TopicDetailPage from './components/community/TopicDetailPage';
 import MainPage from './3dmap/pages/MainPage';
 import DonateIndia from './pages/DonateIndia';
 import CampaignDetails from './pages/CampaignDetails';
+import Authors from './pages/Authors';
+import BanarasiSaree from './pages/BanarasiSaree';
+import IndianSpices from './pages/IndianSpices';
+import MonthArchive from './pages/MonthArchive';
+import Pottery from './pages/Pottery';
+import Tags from './pages/Tags';
+import TribalJewellery from './pages/TribalJewellery';
+import WoodenToys from './pages/WoodenToys';
+import YearArchive from './pages/YearArchive';
+import RegionalProducts from './pages/RegionalProducts';
 
 function App() {
 
@@ -51,6 +61,15 @@ const ScrollToTopOnlyForDetails = () => {
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/blog' element={<Blog />} />
+      <Route path='/authors' element={<Authors />} />
+      <Route path='/banarasi-saree' element={<BanarasiSaree />} />
+      <Route path='/indian-spices' element={<IndianSpices />} />
+      <Route path='/month-archive' element={<MonthArchive />} />
+      <Route path='/indian-pottery' element={<Pottery />} />
+      <Route path='/tags' element={<Tags />} />
+      <Route path='/tribal-jewelry' element={<TribalJewellery />} />
+      <Route path='/wooden-toys' element={<WoodenToys />} />
+      <Route path='/year-archive' element={<YearArchive />} />
       <Route path='/register' element={<Register/>} />
       <Route path='/login' element={<Login/>} />
       <Route path='/shops' element={<Shops/>} />
@@ -79,6 +98,7 @@ const ScrollToTopOnlyForDetails = () => {
           <Route path='chat/:sellerId' element={<Chat/>} />
         </Route>
       </Route>
+      <Route path='/regional-products' element={<RegionalProducts />} />
     </Routes>
     </BrowserRouter>
   );

@@ -35,6 +35,8 @@ const CategoryShop = () => {
    
     const [pageNumber, setPageNumber] = useState(1)
     const [sortPrice, setSortPrice] = useState('') 
+    const [selectedRegion, setSelectedRegion] = useState('')
+    const [selectedState, setSelectedState] = useState('')
       
     useEffect(() => { 
         dispatch(
@@ -44,10 +46,12 @@ const CategoryShop = () => {
                 category,
                 rating,
                 sortPrice,
-                pageNumber
+                pageNumber,
+                region: selectedRegion,
+                state: selectedState
             })
          )
-    },[state.values[0],state.values[1],category,rating,sortPrice,pageNumber])
+    },[state.values[0],state.values[1],category,rating,sortPrice,pageNumber,selectedRegion,selectedState])
     const resetRating = () => {
         setRating('')
         dispatch(
@@ -57,7 +61,9 @@ const CategoryShop = () => {
                 category,
                 rating: '',
                 sortPrice,
-                pageNumber
+                pageNumber,
+                region: selectedRegion,
+                state: selectedState
             })
          )
     }

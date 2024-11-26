@@ -128,6 +128,15 @@ const Header2 = () => {
                     Contact
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    className={`p-2 ${
+                      pathname === "/regional-products" ? "text-[#059473]" : "text-slate-600"
+                    }`}
+                    to="/regional-products">
+                    Regional Products
+                  </Link>
+                </li>
               </ul>
 
               {/* Icons and Buttons Section - Aligned Right */}
@@ -300,6 +309,15 @@ const Header2 = () => {
                       : "text-slate-600"
                   }`}>
                   Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/regional-products"
+                  className={`py-2 block ${
+                    pathname === "/regional-products" ? "text-[#059473]" : "text-slate-600"
+                  }`}>
+                  Regional Products
                 </Link>
               </li>
             </ul>

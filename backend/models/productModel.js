@@ -48,7 +48,19 @@ const productSchema = new Schema({
     rating: {
         type: Number,
         default : 0
-    } 
+    },
+    categories: [{
+        type: String,
+        required: true
+    }],
+    region: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String, 
+        required: true
+    }
 
 }, {timestamps: true})
 

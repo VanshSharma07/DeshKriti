@@ -14,13 +14,15 @@ class productController {
       }
       let {
         name,
-        category,
+        categories,
         description,
         stock,
         price,
         discount,
         shopName,
         brand,
+        region,
+        state,
       } = field;
       let { images } = files;
 
@@ -58,13 +60,16 @@ class productController {
           name,
           slug,
           shopName,
-          category: category.trim(),
+          category: categories[0],
           description: description.trim(),
           stock: parseInt(stock),
           price: parseInt(price),
           discount: parseInt(discount),
           images: allImageUrl,
           brand: brand.trim(),
+          categories: JSON.parse(categories),
+          region: region ? region.trim() : '',
+          state: state ? state.trim() : ''
         });
 
         responseReturn(res, 201, { message: "Product Added Successfully" });
@@ -132,36 +137,50 @@ class productController {
 
   product_update = async (req, res) => {
     let {
-      name,
-      category,
-      description,
-      stock,
-      price,
-      discount,
-      brand,
-      productId,
-    } = req.body;
-    name = name.trim();
-    const slug = name.split(" ").join("-");
-
-    try {
-      await productModel.findByIdAndUpdate(productId, {
         name,
+        category,
+        categories,
         description,
         stock,
         price,
         discount,
         brand,
         productId,
-        slug,
-      });
-      const product = await productModel.findById(productId);
-      responseReturn(res, 200, {
-        product,
-        message: "Product Updated Successfully",
-      });
+        region,
+        state
+    } = req.body;
+    
+    name = name.trim();
+    const slug = name.split(" ").join("-");
+
+    region = region ? region.toLowerCase() : '';
+    state = state ? state.toLowerCase() : '';
+
+    try {
+        const updatedProduct = await productModel.findByIdAndUpdate(
+            productId, 
+            {
+                name,
+                category: category || categories[0],
+                categories,
+                description,
+                stock,
+                price,
+                discount,
+                brand,
+                slug,
+                region,
+                state
+            }, 
+            { new: true }
+        );
+
+        responseReturn(res, 200, {
+            product: updatedProduct,
+            message: "Product Updated Successfully",
+        });
     } catch (error) {
-      responseReturn(res, 500, { error: error.message });
+        responseReturn(res, 500, { error: error.message });
     }
   };
   /// end method

@@ -1,68 +1,80 @@
 class queryProducts {
     products = []
     query = {}
-    constructor(products,query){
+    constructor(products, query) {
         this.products = products
         this.query = query
     }
+
     categoryQuery = () => {
-        this.products = this.query.category ? this.products.filter(c => c.category === this.query.category) : this.products
+        if (this.query.category) {
+            this.products = this.products.filter(p => 
+                p.category === this.query.category || 
+                p.categories.includes(this.query.category)
+            )
+        }
         return this
     }
+
+    regionQuery = () => {
+        console.log('Region query called with:', this.query.region);
+        if (this.query.region && this.query.region !== '') {
+            const beforeFilter = this.products.length;
+            this.products = this.products.filter(p => 
+                p.region && p.region.toLowerCase() === this.query.region.toLowerCase()
+            );
+            console.log(`Region filter: ${beforeFilter} -> ${this.products.length} products`);
+            console.log('Available regions:', [...new Set(this.products.map(p => p.region || 'none'))]);
+        }
+        return this
+    }
+
+    stateQuery = () => {
+        console.log('State query called with:', this.query.state);
+        if (this.query.state && this.query.state !== '') {
+            const beforeFilter = this.products.length;
+            this.products = this.products.filter(p => 
+                p.state && p.state.toLowerCase() === this.query.state.toLowerCase()
+            );
+            console.log(`State filter: ${beforeFilter} -> ${this.products.length} products`);
+            console.log('Available states:', [...new Set(this.products.map(p => p.state || 'none'))]);
+        }
+        return this
+    }
+
     ratingQuery = () => {
-        this.products = this.query.rating ? this.products.filter(c => parseInt(this.query.rating) <= c.rating && c.rating < parseInt(this.query.rating) + 1) : this.products
+        if (this.query.rating && this.query.rating !== '') {
+            this.products = this.products.filter(p => parseInt(p.rating) === parseInt(this.query.rating))
+        }
         return this
     }
+
     searchQuery = () => {
-        this.products = this.query.searchValue ? this.products.filter(p => p.name.toUpperCase().indexOf(this.query.searchValue.toUpperCase()) > -1  ) : this.products
         return this
     }
 
     priceQuery = () => {
-        this.products = this.products.filter(p => p.price >= this.query.lowPrice & p.price <= this.query.highPrice )
         return this
     }
-    sortByPrice = () => {
-        if (this.query.sortPrice) {
-            if (this.query.sortPrice === 'low-to-high') {
-                this.products = this.products.sort(function (a,b){ return a.price - b.price})
-            } else {
-                this.products = this.products.sort(function (a,b){ return b.price - a.price})
-            }
-        }
-        return this
-    }
-    skip = () => {
-        let {pageNumber} = this.query
-        const skipPage = (parseInt(pageNumber) - 1) * this.query.parPage
-        let skipProduct = []
 
-        for (let i = skipPage; i < this.products.length; i++) {
-            skipProduct.push(this.products[i]) 
-        }
-        this.products = skipProduct
+    sortByPrice = () => {
+        return this
+    }
+
+    skip = () => {
         return this
     }
 
     limit = () => {
-        let temp = []
-        if (this.products.length > this.query.parPage) {
-            for (let i = 0; i < this.query.parPage; i++) {
-                temp.push(this.products[i]) 
-            } 
-        }else {
-            temp = this.products
-        }
-        this.products = temp 
         return this
+    }
+
+    countProducts = () => {
+        return this.products.length
     }
 
     getProducts = () => {
         return this.products
     }
-
-    countProducts = () => {
-        return this.products.length
-    } 
 }
 module.exports = queryProducts

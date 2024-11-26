@@ -83,23 +83,50 @@ const EditProduct = () => {
        
     }
 
-   
+    const [selectedRegion, setSelectedRegion] = useState('');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const regions = ['North', 'South', 'East', 'West', 'Central'];
+    const states = {
+      North: [
+        'Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir',
+        'Ladakh', 'Punjab', 'Rajasthan', 'Uttarakhand', 'Uttar Pradesh'
+      ],
+      South: [
+        'Andhra Pradesh', 'Karnataka', 'Kerala', 'Lakshadweep',
+        'Puducherry', 'Tamil Nadu', 'Telangana'
+      ],
+      East: [
+        'Arunachal Pradesh', 'Assam', 'Bihar', 'Manipur', 'Meghalaya',
+        'Mizoram', 'Nagaland', 'Odisha', 'Sikkim', 'Tripura',
+        'West Bengal', 'Jharkhand'
+      ],
+      West: [
+        'Dadra and Nagar Haveli', 'Daman and Diu', 'Goa',
+        'Gujarat', 'Maharashtra'
+      ],
+      Central: ['Chhattisgarh', 'Madhya Pradesh']
+    };
 
     useEffect(() => {
-        setState({
-            name: product.name,
-            description: product.description,
-            discount: product.discount,
-            price: product.price,
-            brand: product.brand,
-            stock: product.stock 
-        })
-        setCategory(product.category)
-        setImageShow([
-            product.images
-            
-        ])
-    },[product])
+        if (product) {
+            setState({
+                name: product.name || '',
+                description: product.description || '',
+                discount: product.discount || '',
+                price: product.price || '',
+                brand: product.brand || '',
+                stock: product.stock || ''
+            });
+            setCategory(product.category || '');
+            setSelectedRegion(product.region || '');
+            setSelectedState(product.state || '');
+            setSelectedCategories(product.categories || []);
+            setAllCategory(categorys);
+            setImageShow(product.images || []);
+        }
+    }, [product, categorys]);
 
     useEffect(() => {
         if (categorys.length > 0) {
@@ -111,34 +138,37 @@ const EditProduct = () => {
 
 
     useEffect(() => {
-
         if (successMessage) {
-            toast.success(successMessage)
-            dispatch(messageClear()) 
-           
-           
-            setCategory('')
-
+            toast.success(successMessage);
+            dispatch(messageClear());
         }
         if (errorMessage) {
-            toast.error(errorMessage)
-            dispatch(messageClear())
+            toast.error(errorMessage);
+            dispatch(messageClear());
         }
-    },[successMessage,errorMessage])
+    }, [successMessage, errorMessage]);
 
-    const update = (e) =>{
-        e.preventDefault()
+    const update = (e) => {
+        e.preventDefault();
+        let updatedCategories = [...selectedCategories];
+        if (category && !updatedCategories.includes(category)) {
+            updatedCategories = [category, ...updatedCategories];
+        }
+        
         const obj = {
             name: state.name,
             description: state.description,
-            discount: state.discount,
             price: state.price,
-            brand: state.brand,
             stock: state.stock,
-            productId: productId
+            category: category,
+            discount: state.discount,
+            brand: state.brand,
+            region: selectedRegion,
+            state: selectedState,
+            categories: updatedCategories,
+            productId
         }
-        dispatch(update_product(obj))
-
+        dispatch(update_product(obj));
     }
 
  
@@ -226,6 +256,62 @@ const EditProduct = () => {
                     </div> )
                 }
 
+            </div>
+
+            <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
+                <div className='flex flex-col w-full gap-1'>
+                    <label htmlFor="region">Region</label>
+                    <select 
+                        className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+                        value={selectedRegion}
+                        onChange={(e) => {
+                            setSelectedRegion(e.target.value);
+                            setSelectedState('');
+                        }}
+                    >
+                        <option value="">Select Region</option>
+                        {regions.map((region, i) => (
+                            <option key={i} value={region}>{region}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className='flex flex-col w-full gap-1'>
+                    <label htmlFor="state">State</label>
+                    <select
+                        className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+                        value={selectedState}
+                        onChange={(e) => setSelectedState(e.target.value)}
+                        disabled={!selectedRegion}
+                    >
+                        <option value="">Select State</option>
+                        {selectedRegion && states[selectedRegion]?.map((state, i) => (
+                            <option key={i} value={state}>{state}</option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            <div className='flex flex-col w-full gap-1 mb-4'>
+                <label>Categories (Select Multiple)</label>
+                <div className='grid grid-cols-3 gap-3 p-4 bg-[#6a5fdf] border border-slate-700 rounded-md'>
+                    {allCategory.map((cat) => (
+                        <label key={cat._id} className='flex items-center gap-2 text-[#d0d2d6]'>
+                            <input
+                                type="checkbox"
+                                checked={selectedCategories.includes(cat.name)}
+                                onChange={() => {
+                                    if (selectedCategories.includes(cat.name)) {
+                                        setSelectedCategories(prev => prev.filter(c => c !== cat.name));
+                                    } else {
+                                        setSelectedCategories(prev => [...prev, cat.name]);
+                                    }
+                                }}
+                            />
+                            {cat.name}
+                        </label>
+                    ))}
+                </div>
             </div>
 
             <div className='flex'>

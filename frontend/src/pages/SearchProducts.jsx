@@ -36,6 +36,15 @@ const SearchProducts = () => {
    
     const [pageNumber, setPageNumber] = useState(1)
     const [sortPrice, setSortPrice] = useState('') 
+    const [selectedRegion, setSelectedRegion] = useState('')
+    const [selectedState, setSelectedState] = useState('')
+    const regions = ['North', 'South', 'East', 'West']
+    const states = {
+      North: ['Delhi', 'Punjab', 'Haryana'],
+      South: ['Kerala', 'Tamil Nadu', 'Karnataka'],
+      East: ['West Bengal', 'Bihar', 'Odisha'],
+      West: ['Maharashtra', 'Gujarat', 'Rajasthan']
+    }
       
     useEffect(() => { 
         dispatch(
@@ -46,10 +55,12 @@ const SearchProducts = () => {
                 rating,
                 sortPrice,
                 pageNumber,
-                searchValue
+                searchValue,
+                region: selectedRegion,
+                state: selectedState
             })
          )
-    },[state.values[0],state.values[1],category,rating,sortPrice,searchValue,pageNumber])
+    },[state.values[0],state.values[1],category,rating,sortPrice,searchValue,pageNumber,selectedRegion,selectedState])
     const resetRating = () => {
         setRating('')
         dispatch(
@@ -59,7 +70,9 @@ const SearchProducts = () => {
                 category,
                 rating: '',
                 sortPrice,
-                pageNumber
+                pageNumber,
+                region: selectedRegion,
+                state: selectedState
             })
          )
     }

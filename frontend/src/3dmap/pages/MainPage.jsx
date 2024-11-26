@@ -1,12 +1,11 @@
 import React, { Suspense, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Model from "../components/Model";
 import StateInfo from "../components/StateInfo";
 import { FaSpinner } from "react-icons/fa";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { Html } from "@react-three/drei";
+import Title3D from '../components/Title3D';
+import Base3D from '../components/Base3D';
 
 // Loading component with animation
 const LoadingScreen = () => (
@@ -56,50 +55,18 @@ const MainContent = () => {
             </button>
           )}
 
-          <Canvas
-            camera={{
-              position: [0, 0, 100],
-              fov: 35,
-              near: 1,
-              far: 1000,
-              zoom: 0.8,
-            }}
-            className="rounded-3xl">
-            <color attach="background" args={["#f8fafc"]} />
-            {/* Lighting */}
-            <ambientLight intensity={0.7} />
-            <directionalLight
-              position={[10, 10, 5]}
-              intensity={0.8}
-              color="#ffffff"
-            />
-            <directionalLight
-              position={[-10, -10, -5]}
-              intensity={0.4}
-              color="#ffeedd"
+          <Base3D showControls={isExploreMode}>
+            <Title3D 
+              position={[50, 20, 10]}
+              scale={[0.8, 0.8, 0.8]}
+              rotation={[0.1, 0, 0]}
             />
             <Model 
               position={[20, -30, 0]} 
-              scale={[0.5, 0.5, 0.5]} 
+              scale={[0.45, 0.45, 0.45]} 
               isExploreMode={isExploreMode}
             />
-            {isExploreMode && (
-              <OrbitControls
-                enableRotate={true}
-                enablePan={false}
-                minDistance={60}
-                maxDistance={140}
-                target={[0, 0, 0]}
-                zoomSpeed={0.8}
-                minPolarAngle={Math.PI / 3}
-                maxPolarAngle={Math.PI / 2}
-                minAzimuthAngle={-Math.PI / 6}
-                maxAzimuthAngle={Math.PI / 6}
-                enableDamping={true}
-                dampingFactor={0.05}
-              />
-            )}
-          </Canvas>
+          </Base3D>
         </div>
       </Suspense>
     </div>
@@ -120,8 +87,6 @@ const Header = () => (
     </p>
   </motion.div>
 );
-
-// Footer component
 
 // Layout component
 const Layout = ({ children }) => (

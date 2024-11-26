@@ -21,14 +21,20 @@ export const get_category = createAsyncThunk(
 // End Method
 
 export const get_products = createAsyncThunk(
-    'product/get_products',
-    async(_, { fulfillWithValue }) => {
+    'home/get_products',
+    async ({ category, region, state, ...params }) => {
         try {
-            const {data} = await api.get('/home/get-products')
-            //  console.log(data)
-            return fulfillWithValue(data)
+            const { data } = await api.get(`/home/get-products`, {
+                params: {
+                    category,
+                    region,
+                    state,
+                    ...params
+                }
+            });
+            return data;
         } catch (error) {
-            console.log(error.respone)
+            throw error;
         }
     }
 )
@@ -48,13 +54,12 @@ export const price_range_product = createAsyncThunk(
 // End Method 
 export const query_products = createAsyncThunk(
     'product/query_products',
-    async(query , { fulfillWithValue }) => {
+    async(query, { fulfillWithValue }) => {
         try {
-            const {data} = await api.get(`/home/query-products?category=${query.category}&&rating=${query.rating}&&lowPrice=${query.low}&&highPrice=${query.high}&&sortPrice=${query.sortPrice}&&pageNumber=${query.pageNumber}&&searchValue=${query.searchValue ? query.searchValue : ''} `)
-            //  console.log(data)
+            const {data} = await api.get(`/home/query-products?category=${query.category || ''}&rating=${query.rating || ''}&lowPrice=${query.low || ''}&highPrice=${query.high || ''}&sortPrice=${query.sortPrice || ''}&pageNumber=${query.pageNumber || 1}&region=${query.region || ''}&state=${query.state || ''}`)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            console.log(error.response)
         }
     }
 )
