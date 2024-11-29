@@ -37,7 +37,7 @@ const Chat = () => {
                 userId: userInfo.id,
                 text,
                 sellerId,
-                name: userInfo.name 
+                name: `${userInfo.firstName} ${userInfo.lastName || ''}`.trim()
             }))
             setText('')
         }

@@ -56,7 +56,7 @@ export const query_products = createAsyncThunk(
     'product/query_products',
     async(query, { fulfillWithValue }) => {
         try {
-            const {data} = await api.get(`/home/query-products?category=${query.category || ''}&rating=${query.rating || ''}&lowPrice=${query.low || ''}&highPrice=${query.high || ''}&sortPrice=${query.sortPrice || ''}&pageNumber=${query.pageNumber || 1}&region=${query.region || ''}&state=${query.state || ''}`)
+            const {data} = await api.get(`/home/query-products?category=${query.category || ''}&searchValue=${query.searchValue || ''}&rating=${query.rating || ''}&lowPrice=${query.low || ''}&highPrice=${query.high || ''}&sortPrice=${query.sortPrice || ''}&pageNumber=${query.pageNumber || 1}&region=${query.region || ''}&state=${query.state || ''}`)
             return fulfillWithValue(data)
         } catch (error) {
             console.log(error.response)

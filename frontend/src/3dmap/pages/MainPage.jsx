@@ -78,7 +78,7 @@ const Header = () => (
   <motion.div
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
-    className="pt-4 pb-2 text-center relative z-10">
+    className="pt-12 pb-12 mt-0 text-center bg-[#fff6f0]">
     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-1 font-serif">
       Explore the Beauty of India
     </h1>

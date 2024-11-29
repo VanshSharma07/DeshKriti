@@ -40,6 +40,10 @@ import TribalJewellery from './pages/TribalJewellery';
 import WoodenToys from './pages/WoodenToys';
 import YearArchive from './pages/YearArchive';
 import RegionalProducts from './pages/RegionalProducts';
+import ConnectionRequests from './components/community/connections/ConnectionRequests';
+import CommunityChat from './components/community/CommunityChat';
+import ConnectionsList from './components/community/ConnectionsList';
+import CategoryPage from './pages/CategoryPage';
 
 function App() {
 
@@ -66,6 +70,7 @@ const ScrollToTopOnlyForDetails = () => {
       <Route path='/indian-spices' element={<IndianSpices />} />
       <Route path='/month-archive' element={<MonthArchive />} />
       <Route path='/indian-pottery' element={<Pottery />} />
+      <Route path='/category' element={<CategoryPage />} />
       <Route path='/tags' element={<Tags />} />
       <Route path='/tribal-jewelry' element={<TribalJewellery />} />
       <Route path='/wooden-toys' element={<WoodenToys />} />
@@ -81,6 +86,9 @@ const ScrollToTopOnlyForDetails = () => {
       <Route path='/virtualevents' element={<VirtualEventPage/>} />
       <Route path="/community" element={<CommunityPage />} />
       <Route path="/community/topic/:topicId" element={<TopicDetailPage />} />
+      <Route path="/community/connections/requests" element={<ConnectionRequests />} />
+      <Route path="/community/chat/:receiverId" element={<CommunityChat />} />
+      <Route path="/community/connections" element={<ConnectionsList />} />
       
       <Route path='/products/search?' element={<SearchProducts/>} />
       <Route path='/payment' element={<Payment/>} />

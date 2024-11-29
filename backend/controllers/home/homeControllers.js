@@ -2,12 +2,12 @@ const category = require("../../models/categoryModel");
 const { responseReturn } = require("../../utiles/response");
 const productModel = require("../../models/productModel");
 const queryProducts = require("../../utiles/queryProducts");
+const customerModel = require("../../models/customerModel");
 const moment = require("moment");
 const reviewModel = require("../../models/reviewModel");
 const {
   mongo: { ObjectId },
 } = require("mongoose");
-
 class homeControllers {
   formateProduct = (products) => {
     const productArray = [];
@@ -102,32 +102,33 @@ class homeControllers {
     const parPage = 12;
     req.query.parPage = parPage;
     try {
-        const products = await productModel.find({}).sort({
+        let searchQuery = {};
+        
+        if (req.query.searchValue) {
+            searchQuery = {
+                $or: [
+                    { name: { $regex: req.query.searchValue, $options: 'i' } },
+                    { description: { $regex: req.query.searchValue, $options: 'i' } },
+                    { category: { $regex: req.query.searchValue, $options: 'i' } }
+                ]
+            };
+        }
+
+        if (req.query.category) {
+            searchQuery.category = req.query.category;
+        }
+
+        const products = await productModel.find(searchQuery).sort({
             createdAt: -1,
         });
-        
-        console.log('Total products before filtering:', products.length);
-        console.log('Requested region:', req.query.region);
-        console.log('Requested state:', req.query.state);
 
         const queryInstance = new queryProducts(products, req.query);
         
-        // Add logging after each filter
-        const afterCategory = queryInstance.categoryQuery();
-        console.log('Products after category filter:', afterCategory.products.length);
-        
-        const afterRegion = afterCategory.regionQuery();
-        console.log('Products after region filter:', afterRegion.products.length);
-        console.log('Products regions:', afterRegion.products.map(p => p.region));
-        
-        const afterState = afterRegion.stateQuery();
-        console.log('Products after state filter:', afterState.products.length);
-        console.log('Products states:', afterState.products.map(p => p.state));
-
-        // Continue with the rest of the chain
-        const result = afterState
+        const result = queryInstance
+            .categoryQuery()
+            .regionQuery()
+            .stateQuery()
             .ratingQuery()
-            .searchQuery()
             .priceQuery()
             .sortByPrice()
             .skip()
@@ -136,11 +137,12 @@ class homeControllers {
 
         responseReturn(res, 200, {
             products: result,
-            totalProduct: afterState.countProducts(),
+            totalProduct: queryInstance.countProducts(),
             parPage,
         });
     } catch (error) {
         console.log(error.message);
+        responseReturn(res, 500, { error: 'Internal server error' });
     }
   };
 
@@ -195,34 +197,48 @@ class homeControllers {
   // end method
 
   submit_review = async (req, res) => {
-    const { productId, rating, review, name } = req.body;
+    const { productId, rating, review } = req.body;
+    const { id } = req;
+    
     try {
-      await reviewModel.create({
-        productId,
-        name,
-        rating,
-        review,
-        date: moment(Date.now()).format("LL"),
-      });
-      let rat = 0;
-      const reviews = await reviewModel.find({
-        productId,
-      });
-      for (let i = 0; i < reviews.length; i++) {
-        rat = rat + reviews[i].rating;
-      }
-      let productRating = 0;
-      if (reviews.length !== 0) {
-        productRating = (rat / reviews.length).toFixed(1);
-      }
-      await productModel.findByIdAndUpdate(productId, {
-        rating: productRating,
-      });
-      responseReturn(res, 201, {
-        message: "Review Added Successfully",
-      });
+        // Get user info
+        const user = await customerModel.findById(id);
+        if (!user) {
+            return responseReturn(res, 404, { error: "User not found" });
+        }
+
+        // Validate productId
+        const product = await productModel.findById(productId);
+        if (!product) {
+            return responseReturn(res, 404, { error: "Product not found" });
+        }
+
+        const newReview = await reviewModel.create({
+            productId,
+            userId: id,
+            firstName: user.firstName,
+            lastName: user.lastName || '',
+            rating,
+            review,
+            date: moment(Date.now()).format("LL"),
+        });
+
+        // Calculate average rating
+        const reviews = await reviewModel.find({ productId });
+        const totalRating = reviews.reduce((sum, r) => sum + r.rating, 0);
+        const productRating = reviews.length > 0 ? (totalRating / reviews.length).toFixed(1) : 0;
+
+        await productModel.findByIdAndUpdate(productId, {
+            rating: productRating,
+        });
+
+        responseReturn(res, 201, {
+            message: "Review Added Successfully",
+            review: newReview
+        });
     } catch (error) {
-      console.log(error.message);
+        console.log(error.message);
+        responseReturn(res, 500, { error: error.message });
     }
   };
   // end method
@@ -233,82 +249,71 @@ class homeControllers {
     pageNo = parseInt(pageNo);
     const limit = 5;
     const skipPage = limit * (pageNo - 1);
+    
     try {
-      let getRating = await reviewModel.aggregate([
-        {
-          $match: {
-            productId: {
-              $eq: new ObjectId(productId),
+        let getRating = await reviewModel.aggregate([
+            {
+                $match: {
+                    productId: {
+                        $eq: new ObjectId(productId),
+                    },
+                    rating: {
+                        $not: {
+                            $size: 0,
+                        },
+                    },
+                },
             },
-            rating: {
-              $not: {
-                $size: 0,
-              },
+            {
+                $unwind: "$rating",
             },
-          },
-        },
-        {
-          $unwind: "$rating",
-        },
-        {
-          $group: {
-            _id: "$rating",
-            count: {
-              $sum: 1,
+            {
+                $group: {
+                    _id: "$rating",
+                    count: {
+                        $sum: 1,
+                    },
+                },
             },
-          },
-        },
-      ]);
-      let rating_review = [
-        {
-          rating: 5,
-          sum: 0,
-        },
-        {
-          rating: 4,
-          sum: 0,
-        },
-        {
-          rating: 3,
-          sum: 0,
-        },
-        {
-          rating: 2,
-          sum: 0,
-        },
-        {
-          rating: 1,
-          sum: 0,
-        },
-      ];
-      for (let i = 0; i < rating_review.length; i++) {
-        for (let j = 0; j < getRating.length; j++) {
-          if (rating_review[i].rating === getRating[j]._id) {
-            rating_review[i].sum = getRating[j].count;
-            break;
-          }
+        ]);
+
+        let rating_review = [
+            { rating: 5, sum: 0 },
+            { rating: 4, sum: 0 },
+            { rating: 3, sum: 0 },
+            { rating: 2, sum: 0 },
+            { rating: 1, sum: 0 },
+        ];
+
+        for (let i = 0; i < rating_review.length; i++) {
+            for (let j = 0; j < getRating.length; j++) {
+                if (rating_review[i].rating === getRating[j]._id) {
+                    rating_review[i].sum = getRating[j].count;
+                    break;
+                }
+            }
         }
-      }
-      const getAll = await reviewModel.find({
-        productId,
-      });
-      const reviews = await reviewModel
-        .find({
-          productId,
-        })
-        .skip(skipPage)
-        .limit(limit)
-        .sort({ createdAt: -1 });
-      responseReturn(res, 200, {
-        reviews,
-        totalReview: getAll.length,
-        rating_review,
-      });
+
+        const getAll = await reviewModel.find({ productId });
+        const reviews = await reviewModel
+            .find({ productId })
+            .populate('userId', 'firstName lastName image')
+            .skip(skipPage)
+            .limit(limit)
+            .sort({ createdAt: -1 });
+
+        responseReturn(res, 200, {
+            reviews,
+            totalReview: getAll.length,
+            rating_review,
+        });
     } catch (error) {
-      console.log(error.message);
+        console.log(error.message);
+        responseReturn(res, 500, { error: error.message });
     }
   };
   // end method
 }
 
 module.exports = new homeControllers();
+

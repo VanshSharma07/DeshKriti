@@ -36,6 +36,10 @@ const Header2 = () => {
   const [showShidebar, setShowSidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true);
 
+  const displayName = userInfo ? 
+    `${userInfo.firstName || ''} ${userInfo.lastName || ''}`.trim() : 
+    'Guest';
+
   const redirect_card_page = () => {
     if (userInfo) {
       navigate("/card");
@@ -44,8 +48,16 @@ const Header2 = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchValue.trim()) {
+      search();
+    }
+  };
+
   const search = () => {
-    navigate(`/products/search?category=${category}&&value=${searchValue}`);
+    if (searchValue.trim()) {
+      navigate(`/products/search?category=${category || ''}&value=${searchValue.trim()}`);
+    }
   };
 
   useEffect(() => {
@@ -82,7 +94,7 @@ const Header2 = () => {
             {/* Navigation and User Actions */}
             <div className="flex items-center justify-between flex-1 px-4">
               {/* Navigation Menu */}
-              <ul className="flex items-center gap-8 text-sm  font-bold uppercase md-lg:hidden mx-8">
+              <ul className="flex items-center gap-8 text-sm font-bold uppercase md-lg:hidden mx-8">
                 <li>
                   <Link
                     className={`p-2 ${
@@ -92,14 +104,28 @@ const Header2 = () => {
                     Home
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/shops" ? "text-[#059473]" : "text-slate-600"
-                    }`}
-                    to="/shops">
-                    Shop
-                  </Link>
+                <li className="relative group">
+                  <div className="flex items-center gap-1 cursor-pointer p-2 text-slate-600">
+                    Store
+                    <IoMdArrowDropdown />
+                  </div>
+                  <ul className="absolute invisible group-hover:visible w-48 py-2 rounded-md backdrop-blur-md">
+                    <li>
+                      <Link to="/shops" className="block px-4 py-2 text-slate-600 hover:bg-slate-100/50 transition-colors">
+                        All Products
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/regional-products" className="block px-4 py-2 text-slate-600 hover:bg-slate-100/50 transition-colors">
+                        Regional Products
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/category" className="block px-4 py-2 text-slate-600 hover:bg-slate-100/50 transition-colors">
+                        Shop by Category
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link
@@ -110,32 +136,23 @@ const Header2 = () => {
                     Blog
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/about" ? "text-[#059473]" : "text-slate-600"
-                    }`}
-                    to="/about">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/contact" ? "text-[#059473]" : "text-slate-600"
-                    }`}
-                    to="/contact">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/regional-products" ? "text-[#059473]" : "text-slate-600"
-                    }`}
-                    to="/regional-products">
-                    Regional Products
-                  </Link>
+                <li className="relative group">
+                  <div className="flex items-center gap-1 cursor-pointer p-2 text-slate-600">
+                    Community
+                    <IoMdArrowDropdown />
+                  </div>
+                  <ul className="absolute invisible group-hover:visible w-48 py-2 rounded-md backdrop-blur-md">
+                    <li>
+                      <Link to="/community" className="block px-4 py-2 text-slate-600 hover:bg-slate-100/50 transition-colors">
+                        Community Groups
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/virtualevents" className="block px-4 py-2 text-slate-600 hover:bg-slate-100/50 transition-colors">
+                        Virtual Events
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
               </ul>
 
@@ -171,22 +188,37 @@ const Header2 = () => {
                   )}
                 </div>
 
-                {/* Login/Profile Button */}
-                {userInfo ? (
-                  <Link
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-black border rounded-full hover:bg-gray-100"
-                    to="/dashboard">
-                    <FaUserCog />
-                    <span>{userInfo.name}</span>
-                  </Link>
-                ) : (
-                  <Link
-                    to="/login"
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-base text-black border rounded-full hover:bg-gray-100">
-                    <IoIosLock />
-                    <span>Login / Signup</span>
-                  </Link>
-                )}
+                {/* User Profile Section */}
+                <div className="flex items-center gap-2">
+                  <div className="flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
+                    <span className="text-xl text-green-500">
+                      <FaUserCog />
+                    </span>
+                  </div>
+                  <div className="hidden md:block">
+                    <p className="text-sm font-medium text-slate-700">
+                      Welcome, {displayName}
+                    </p>
+                    {!userInfo ? (
+                      <div className="flex items-center gap-2">
+                        <Link to="/login" className="text-sm text-blue-500 hover:underline">
+                          Login
+                        </Link>
+                        <span className="text-slate-500">/</span>
+                        <Link to="/register" className="text-sm text-blue-500 hover:underline">
+                          Register
+                        </Link>
+                      </div>
+                    ) : (
+                      <Link 
+                        to="/dashboard" 
+                        className="text-sm text-blue-500 hover:underline"
+                      >
+                        Dashboard
+                      </Link>
+                    )}
+                  </div>
+                </div>
 
                 {/* Register as Seller Button */}
                 <a
@@ -273,14 +305,31 @@ const Header2 = () => {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/shops"
-                  className={`py-2 block ${
-                    pathname === "/shops" ? "text-[#059473]" : "text-slate-600"
-                  }`}>
-                  Shop
-                </Link>
+              <li className="w-full">
+                <div className="py-2 text-slate-600">Store</div>
+                <ul className="pl-4">
+                  <li>
+                    <Link
+                      to="/shops"
+                      className="py-2 block text-slate-600">
+                      All Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/regional-products"
+                      className="py-2 block text-slate-600">
+                      Regional Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/category"
+                      className="py-2 block text-slate-600">
+                      Shop by Category
+                    </Link>
+                  </li>
+                </ul>
               </li>
               <li>
                 <Link
@@ -291,34 +340,24 @@ const Header2 = () => {
                   Blog
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/about"
-                  className={`py-2 block ${
-                    pathname === "/about" ? "text-[#059473]" : "text-slate-600"
-                  }`}>
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contact"
-                  className={`py-2 block ${
-                    pathname === "/contact"
-                      ? "text-[#059473]"
-                      : "text-slate-600"
-                  }`}>
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/regional-products"
-                  className={`py-2 block ${
-                    pathname === "/regional-products" ? "text-[#059473]" : "text-slate-600"
-                  }`}>
-                  Regional Products
-                </Link>
+              <li className="w-full">
+                <div className="py-2 text-slate-600">Community</div>
+                <ul className="pl-4">
+                  <li>
+                    <Link
+                      to="/community"
+                      className="py-2 block text-slate-600">
+                      Community Groups
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/virtualevents"
+                      className="py-2 block text-slate-600">
+                      Virtual Events
+                    </Link>
+                  </li>
+                </ul>
               </li>
             </ul>
 

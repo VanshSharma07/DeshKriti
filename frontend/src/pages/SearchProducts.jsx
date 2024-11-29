@@ -60,7 +60,7 @@ const SearchProducts = () => {
                 state: selectedState
             })
          )
-    },[state.values[0],state.values[1],category,rating,sortPrice,searchValue,pageNumber,selectedRegion,selectedState])
+    },[state.values[0], state.values[1], category, rating, sortPrice, pageNumber, searchValue, selectedRegion, selectedState])
     const resetRating = () => {
         setRating('')
         dispatch(

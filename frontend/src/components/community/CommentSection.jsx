@@ -80,7 +80,9 @@ const Comment = ({ comment, level = 0 }) => {
                         />
                         <div>
                             <h4 className="font-semibold text-gray-800">
-                                {comment.userId?.name || 'Anonymous'}
+                                {comment.userId ? 
+                                    `${comment.userId.firstName} ${comment.userId.lastName || ''}`.trim() 
+                                    : 'Anonymous'}
                             </h4>
                             <span className="text-sm text-gray-500">
                                 {moment(comment.createdAt).fromNow()}

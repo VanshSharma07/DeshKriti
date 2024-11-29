@@ -11,12 +11,45 @@
   animation: fadeIn 0.3s ease-out forwards;
 }
 
+.phone-input .form-control {
+  width: 100% !important;
+  padding: 20px 45px !important;
+}
+
 body {
-    background-color: #FFF5EE
-    ; /* Set a light gray background */
-    /* Or, you can use an image */
-    /* background-image: url('path/to/your/image.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
-  }
+  background: linear-gradient(
+    to right,
+    rgba(255, 153, 51, 0.3), /* #FF9933 with 90% opacity */
+    rgba(255, 255, 255, 0.3), /* #FFFFFF with 40% opacity */
+    rgba(19, 136, 8, 0.3)     /* #138808 with 90% opacity */
+  );
+  background-attachment: fixed; /* Optional: keeps the gradient fixed during scrolling */
+  background-size: cover; /* Ensures it covers the entire body */
+  padding: 16px 0; /* Equivalent to `py-16` in Tailwind */
+}
+
+.react-multi-carousel-dot-list {
+  bottom: -50px;
+}
+
+.react-multi-carousel-dot button {
+  border: none;
+  background: #e2e8f0;
+  width: 40px;
+  height: 3px;
+  border-radius: 4px;
+  margin: 0 4px;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.react-multi-carousel-dot--active button {
+  background: #059473;
+  width: 50px;
+  opacity: 1;
+}
+
+/* Optional: Add this if you want smooth sliding animation */
+.react-multi-carousel-track {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -7,11 +7,16 @@ export const stateData = {
     explore: "#"
   },
   "model_11123": {
-    name: "Jammu & Kashmir",
-    products: "Kashmiri Carpets, Saffron",
-    food: "Rogan Josh, Dum Aloo",
-    places: "Dal Lake, Gulmarg, Vaishno Devi",
-    explore: "#"
+    "name": "Jammu & Kashmir",
+    "products": "Kashmiri Carpets, Saffron, Pashmina Shawls, Papier-mâché Items, Walnut Wood Carvings",
+    "food": "Rogan Josh, Dum Aloo, Yakhni, Kahwa (Traditional Tea), Modur Pulao, Rajma-Chawal, Kaladi Kulcha",
+    "places": "Vaishno Devi, Dal Lake, Gulmarg, Pahalgam, Sonamarg, Mughal Gardens, Shankaracharya Temple, Raghunath Temple, Bhaderwah (Mini Kashmir), Dachigam National Park, Patnitop",
+    "song": {
+      name: "jammu kashmir",
+      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      attribution: "folk music by @kashmirtourism"
+    },
+    "explore": "#"
   },
   "model_10140": {
     name: "Himachal Pradesh",
@@ -341,155 +346,248 @@ export const detailedStateData = {
   },
 
   "model_11123": {
-    name: "Jammu & Kashmir",
-    description: "Jammu & Kashmir, often called 'Paradise on Earth', is known for its picturesque beauty, snow-capped mountains, lush valleys, and rich cultural heritage. The state comprises three regions: Jammu, Kashmir Valley, and Ladakh, each with its distinct culture and landscape.",
+    "name": "Jammu & Kashmir",
+    "description": "Jammu & Kashmir, often called 'Paradise on Earth', is known for its picturesque beauty, snow-capped mountains, lush valleys, and rich cultural heritage. The region comprises Jammu, Kashmir Valley, and Ladakh, each with its distinct culture and landscape.",
     
-    products: {
-      main: "Kashmiri Carpets, Pashmina Shawls, Saffron, Walnut Wood Carving",
-      details: [
+    "products": {
+      "main": "Kashmiri Carpets, Pashmina Shawls, Saffron, Walnut Wood Carving, Papier Mache, Silk Fabrics, Dry Fruits",
+      "details": [
         {
-          name: "Kashmiri Carpets",
-          description: "Hand-knotted carpets with intricate Persian-inspired designs",
-          imageUrl: "https://carpetsofkashmir.com/wp-content/uploads/2019/02/IMG_0249-350x490.jpg"
+          "name": "Kashmiri Carpets",
+          "description": "Hand-knotted carpets with intricate Persian-inspired designs.",
+          "imageUrl": "https://carpetsofkashmir.com/wp-content/uploads/2019/02/IMG_0249-350x490.jpg"
         },
         {
-          name: "Pashmina Shawls",
-          description: "Luxurious shawls made from fine Pashmina wool with traditional embroidery",
-          imageUrl: "https://pashmina.vtexassets.com/arquivos/ids/161264/dilshaad-multicoloured-kani-pashmina-shawl4.jpg?v=638516216259030000"
+          "name": "Pashmina Shawls",
+          "description": "Luxurious shawls made from fine Pashmina wool with traditional embroidery.",
+          "imageUrl": "https://pashmina.vtexassets.com/arquivos/ids/161264/dilshaad-multicoloured-kani-pashmina-shawl4.jpg?v=638516216259030000"
         },
         {
-          name: "Saffron",
-          description: "World's finest saffron grown in Pampore region",
-          imageUrl: "https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/11/saffron-1296x728-header.jpg?w=1155&h=1528"
+          "name": "Saffron",
+          "description": "World's finest saffron grown in Pampore region.",
+          "imageUrl": "https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/11/saffron-1296x728-header.jpg?w=1155&h=1528"
         },
         {
-          name: "Walnut Wood Carving",
-          description: "Intricately carved furniture and decorative items",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0556s6XXVthaaYov7sSEr6FIIgcMWW23ibA&s"
+          "name": "Walnut Wood Carving",
+          "description": "Intricately carved furniture and decorative items.",
+          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0556s6XXVthaaYov7sSEr6FIIgcMWW23ibA&s"
         },
         {
-          name: "Paper Mache",
-          description: "Decorative items with intricate designs and gold work",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZH0iZBzrMKMbIE6NfIaLPtbLmNttxz4jwg&s"
+          "name": "Papier Mache",
+          "description": "Decorative items with intricate designs and gold work.",
+          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZH0iZBzrMKMbIE6NfIaLPtbLmNttxz4jwg&s"
+        },
+        {
+          "name": "Dry Fruits",
+          "description": "Premium quality almonds, walnuts, and dried apricots from Kashmir.",
+          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTjhMclIcDFeUZ5Nlpe-qxGsRv99Q56v4R9g&s"
         }
       ]
     },
-
-    culture: {
-      festivals: [
+  
+    "culture": {
+      "festivals": [
         {
-          name: "Tulip Festival",
-          description: "Annual celebration during tulip blooming season in Asia's largest tulip garden",
-          imageUrl: "https://www.indianholiday.com/pictures/travelguide/fairandfestival/tulip-festival-256.jpeg"
+          "name": "Tulip Festival",
+          "description": "Annual celebration during tulip blooming season in Asia's largest tulip garden.",
+          "imageUrl": "https://www.indianholiday.com/pictures/travelguide/fairandfestival/tulip-festival-256.jpeg"
         },
         {
-          name: "Baisakhi",
-          description: "Harvest festival celebrated with traditional dance and music",
-          imageUrl: "https://m.economictimes.com/thumb/msid-99319887,width-1200,height-900,resizemode-4,imgsize-179308/baisakhi-2023-date-significance-of-vaisakhi-sikh-new-year-harvest-festival.jpg"
+          "name": "Baisakhi",
+          "description": "Harvest festival celebrated with traditional dance and music.",
+          "imageUrl": "https://m.economictimes.com/thumb/msid-99319887,width-1200,height-900,resizemode-4,imgsize-179308/baisakhi-2023-date-significance-of-vaisakhi-sikh-new-year-harvest-festival.jpg"
+        },
+        {
+          "name": "Hemis Festival",
+          "description": "A Buddhist celebration in Ladakh with colorful mask dances.",
+          "imageUrl": "https://static.toiimg.com/thumb/73373610.cms?imgsize=1512706&width=800&height=800"
         }
       ],
-      traditions: [
+      "traditions": [
         {
-          name: "Wazwan",
-          description: "Traditional multi-course meal ceremony",
-          imageUrl: "https://www.datocms-assets.com/126788/1718165981-sath-syen-trami-by-sarposh.jpg?auto=format&fit=max&w=1200"
+          "name": "Wazwan",
+          "description": "Traditional multi-course meal ceremony.",
+          "imageUrl": "https://www.datocms-assets.com/126788/1718165981-sath-syen-trami-by-sarposh.jpg?auto=format&fit=max&w=1200"
+        },
+        {
+          "name": "Kahwa Ceremony",
+          "description": "Serving of the traditional green tea during social gatherings.",
+          "imageUrl": "https://www.sharmispassions.com/wp-content/uploads/2023/03/KashmiriKahwa2-500x500.jpg"
         }
       ]
     },
-
-    food: {
-      main: "Rogan Josh, Dum Aloo, Yakhni, Kahwa",
-      dishes: [
+  
+    "food": {
+      "main": "Rogan Josh, Dum Aloo, Yakhni, Kahwa, Modur Pulao, Rajma-Chawal, Kaladi Kulcha",
+      "dishes": [
         {
-          name: "Rogan Josh",
-          description: "Aromatic lamb curry in Kashmiri spices",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3HrNzcKPGXLXpAc4nUoEQxq8L9F55mUVwoQ&s"
+          "name": "Rogan Josh",
+          "description": "Aromatic lamb curry in Kashmiri spices.",
+          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3HrNzcKPGXLXpAc4nUoEQxq8L9F55mUVwoQ&s"
         },
         {
-          name: "Dum Aloo",
-          description: "Baby potatoes in yogurt-based gravy",
-          imageUrl: "https://sinfullyspicy.com/wp-content/uploads/2024/01/1200-by-1200-images-3.jpg"
+          "name": "Dum Aloo",
+          "description": "Baby potatoes in yogurt-based gravy.",
+          "imageUrl": "https://sinfullyspicy.com/wp-content/uploads/2024/01/1200-by-1200-images-3.jpg"
         },
         {
-          name: "Kahwa",
-          description: "Traditional green tea with saffron and almonds",
-          imageUrl: "https://www.sharmispassions.com/wp-content/uploads/2023/03/KashmiriKahwa2-500x500.jpg"
+          "name": "Modur Pulao",
+          "description": "Sweet saffron rice cooked with dry fruits.",
+          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa4OIzTj8oE3a90FPFuAilCgsuAV10z6t5Tg&s"
         },
         {
-          name: "Yakhni",
-          description: "Yogurt-based mutton curry with aromatic spices",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZjE0pJ0MRlZ0Y8GgB5hy_SwEEOMwGnm12uw&s"
-        },
-        {
-          name: "Phirni",
-          description: "Traditional rice pudding dessert",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyCG5hb2QlWvuPG51FMNg8EZmFGdW9MiZPgA&s"
-        },
-        {
-          name: "Baderwah Rajma",
-          description: "A specialty of the Jammu region, these kidney beans are cooked with aromatic spices to create a flavorful curry.",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjKlo8C2oaY3YS0ismpcZ1F7g671GuotPsLw&s"
-        },
-        {
-          name: "Udhampur ki Kaladi",
-          description: "A traditional cheese made from cow's milk, often fried and served with chutney or in a curry.",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXq7C2yl3Bj7rp03LpDg0E1Sugz7g3w2NE4Q&s"
+          "name": "Rajma-Chawal",
+          "description": "Kidney beans curry served with rice, a specialty of Jammu.",
+          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjKlo8C2oaY3YS0ismpcZ1F7g671GuotPsLw&s"
         }
       ]
     },
-
-    heritage: {
-      description: "J&K's heritage reflects a blend of Hindu, Muslim, and Buddhist influences",
-      sites: [
-        {
-          name: "Shankaracharya Temple",
-          description: "Ancient temple dedicated to Lord Shiva on hilltop",
-          imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/fb/3a/19/shankaracharya-temple.jpg?w=1200&h=1200&s=1"
-        },
-        {
-          name: "Hazratbal Shrine",
-          description: "Famous Muslim shrine containing a relic of Prophet Muhammad",
-          imageUrl: "https://static.toiimg.com/thumb/51718137/HAZRATBAL_SHRINE_01.jpg?width=1200&height=900"
-        }
-      ]
+  
+    "heritage": {
+  "description": "J&K's heritage reflects a blend of Hindu, Muslim, and Buddhist influences.",
+  "sites": [
+    {
+      "name": "Shankaracharya Temple",
+      "description": "Ancient temple dedicated to Lord Shiva on a hilltop.",
+      "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/fb/3a/19/shankaracharya-temple.jpg?w=1200&h=1200&s=1"
     },
-
-    places: {
-      main: "Dal Lake, Gulmarg, Vaishno Devi, Pahalgam",
-      tourist_spots: [
-        {
-          name: "Dal Lake",
-          description: "Famous lake known for houseboats and floating gardens",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKsWaadZorrm4nhrj0JbMq5lsYgqswo_cD9w&s"
-        },
-        {
-          name: "Gulmarg",
-          description: "Popular ski resort and summer retreat",
-          imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREN781SKjElg39bOPTL4kaq3Ffa_zoATIGag&s"
-        },
-        {
-          name: "Vaishno Devi",
-          description: "Important Hindu pilgrimage site",
-          imageUrl: "https://media.webdunia.com/_media/hi/img/article/2020-08/06/full/1596654798-3109.jpg"
-        },
-        {
-          name: "Pahalgam",
-          description: "Valley of Shepherds with scenic beauty",
-          imageUrl: "https://cliffhangersindia.com/wp-content/uploads/2024/05/Aru-Valley.jpg.webp"
-        },
-        {
-          name: "Sonmarg",
-          description: "Meadow of Gold with glaciers and lakes",
-          imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sonmarg_rishav7336.jpg/800px-Sonmarg_rishav7336.jpg"
-        }
-      ]
+    {
+      "name": "Hazratbal Shrine",
+      "description": "Famous Muslim shrine containing a relic of Prophet Muhammad.",
+      "imageUrl": "https://static.toiimg.com/thumb/51718137/HAZRATBAL_SHRINE_01.jpg?width=1200&height=900"
     },
+    {
+      "name": "Leh Palace",
+      "description": "9-story palace in Leh built in the 17th century.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Leh_Palace.jpg"
+    },
+    {
+      "name": "Mubarak Mandi Palace",
+      "description": "An erstwhile royal palace complex of the Dogra rulers, known for its architecture.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Mubarak_Mandi.jpg"
+    },
+    {
+      "name": "Raghunath Temple",
+      "description": "A famous Hindu temple complex dedicated to Lord Rama, showcasing stunning artwork.",
+      "imageUrl": "https://www.nativeplanet.com/img/2021/06/cover-raghnath-temple-jammu-1622719457.jpg"
+    },
+    {
+      "name": "Martand Sun Temple",
+      "description": "A 7th-century temple dedicated to the Sun God, reflecting ancient Kashmiri architecture.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Martand_Sun_Temple_Ruins.jpg"
+    },
+    {
+      "name": "Hari Parbat Fort",
+      "description": "An ancient fort built during the Mughal era, offering panoramic views of Srinagar.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Hari_Parbat.jpg"
+    },
+    {
+      "name": "Bahu Fort",
+      "description": "One of the oldest forts in Jammu, housing the revered Bawe Wali Mata temple.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Bahu_Fort.jpg"
+    },
+    {
+      "name": "Avantipur Temple",
+      "description": "Historical ruins of temples built by King Avantivarman in the 9th century.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/47/Avantipur_ruins.jpg"
+    },
+    {
+      "name": "Zorawar Fort",
+      "description": "Built by General Zorawar Singh, this fort stands in Leh as a symbol of bravery.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/15/Zorawar_Fort.jpg"
+    },
+    {
+      "name": "Shey Palace",
+      "description": "A former summer retreat of Ladakhi kings, known for its giant Buddha statue.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/25/Shey_Palace.jpg"
+    }
+  ]
+},
 
-    images: {
-      state_banner: "https://www.shutterstock.com/image-vector/jammu-kashmir-indian-state-retro-260nw-2404698307.jpg",
-      state_thumbnail: "https://i.ytimg.com/vi/vOM2TjbJT9g/maxresdefault.jpg"
+  
+   "places": {
+  "main": "Dal Lake, Gulmarg, Vaishno Devi, Pahalgam, Sonmarg, Leh, Akhnoor Fort, Bagh-e-Bahu, Bawe Wali Mata, Patnitop, Bhaderwah",
+  "tourist_spots": [
+    {
+      "name": "Dal Lake",
+      "description": "Famous lake known for houseboats and floating gardens.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKsWaadZorrm4nhrj0JbMq5lsYgqswo_cD9w&s"
+    },
+    {
+      "name": "Gulmarg",
+      "description": "Popular ski resort and summer retreat.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREN781SKjElg39bOPTL4kaq3Ffa_zoATIGag&s"
+    },
+    {
+      "name": "Vaishno Devi",
+      "description": "Important Hindu pilgrimage site.",
+      "imageUrl": "https://media.webdunia.com/_media/hi/img/article/2020-08/06/full/1596654798-3109.jpg"
+    },
+    {
+      "name": "Pahalgam",
+      "description": "Valley of Shepherds with scenic beauty.",
+      "imageUrl": "https://cliffhangersindia.com/wp-content/uploads/2024/05/Aru-Valley.jpg.webp"
+    },
+    {
+      "name": "Sonmarg",
+      "description": "Meadow of Gold with glaciers and lakes.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sonmarg_rishav7336.jpg/800px-Sonmarg_rishav7336.jpg"
+    },
+    {
+      "name": "Leh",
+      "description": "Adventure hub with stunning landscapes and monasteries.",
+      "imageUrl": "https://www.planetware.com/photos-large/IND/india-ladakh-leh-town.jpg"
+    },
+    {
+      "name": "Akhnoor Fort",
+      "description": "Historical fort on the banks of the Chenab River, with a blend of Mughal and Sikh architecture.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Rj_UA7xCS9JbsCS3P0olh_GBtKSKrCoA2g&s"
+    },
+    {
+      "name": "Bagh-e-Bahu",
+      "description": "A stunning garden surrounding the historic Bahu Fort, known for fountains, lush greenery, and views of the Tawi River.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjt_b6zvmKMkB8R_93RCV1obMUp2Rf3RPqcQ&s"
+    },
+    {
+      "name": "Bawe Wali Mata Temple",
+      "description": "Famous Hindu temple dedicated to Goddess Mahakali, located inside Bahu Fort.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCchsmNhPwvlyh6BJrlUVtd-Etk9Tz9b8NFg&s"
+    },
+    {
+      "name": "Patnitop",
+      "description": "Hilltop destination known for its natural beauty, adventure sports, and snow in winter.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Patnitop_Valley_View.jpg"
+    },
+    {
+      "name": "Bhaderwah",
+      "description": "Also known as 'Mini Kashmir', famous for its verdant meadows, forests, and adventure tourism.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqTUMnHEcUk7KXspw6QOj9IlRnKKik7eaDDw&s"
+    },
+    {
+      "name": "Mansar Lake",
+      "description": "Sacred lake surrounded by forested hills, with boating and wildlife attractions.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7Yl_W8Kt8SUvXX3ihp0LfRGOyL9NdLwb48w&s"
+    },
+    {
+      "name": "Surinsar Lake",
+      "description": "A serene and picturesque lake, popular for day picnics.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZo97pDchHLu2moZgXtDNc4u2Rch75TxOeTA&s"
+    },
+    {
+      "name": "Shiv Khori",
+      "description": "A revered cave shrine dedicated to Lord Shiva, known for its natural Shivling.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOAhwftAYyGbDX--K36OBFrTYRVuyTM-jNHg&s"
+    }
+  ]
+  },
+
+  
+    "images": {
+      "state_banner": "https://www.shutterstock.com/image-vector/jammu-kashmir-indian-state-retro-260nw-2404698307.jpg",
+      "state_thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLW6gEZXh3lwk6G70fuG5PgIShOpLhKQ5D3Q&s"
     }
   },
+  
   
   // ... previous states ...
 

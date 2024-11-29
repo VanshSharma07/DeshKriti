@@ -35,7 +35,7 @@ class ChatController{
                    $addToSet: {
                        myFriends: {
                            fdId : sellerId,
-                           name: seller.shopInfo?.shopName,
+                           name: `${seller.shopInfo?.shopName}`,
                            image: seller.image
                        }
                    }
@@ -65,7 +65,7 @@ class ChatController{
                 $addToSet: {
                    myFriends: {
                        fdId : userId,
-                       name: user.name,
+                       name: `${user.firstName} ${user.lastName || ''}`.trim(),
                        image: ""
                    }
                }

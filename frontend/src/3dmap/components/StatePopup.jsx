@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Html } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaPlay, FaPause } from 'react-icons/fa';
 
 const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
   const navigate = useNavigate();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(new Audio());
+
+  useEffect(() => {
+    return () => {
+      audioRef.current.pause();
+      audioRef.current.src = '';
+    };
+  }, []);
 
   if (!visible || !data) return null;
+
+  const handlePlayClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!data.song?.url) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.src = data.song.url;
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   const handleExploreClick = (e) => {
     e.preventDefault();
@@ -39,8 +64,6 @@ const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
       console.error('Error in handleExploreClick:', error);
     }
   };
-
-  // Rest of your component code...
 
   return (
     <Html
@@ -153,6 +176,55 @@ const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
                 </span>
                 {data.places || 'Information coming soon'}
               </motion.p>
+
+              {/* Song Section */}
+              {data.song && (
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.35 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    margin: '10px 0',
+                  }}
+                >
+                  <span style={{
+                    color: '#f0e68c',
+                    fontWeight: '600',
+                  }}>
+                    Famous Song:
+                  </span>
+                  <span>{data.song.name}</span>
+                  <button
+                    onClick={handlePlayClick}
+                    style={{
+                      background: 'rgba(240, 230, 140, 0.2)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '30px',
+                      height: '30px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      color: '#f0e68c',
+                      transition: 'all 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = '#f0e68c';
+                      e.target.style.color = 'black';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = 'rgba(240, 230, 140, 0.2)';
+                      e.target.style.color = '#f0e68c';
+                    }}
+                  >
+                    {isPlaying ? <FaPause size={12} /> : <FaPlay size={12} />}
+                  </button>
+                </motion.div>
+              )}
 
               {/* Explore Button */}
               <motion.button

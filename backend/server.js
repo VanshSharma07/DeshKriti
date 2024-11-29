@@ -56,59 +56,125 @@ const remove = (socketId) => {
     allSeller = allSeller.filter(c => c.socketId !== socketId);
 };
 
-// Socket.io event handling
-io.on('connection', (soc) => {
-    console.log('Socket server connected');
+const onlineUsers = new Map();
 
-    soc.on('add_user', (customerId, userInfo) => {
-        addUser(customerId, soc.id, userInfo);
-        io.emit('activeSeller', allSeller);
+io.on('connection', (socket) => {
+    socket.on('user_online', (userId) => {
+        onlineUsers.set(userId, socket.id);
+        io.emit('online_users', Array.from(onlineUsers.keys()));
     });
 
-    soc.on('add_seller', (sellerId, userInfo) => {
-        addSeller(sellerId, soc.id, userInfo);
-        io.emit('activeSeller', allSeller);
+    socket.on('user_offline', (userId) => {
+        onlineUsers.delete(userId);
+        io.emit('online_users', Array.from(onlineUsers.keys()));
     });
 
-    soc.on('send_seller_message', (msg) => {
-        const customer = findCustomer(msg.receverId);
-        if (customer !== undefined) {
-            soc.to(customer.socketId).emit('seller_message', msg);
+    socket.on('join_community_chat', (userId) => {
+        socket.join(`community_user_${userId}`);
+    });
+
+    socket.on('send_community_message', (data) => {
+        const { receiverId, message } = data;
+        
+        // Emit to receiver
+        socket.to(`community_user_${receiverId}`).emit('receive_community_message', {
+            ...message,
+            status: 'sent'
+        });
+
+        // If receiver is online, mark as delivered
+        if (onlineUsers.has(receiverId)) {
+            socket.to(`community_user_${receiverId}`).emit('message_delivered', {
+                messageId: message._id,
+                senderId: message.senderId
+            });
         }
     });
 
-    soc.on('send_customer_message', (msg) => {
-        const seller = findSeller(msg.receverId);
-        if (seller !== undefined) {
-            soc.to(seller.socketId).emit('customer_message', msg);
+    socket.on('message_delivered', (data) => {
+        const { messageId, senderId } = data;
+        socket.to(`community_user_${senderId}`).emit('message_status_update', {
+            messageId,
+            status: 'delivered'
+        });
+    });
+
+    socket.on('message_seen', (data) => {
+        const { messageId, senderId } = data;
+        socket.to(`community_user_${senderId}`).emit('message_status_update', {
+            messageId,
+            status: 'seen'
+        });
+    });
+
+    socket.on('disconnect', () => {
+        // Find and remove disconnected user
+        for (const [userId, socketId] of onlineUsers.entries()) {
+            if (socketId === socket.id) {
+                onlineUsers.delete(userId);
+                io.emit('online_users', Array.from(onlineUsers.keys()));
+                break;
+            }
         }
     });
 
-    soc.on('send_message_admin_to_seller', (msg) => {
-        const seller = findSeller(msg.receverId);
-        if (seller !== undefined) {
-            soc.to(seller.socketId).emit('receved_admin_message', msg);
+    socket.on('connection_status_change', async ({ connectionId, status }) => {
+        // Broadcast connection status change to relevant users
+        const connection = await CommunityConnection.findById(connectionId)
+            .populate('senderId', 'firstName lastName image')
+            .populate('receiverId', 'firstName lastName image');
+
+        if (connection) {
+            io.to(`user_${connection.senderId}`).emit('connection_update', {
+                connectionId,
+                status,
+                otherUser: connection.receiverId
+            });
+            io.to(`user_${connection.receiverId}`).emit('connection_update', {
+                connectionId,
+                status,
+                otherUser: connection.senderId
+            });
         }
     });
 
-    soc.on('send_message_seller_to_admin', (msg) => {
-        if (admin.socketId) {
-            soc.to(admin.socketId).emit('receved_seller_message', msg);
+    // Add new community-specific handlers
+    socket.on('join_community_room', (userId) => {
+        socket.join(`community_${userId}`);
+        onlineUsers.set(userId, socket.id);
+        io.emit('community_online_users', Array.from(onlineUsers.keys()));
+    });
+
+    socket.on('send_community_message', (data) => {
+        const { receiverId, senderId, message, senderName } = data;
+        
+        // Emit to both sender and receiver rooms
+        io.to(`community_${receiverId}`).emit('receive_community_message', {
+            senderId,
+            receiverId,
+            message,
+            senderName,
+            createdAt: new Date()
+        });
+    });
+
+    socket.on('add_community_user', (userId, userInfo) => {
+        socket.join(`community_${userId}`);
+        let temp = allCustomer.some(u => u.customerId === userId);
+        if (!temp) {
+            allCustomer.push({ customerId: userId, socketId: socket.id, userInfo });
         }
+        io.emit('activeCustomer', allCustomer);
     });
 
-    soc.on('add_admin', (adminInfo) => {
-        delete adminInfo.email;
-        delete adminInfo.password;
-        admin = adminInfo;
-        admin.socketId = soc.id;
-        io.emit('activeSeller', allSeller);
+    socket.on('send_community_message', (message) => {
+        const { receiverId } = message;
+        socket.to(`community_${receiverId}`).emit('receive_community_message', message);
     });
 
-    soc.on('disconnect', () => {
-        console.log('User disconnected');
-        remove(soc.id);
-        io.emit('activeSeller', allSeller);
+    socket.on('disconnect', () => {
+        allCustomer = allCustomer.filter(u => u.socketId !== socket.id);
+        io.emit('activeCustomer', allCustomer);
     });
 });
 
@@ -119,6 +185,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Add this before route registrations
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+});
 
 // API routes
 app.use('/api/home', require('./routes/home/homeRoutes'));
@@ -133,11 +205,13 @@ app.use('/api', require('./routes/chatRoutes'));
 app.use('/api', require('./routes/paymentRoutes'));
 app.use('/api', require('./routes/dashboard/dashboardRoutes'));
 app.use('/api', require('./routes/dashboard/eventRoutes'));
-app.use('/api', require('./routes/community/communityRoutes'));
-app.use('/api/community', communityRoutes);
+app.use('/api/community', require('./routes/community'));
 app.use('/api/loan', loanRoutes);
 app.use('/api/dashboard', campaignRoutes);
 app.use('/api', campaignRoutes);
+
+// Community routes
+app.use('/api/community', require('./routes/community'));
 
 // Basic route
 app.get('/', (req, res) => res.send('Hello Server'));
@@ -161,12 +235,13 @@ const startServer = async () => {
     try {
         await dbConnect();
         
-        // Register models
+        // Register models in correct order
+        require('./models/customerModel');  // Register customers model first
         require('./models/sellerModel');
-        require('./models/customerModel');
         require('./models/community/Topic');
         require('./models/community/Comment');
         require('./models/Campaign');
+        require('./models/UserLocation');  // Register after customers model
 
         server.listen(port, () => {
             console.log(`Server is running on port ${port}`);

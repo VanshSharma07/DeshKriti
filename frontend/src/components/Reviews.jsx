@@ -143,7 +143,9 @@ const Reviews = ({product}) => {
                     </div>
                     <span className='text-slate-600'>{r.date}</span>
                 </div>
-                <span className='text-slate-600 text-md'>{r.name}</span>
+                <h4 className="font-semibold">
+                    {r.firstName} {r.lastName}
+                </h4>
                 <p className='text-slate-600 text-sm'>{r.review}</p>
             </div>
             )

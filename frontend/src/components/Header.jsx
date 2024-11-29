@@ -44,8 +44,16 @@ const Header = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchValue.trim()) {
+      search();
+    }
+  };
+
   const search = () => {
-    navigate(`/products/search?category=${category}&&value=${searchValue}`);
+    if (searchValue.trim()) {
+      navigate(`/products/search?category=${category || ''}&value=${searchValue.trim()}`);
+    }
   };
 
   useEffect(() => {
@@ -94,6 +102,10 @@ const Header = () => {
     return () => clearTimeout(timeout);
   }, [currentText, typing, currentIndex, textArray]);
 
+  const displayName = userInfo ? 
+    `${userInfo.firstName} ${userInfo.lastName}`.trim() : 
+    'Guest';
+
   return (
     <div className="w-full h-auto ">
       {/* Background Video */}
@@ -135,7 +147,7 @@ const Header = () => {
             {/* Navigation and User Actions */}
             <div className="flex items-center justify-between flex-1 px-4">
               {/* Navigation Menu */}
-              <ul className="flex items-center gap-8 text-sm  font-bold uppercase md-lg:hidden mx-8">
+              <ul className="flex items-center gap-8 text-sm font-bold uppercase md-lg:hidden mx-8">
                 <li>
                   <Link
                     className={`p-2 ${
@@ -145,23 +157,28 @@ const Header = () => {
                     Home
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/shops" ? "text-white" : "text-white"
-                    }`}
-                    to="/shops">
-                    Shop
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/regional-products" ? "text-white" : "text-white"
-                    }`}
-                    to="/regional-products">
-                    Regional Products
-                  </Link>
+                <li className="relative group">
+                  <div className="flex items-center gap-1 cursor-pointer p-2 text-white">
+                    Store
+                    <IoMdArrowDropdown />
+                  </div>
+                  <ul className="absolute invisible group-hover:visible w-48 py-2 rounded-md backdrop-blur-md">
+                    <li>
+                      <Link to="/shops" className="block px-4 py-2 text-white hover:bg-white/10 transition-colors">
+                        All Products
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/regional-products" className="block px-4 py-2 text-white hover:bg-white/10 transition-colors">
+                        Regional Products
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/category" className="block px-4 py-2 text-white hover:bg-white/10 transition-colors">
+                        Shop by Category
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link
@@ -172,23 +189,23 @@ const Header = () => {
                     Blog
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/about" ? "text-white" : "text-white"
-                    }`}
-                    to="/about">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={`p-2 ${
-                      pathname === "/contact" ? "text-white" : "text-white"
-                    }`}
-                    to="/contact">
-                    Contact
-                  </Link>
+                <li className="relative group">
+                  <div className="flex items-center gap-1 cursor-pointer p-2 text-white">
+                    Community
+                    <IoMdArrowDropdown />
+                  </div>
+                  <ul className="absolute invisible group-hover:visible w-48 py-2 rounded-md backdrop-blur-md">
+                    <li>
+                      <Link to="/community" className="block px-4 py-2 text-white hover:bg-white/10 transition-colors">
+                        Community Groups
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/virtualevents" className="block px-4 py-2 text-white hover:bg-white/10 transition-colors">
+                        Virtual Events
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
               </ul>
 
@@ -230,7 +247,7 @@ const Header = () => {
                     className="flex items-center justify-center gap-2 px-4 py-2 text-base text-white border rounded-full hover:bg-gray-100 hover:text-black"
                     to="/dashboard">
                     <FaUserCog />
-                    <span>{userInfo.name}</span>
+                    <span>{displayName}</span>
                   </Link>
                 ) : (
                   <Link
@@ -301,7 +318,7 @@ const Header = () => {
                     {" "}
                     <FaUserCog />{" "}
                   </span>
-                  <span>{userInfo.name}</span>
+                  <span>{displayName}</span>
                 </Link>
               ) : (
                 <Link
@@ -486,9 +503,9 @@ const Header = () => {
                 <input
                   className="flex-grow bg-transparent text-slate-700 placeholder-gray-500 outline-none px-3 h-full"
                   onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  value={searchValue}
                   type="text"
-                  name=""
-                  id=""
                   placeholder="Search for Product"
                 />
 

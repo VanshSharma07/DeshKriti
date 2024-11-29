@@ -71,7 +71,7 @@ class CommunityController {
     
                 await topic.populate({
                     path: 'userId',
-                    select: 'name image'
+                    select: 'firstName lastName image'
                 });
     
                 responseReturn(res, 201, { message: 'Topic created successfully', topic });
@@ -132,18 +132,18 @@ class CommunityController {
 
         try {
             const topic = await Topic.findById(topicId)
-                .populate('userId', 'name image')
+                .populate('userId', 'firstName lastName image')
                 .populate({
                     path: 'comments',
                     match: { parentId: null },
                     populate: [{
                         path: 'userId',
-                        select: 'name image'
+                        select: 'firstName lastName image'
                     }, {
                         path: 'replies',
                         populate: {
                             path: 'userId',
-                            select: 'name image'
+                            select: 'firstName lastName image'
                         }
                     }]
                 });
@@ -229,14 +229,14 @@ class CommunityController {
             // Get updated comments with proper population
             const updatedComments = await Comment.find({ 
                 topicId,
-                parentId: null // Only get top-level comments
+                parentId: null
             })
-            .populate('userId', 'name image')
+            .populate('userId', 'firstName lastName image')
             .populate({
                 path: 'replies',
                 populate: [{
                     path: 'userId',
-                    select: 'name image'
+                    select: 'firstName lastName image'
                 }, {
                     path: 'likes'
                 }]
@@ -293,12 +293,12 @@ class CommunityController {
                 topicId,
                 parentId: null 
             })
-            .populate('userId', 'name image')
+            .populate('userId', 'firstName lastName image')
             .populate({
                 path: 'replies',
                 populate: [{
                     path: 'userId',
-                    select: 'name image'
+                    select: 'firstName lastName image'
                 }, {
                     path: 'likes'
                 }]

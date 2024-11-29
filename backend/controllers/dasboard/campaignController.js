@@ -490,7 +490,7 @@ class CampaignController {
             const campaign = await Campaign.findById(campaignId)
                 .populate({
                     path: 'donors.userId',
-                    select: 'name email' // Select the fields you want to show
+                    select: 'firstName lastName email'
                 });
 
             if (!campaign) {
@@ -507,7 +507,12 @@ class CampaignController {
                     isAnonymous: donation.isAnonymous,
                     donor: donation.isAnonymous 
                         ? { name: 'Anonymous' } 
-                        : donation.userId
+                        : { 
+                            name: donation.userId 
+                                ? `${donation.userId.firstName} ${donation.userId.lastName || ''}`.trim()
+                                : 'Anonymous',
+                            email: donation.userId?.email
+                        }
                 }));
 
             console.log('Fetched donations:', donations); // Debug log
@@ -626,10 +631,21 @@ class CampaignController {
                 { $limit: 10 },
                 {
                     $lookup: {
-                        from: "users",
+                        from: "customers",
                         localField: "donors.userId",
                         foreignField: "_id",
                         as: "donorInfo"
+                    }
+                },
+                {
+                    $project: {
+                        title: 1,
+                        "donors.amount": 1,
+                        "donors.date": 1,
+                        "donors.isAnonymous": 1,
+                        "donorInfo.firstName": 1,
+                        "donorInfo.lastName": 1,
+                        "donorInfo.email": 1
                     }
                 }
             ]);

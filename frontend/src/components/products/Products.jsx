@@ -26,52 +26,79 @@ const Products = ({ title, products }) => {
 
   const ButtonGroup = ({ next, previous }) => {
     return (
-      <div className="flex justify-between items-center">
-        <div className="text-xl font-bold text-slate-600"> {title} </div>
-        <div className="flex justify-center items-center gap-3 text-slate-600">
+      <div className='flex justify-between items-center mb-6'>
+        <div className='relative'>
+          <h2 className='text-xl font-bold text-gray-800 hover:text-[#059473] transition-colors duration-300'>
+            {title}
+          </h2>
+          <div className='w-1/2 h-0.5 bg-[#059473] mt-1 transform origin-left scale-x-0 group-hover:scale-x-100 
+            transition-transform duration-300'></div>
+        </div>
+        <div className='flex justify-center items-center gap-2'>
           <button
             onClick={() => previous()}
-            className="w-[30px] h-[30px] flex justify-center items-center bg-slate-300 border border-slate-200">
+            className='w-8 h-8 flex justify-center items-center rounded-full bg-gray-100 
+              hover:bg-[#059473] hover:text-white transition-all duration-300 
+              hover:scale-110 text-gray-600'>
             <IoIosArrowBack />
           </button>
           <button
             onClick={() => next()}
-            className="w-[30px] h-[30px] flex justify-center items-center bg-slate-300 border border-slate-200">
+            className='w-8 h-8 flex justify-center items-center rounded-full bg-gray-100 
+              hover:bg-[#059473] hover:text-white transition-all duration-300 
+              hover:scale-110 text-gray-600'>
             <IoIosArrowForward />
           </button>
         </div>
       </div>
     );
   };
+
   return (
-    <div className="flex gap-8 flex-col-reverse">
+    <div className='flex gap-6 flex-col-reverse group'>
       <Carousel
-        autoPlay={false}
-        infinite={false}
+        autoPlay={true}
+        infinite={true}
         arrows={false}
         responsive={responsive}
         transitionDuration={500}
         renderButtonGroupOutside={true}
         customButtonGroup={<ButtonGroup />}>
-        {products.map((p, i) => {
-          return (
-            <div key={i} className="flex flex-col justify-start gap-2">
-              {p.map((pl, j) => (
-                <Link key={j} className="flex justify-start items-start" to="#">
+        {products.map((p, i) => (
+          <div key={i} className='flex flex-col justify-start gap-3'>
+            {p.map((pl, j) => (
+              <Link key={j} 
+                className='flex justify-start items-center p-3 rounded-xl hover:bg-gray-50 
+                  transition-all duration-300 group/item' 
+                to="#">
+                <div className='relative w-[100px] h-[100px] rounded-lg overflow-hidden'>
                   <img
-                    className="w-[110px] h-[110px]"
+                    className='w-full h-full object-cover transform transition-transform 
+                      duration-500 group-hover/item:scale-110'
                     src={pl.images[0]}
-                    alt=""
+                    alt={pl.name}
                   />
-                  <div className="px-3 flex justify-start items-start gap-1 flex-col text-slate-600">
-                    <h2>{pl.name} </h2>
-                    <span className="text-lg font-bold">{pl.price} INR</span>
+                </div>
+                <div className='px-4 flex justify-start items-start gap-1 flex-col'>
+                  <h3 className='text-gray-700 font-medium line-clamp-2 group-hover/item:text-[#059473] 
+                    transition-colors duration-300'>
+                    {pl.name}
+                  </h3>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-lg font-bold text-[#059473]'>
+                      ₹{pl.price}
+                    </span>
+                    {pl.discount && (
+                      <span className='text-sm text-gray-400 line-through'>
+                        ₹{Math.round(pl.price * (1 + pl.discount/100))}
+                      </span>
+                    )}
                   </div>
-                </Link>
-              ))}
-            </div>
-          );
-        })}
+                </div>
+              </Link>
+            ))}
+          </div>
+        ))}
       </Carousel>
     </div>
   );

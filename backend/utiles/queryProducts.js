@@ -50,7 +50,15 @@ class queryProducts {
     }
 
     searchQuery = () => {
-        return this
+        if (this.query.searchValue && this.query.searchValue !== '') {
+            const searchRegex = new RegExp(this.query.searchValue, 'i');
+            this.products = this.products.filter(p => 
+                searchRegex.test(p.name) || 
+                searchRegex.test(p.description) ||
+                searchRegex.test(p.category)
+            );
+        }
+        return this;
     }
 
     priceQuery = () => {

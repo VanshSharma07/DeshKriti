@@ -53,56 +53,108 @@ const FeatureProducts = ({products}) => {
         }))
     }
     return (
-        <div className='w-[85%] flex flex-wrap mx-auto'>
-            <div className='w-full'>
-            <div className='text-center flex justify-center items-center flex-col text-4xl text-slate-600 font-bold relative pb-[45px]'>
-                <h2>Feature Products </h2>
-                <div className='w-[100px] h-[2px] bg-[#059473] mt-4'></div>
+        <div className='bg-gradient-to-b from-gray-50 to-white py-14'>
+            <div className='max-w-[1400px] mx-auto px-8'>
+                {/* Enhanced Header Section */}
+                <div className='mb-12 text-center'>
+                    <div className='inline-block mb-3'>
+                        <div className='flex items-center justify-center space-x-2 bg-[#059473]/10 px-4 py-1.5 rounded-full
+                            hover:bg-[#059473]/20 transition-all duration-300 cursor-pointer'>
+                            <span className='text-[#059473] text-xs font-bold tracking-[0.2em] uppercase'>
+                                Premium Collection
+                            </span>
+                        </div>
+                    </div>
+                    <h2 className='text-3xl font-bold text-gray-800 mb-3 hover:text-[#059473] transition-colors duration-300'>
+                        Featured Products
+                    </h2>
+                    <div className='w-16 h-0.5 bg-[#059473] mx-auto mb-3 transform hover:scale-x-150 transition-transform duration-300'></div>
+                    <p className='text-gray-500 max-w-lg mx-auto text-sm'>
+                        Discover our handpicked selection of premium Indian products
+                    </p>
+                </div>
+
+                {/* Enhanced Products Grid */}
+                <div className='grid grid-cols-4 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6'>
+                    {products.map((p, i) => (
+                        <div key={i} className='group relative bg-white rounded-xl overflow-hidden 
+                            hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 
+                            hover:-translate-y-1 border border-gray-100'>
+                            {/* Enhanced Discount Badge */}
+                            {p.discount && (
+                                <div className='absolute top-3 left-3 z-10'>
+                                    <div className='bg-red-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full
+                                        shadow-lg transform hover:scale-110 transition-transform duration-300'>
+                                        {p.discount}% OFF
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Image Container with Reduced Height */}
+                            <div className='relative aspect-[3/3.5] overflow-hidden bg-gray-100'>
+                                <img 
+                                    className='w-full h-full object-cover transform transition-all duration-700 
+                                        group-hover:scale-105 group-hover:brightness-[1.02]' 
+                                    src={p.images[0]} 
+                                    alt={p.name} 
+                                />
+                                
+                                {/* Enhanced Overlay with Actions */}
+                                <div className='absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent 
+                                    opacity-0 group-hover:opacity-100 transition-all duration-300'>
+                                    <div className='absolute bottom-4 left-0 right-0 flex justify-center items-center gap-2 
+                                        transform translate-y-10 group-hover:translate-y-0 transition-all duration-500'>
+                                        <button onClick={() => add_wishlist(p)} 
+                                            className='w-8 h-8 bg-white/90 rounded-full flex items-center justify-center 
+                                                text-gray-700 hover:bg-[#059473] hover:text-white transition-all duration-300 
+                                                hover:scale-110 shadow-[0_2px_10px_rgba(0,0,0,0.1)]'>
+                                            <FaRegHeart className='text-sm' />
+                                        </button>
+                                        <Link to={`/product/details/${p.slug}`} 
+                                            className='w-8 h-8 bg-white/90 rounded-full flex items-center justify-center 
+                                                text-gray-700 hover:bg-[#059473] hover:text-white transition-all duration-300 
+                                                hover:scale-110 shadow-[0_2px_10px_rgba(0,0,0,0.1)]'>
+                                            <FaEye className='text-sm' />
+                                        </Link>
+                                        <button onClick={() => add_card(p._id)} 
+                                            className='w-8 h-8 bg-white/90 rounded-full flex items-center justify-center 
+                                                text-gray-700 hover:bg-[#059473] hover:text-white transition-all duration-300 
+                                                hover:scale-110 shadow-[0_2px_10px_rgba(0,0,0,0.1)]'>
+                                            <FiShoppingCart className='text-sm' />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Enhanced Product Info */}
+                            <div className='p-4'>
+                                <Link to={`/product/details/${p.slug}`}>
+                                    <h3 className='font-medium text-gray-700 text-sm mb-2 hover:text-[#059473] 
+                                        transition-colors duration-300 line-clamp-1'>
+                                        {p.name}
+                                    </h3>
+                                </Link>
+                                
+                                <div className='flex justify-between items-center'>
+                                    <div className='flex items-center gap-1.5'>
+                                        <span className='text-[#059473] font-bold text-base'>
+                                            ₹{p.price}
+                                        </span>
+                                        {p.discount && (
+                                            <span className='text-gray-400 line-through text-xs'>
+                                                ₹{Math.round(p.price * (1 + p.discount/100))}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className='flex items-center gap-1'>
+                                        <Rating ratings={p.rating} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            </div>
-
-        <div className='w-full grid grid-cols-4 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6'>
-    {
-        products.map((p,i) => <div key={i} className='border group transition-all duration-500 hover:shadow-md hover:-mt-3'>
-            <div className='relative overflow-hidden'>
-
-            {
-            p.discount ? <div className='flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2'>{p.discount}% </div> : ''
-            } 
-
-        <img className='sm:w-full w-full h-[240px]' src={p.images[0]} alt="" />  
-
-<ul className='flex transition-all duration-700 -bottom-10 justify-center items-center gap-2 absolute w-full group-hover:bottom-3'>
-<li onClick={() => add_wishlist(p)} className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
-    <FaRegHeart />
-</li>
-    <Link to={`/product/details/${p.slug}`} className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
-    <FaEye />
-    </Link>
-    <li onClick={() => add_card(p._id)} className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
-    <FiShoppingCart  />
-    </li>
-</ul>    
-    </div>
-
-<div className='py-3 text-slate-600 px-2'>
-<h2 className='font-bold'>{p.name} </h2>
-    <div className='flex justify-start items-center gap-3'>
-    <span className='text-md font-semibold'>{p.price} INR</span>
-        <div className='flex'>
-            <Rating ratings={p.rating} />
-                </div>   
-
-
-            </div>
-            </div>    
-        </div>
-        )
-    }
-
-        </div>
-
-
         </div>
     );
 };
