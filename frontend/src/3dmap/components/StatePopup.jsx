@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Html } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaPlay, FaPause } from 'react-icons/fa';
+
+const MemoizedHtml = React.memo(Html);
 
 const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
   const navigate = useNavigate();
@@ -21,17 +23,31 @@ const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
   const handlePlayClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    if (!data.song?.url) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.src = data.song.url;
-      audioRef.current.play();
+  
+    // Path to the audio file
+    const songPath = `/songs/${data.song?.fileName}`;
+  
+    if (!data.song?.fileName) {
+      console.error('Audio file not specified in the data object.');
+      return;
     }
-    setIsPlaying(!isPlaying);
+  
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0; // Reset audio
+      } else {
+        audioRef.current.src = songPath; // Load the audio file
+        audioRef.current
+          .play()
+          .catch((error) => console.error('Audio play failed:', error));
+      }
+      setIsPlaying(!isPlaying);
+    } catch (error) {
+      console.error('Error playing audio:', error);
+    }
   };
+  
 
   const handleExploreClick = (e) => {
     e.preventDefault();
@@ -66,7 +82,7 @@ const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
   };
 
   return (
-    <Html
+    <MemoizedHtml
       position={[[-150], [60], 5]}
       transform
       occlude={false}
@@ -260,8 +276,8 @@ const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </Html>
+    </MemoizedHtml>
   );
 };
 
-export default StatePopup;
+export default React.memo(StatePopup);

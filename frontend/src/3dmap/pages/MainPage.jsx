@@ -6,6 +6,7 @@ import StateInfo from "../components/StateInfo";
 import { FaSpinner } from "react-icons/fa";
 import Title3D from '../components/Title3D';
 import Base3D from '../components/Base3D';
+import { useStateData } from '../context/StateDataContext';
 
 // Loading component with animation
 const LoadingScreen = () => (
@@ -20,6 +21,12 @@ const LoadingScreen = () => (
 // Main content component
 const MainContent = () => {
   const [isExploreMode, setIsExploreMode] = useState(false);
+  const { loadStateData, isLoading } = useStateData();
+
+  const handleExploreClick = async () => {
+    await loadStateData(); // Load data when user clicks explore
+    setIsExploreMode(true);
+  };
 
   return (
     <div className="relative w-full bg-[#FFF5EE] h-screen flex items-center justify-center px-4">
@@ -33,12 +40,14 @@ const MainContent = () => {
           {!isExploreMode && (
             <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/40">
               <button
-                onClick={() => setIsExploreMode(true)}
+                onClick={handleExploreClick}
+                disabled={isLoading}
                 className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg 
                          hover:bg-white hover:text-black transition-all duration-300 
-                         text-2xl font-semibold tracking-wider"
+                         text-2xl font-semibold tracking-wider
+                         disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Explore the Beauty of India
+                {isLoading ? 'Loading...' : 'Explore the Beauty of India'}
               </button>
             </div>
           )}

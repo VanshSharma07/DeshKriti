@@ -53,3 +53,13 @@ body {
 .react-multi-carousel-track {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+@layer components {
+  .menu-item {
+    @apply block py-2 text-gray-700 hover:text-[#059473] transition-colors;
+  }
+
+  .mobile-menu-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300;
+  }
+}

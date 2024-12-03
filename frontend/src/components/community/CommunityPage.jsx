@@ -12,6 +12,8 @@ import TopicCard from './TopicCard';
 import CreateTopicModal from './CreateTopicModal';
 import MapControls from './map/MapControls';
 import Footer from '../Footer';
+import StateGroupList from './groups/StateGroupList';
+import { getStateGroups } from '../../store/reducers/communityReducer';
 
 const CommunityPage = () => {
   const dispatch = useDispatch();
@@ -21,15 +23,17 @@ const CommunityPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
-  const [showMap, setShowMap] = useState(false);
+  const [activeTab, setActiveTab] = useState('topics');
 
   const popularTags = ['Culture', 'Food', 'Festival', 'Travel', 'Tradition'];
 
   useEffect(() => {
-    if (!showMap) {
+    if (activeTab === 'topics') {
       dispatch(getTopics({ search: searchTerm, tag: selectedTag }));
+    } else if (activeTab === 'groups') {
+      dispatch(getStateGroups());
     }
-  }, [dispatch, searchTerm, selectedTag, showMap]);
+  }, [dispatch, searchTerm, selectedTag, activeTab]);
 
   useEffect(() => {
     if (userInfo) {
@@ -59,7 +63,7 @@ const CommunityPage = () => {
           
           <div className="max-w-4xl mx-auto flex flex-wrap gap-4 items-center justify-between">
             {/* Search and New Topic - Left Side */}
-            {!showMap && (
+            {activeTab === 'topics' && (
               <div className="flex-1 flex gap-4 min-w-[300px]">
                 <div className="flex-1 relative">
                   <input
@@ -103,26 +107,51 @@ const CommunityPage = () => {
                   </Link>
                 </>
               )}
-              <button
-                onClick={() => setShowMap(!showMap)}
-                className="bg-[#138808] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#0F6E06] transition flex items-center gap-2 shadow-md whitespace-nowrap"
-              >
-                {showMap ? <FaList /> : <FaMapMarkedAlt />}
-                {showMap ? 'Show Topics' : 'Show Map'}
-              </button>
             </div>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        {showMap ? (
-          <div className="relative">
-            <MapControls />
-            <WorldMap />
-            <UserDetailsPanel />
-          </div>
-        ) : (
+        {/* Tab Navigation */}
+        <div className="flex space-x-4 mb-6">
+          <button
+            className={`px-4 py-2 rounded-lg ${
+              activeTab === 'topics' 
+                ? 'bg-blue-500 text-white' 
+                : 'bg-white text-gray-600'
+            }`}
+            onClick={() => setActiveTab('topics')}
+          >
+            <FaList className="inline mr-2" />
+            Topics
+          </button>
+          <button
+            className={`px-4 py-2 rounded-lg ${
+              activeTab === 'groups' 
+                ? 'bg-blue-500 text-white' 
+                : 'bg-white text-gray-600'
+            }`}
+            onClick={() => setActiveTab('groups')}
+          >
+            <FaUsers className="inline mr-2" />
+            State Groups
+          </button>
+          <button
+            className={`px-4 py-2 rounded-lg ${
+              activeTab === 'map' 
+                ? 'bg-blue-500 text-white' 
+                : 'bg-white text-gray-600'
+            }`}
+            onClick={() => setActiveTab('map')}
+          >
+            <FaMapMarkedAlt className="inline mr-2" />
+            Map View
+          </button>
+        </div>
+
+        {/* Content based on active tab */}
+        {activeTab === 'topics' && (
           <>
             <div className="flex justify-center gap-6 mb-8 flex-wrap">
               {popularTags.map(tag => (
@@ -147,13 +176,25 @@ const CommunityPage = () => {
                 No topics found. Be the first to start a discussion!
               </div>
             ) : (
-              <div className="grid grid-cols-4 md:grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {topics.map(topic => (
                   <TopicCard key={topic._id} topic={topic} />
                 ))}
               </div>
             )}
           </>
+        )}
+
+        {activeTab === 'groups' && (
+          <StateGroupList />
+        )}
+
+        {activeTab === 'map' && (
+          <div className="relative h-[600px]">
+            <MapControls />
+            <WorldMap />
+            <UserDetailsPanel />
+          </div>
         )}
       </div>
 

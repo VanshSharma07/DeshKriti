@@ -9,6 +9,8 @@ import campaignReducer from "./reducers/campaignReducer";
 import communityMapReducer from "./reducers/communityMapReducer";
 import communityMessageReducer from './reducers/communityMessageSlice';
 import communityConnectionReducer from './reducers/communityConnectionReducer';
+import storyReducer from './reducers/storyReducer';
+import surveyReducer from "./reducers/surveyReducer";
 
 const rootReducer = {
     home: homeReducer,
@@ -21,7 +23,9 @@ const rootReducer = {
     campaign: campaignReducer,
     communityMap: communityMapReducer,
     communityMessage: communityMessageReducer,
-    communityConnection: communityConnectionReducer
+    communityConnection: communityConnectionReducer,
+    story: storyReducer,
+    survey: surveyReducer
 }   
 
 export default rootReducer;

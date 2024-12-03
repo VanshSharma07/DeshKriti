@@ -22,6 +22,11 @@ const Home = () => {
     dispatch(get_products());
   }, []);
 
+  // Handler for product click
+  const handleProductClick = (slug) => {
+    navigate(`/product/details/${slug}`);
+  };
+
   return (
     <div className="w-full">
       <Header />
@@ -37,17 +42,29 @@ const Home = () => {
           <div className='grid w-full grid-cols-3 md-lg:grid-cols-2 md:grid-cols-1 gap-8'>
             <div className='bg-white rounded-2xl p-6 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                 transition-all duration-300 hover:-translate-y-1'>
-              <Products title="Latest Product" products={latest_product} />
+              <Products 
+                title="Latest Product" 
+                products={latest_product} 
+                onProductClick={handleProductClick}
+              />
             </div>
 
             <div className='bg-white rounded-2xl p-6 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                 transition-all duration-300 hover:-translate-y-1'>
-              <Products title="Top Rated Product" products={topRated_product} />
+              <Products 
+                title="Top Rated Product" 
+                products={topRated_product} 
+                onProductClick={handleProductClick}
+              />
             </div>
 
             <div className='bg-white rounded-2xl p-6 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                 transition-all duration-300 hover:-translate-y-1'>
-              <Products title="Discount Product" products={discount_product} />
+              <Products 
+                title="Discount Product" 
+                products={discount_product} 
+                onProductClick={handleProductClick}
+              />
             </div>
           </div>
         </div>
@@ -56,5 +73,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

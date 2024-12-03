@@ -15,6 +15,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdCurrencyExchange } from 'react-icons/md';
 import { MdDashboard } from 'react-icons/md';
 import { FaHandHoldingHeart } from 'react-icons/fa';
+import { MdVideoLibrary } from 'react-icons/md';
 
 export const allNav = [
   {
@@ -189,6 +190,25 @@ export const allNav = [
         title: 'Donations',
         path: '/admin/dashboard/campaigns/donations',
         status: 'active'
+      }
+    ]
+  },
+  {
+    id: 21,
+    title: 'Stories',
+    icon: <MdVideoLibrary />,
+    role: 'seller',
+    path: '/seller/dashboard/stories',
+    subNav: [
+      {
+        id: 1,
+        title: 'Add Story',
+        path: '/seller/dashboard/story/add'
+      },
+      {
+        id: 2,
+        title: 'Manage Stories',
+        path: '/seller/dashboard/stories'
       }
     ]
   }

@@ -21,7 +21,9 @@ const initialState = {
     error: null,
     success: '',
     totalPages: 1,
-    currentPage: 1
+    currentPage: 1,
+    stateGroups: [],
+    currentGroup: null,
 };
 
 export const createTopic = createAsyncThunk(
@@ -85,10 +87,12 @@ export const getTopic = createAsyncThunk(
 
 export const addComment = createAsyncThunk(
     'community/addComment',
-    async ({ topicId, commentData }, { rejectWithValue }) => {
+    async ({ groupId, postId, content }, { rejectWithValue }) => {
         try {
-            // Change the endpoint to match backend route
-            const { data } = await api.post(`/community/topic/${topicId}/comment`, commentData);
+            const { data } = await api.post(
+                `/community/state-groups/${groupId}/posts/${postId}/comment`,
+                { content }
+            );
             return data;
         } catch (error) {
             return rejectWithValue(error.response?.data || { error: 'Failed to add comment' });
@@ -98,9 +102,9 @@ export const addComment = createAsyncThunk(
 
 export const toggleLike = createAsyncThunk(
     'community/toggleLike',
-    async (topicId, { rejectWithValue }) => {
+    async ({ groupId, postId }, { rejectWithValue }) => {
         try {
-            const { data } = await api.put(`/community/topic/${topicId}/like`);
+            const { data } = await api.post(`/community/state-groups/${groupId}/posts/${postId}/like`);
             return data;
         } catch (error) {
             return rejectWithValue(error.response?.data || { error: 'Failed to toggle like' });
@@ -118,6 +122,93 @@ export const toggleCommentLike = createAsyncThunk(
             return rejectWithValue(error.response.data);
         }
     }
+);
+
+export const getStateGroups = createAsyncThunk(
+    'community/getStateGroups',
+    async (_, { rejectWithValue }) => {
+        try {
+            const { data } = await api.get('/community/state-groups');
+            console.log('Fetched groups data:', data); // Debug log
+            return data.groups; // Make sure we're returning the groups array
+        } catch (error) {
+            return rejectWithValue(error.response?.data || { error: 'Failed to fetch groups' });
+        }
+    }
+);
+
+export const joinStateGroup = createAsyncThunk(
+    'community/joinStateGroup',
+    async (groupId, { rejectWithValue, dispatch }) => {
+        try {
+            const { data } = await api.post(`/community/state-groups/${groupId}/join`);
+            // Refresh the groups list to get updated membership status
+            await dispatch(getStateGroups());
+            return data;
+        } catch (error) {
+            if (error.response?.data?.error === 'Already a member') {
+                // If already a member, refresh groups and redirect
+                await dispatch(getStateGroups());
+                return { alreadyMember: true, groupId };
+            }
+            return rejectWithValue(error.response?.data || { error: 'Failed to join group' });
+        }
+    }
+);
+
+export const getGroupDetails = createAsyncThunk(
+    'community/getGroupDetails',
+    async (groupId, { rejectWithValue, getState }) => {
+        try {
+            const { data } = await api.get(`/community/state-groups/${groupId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            const { userInfo } = getState().auth;
+            const isMember = data.group.members.some(member => 
+                (member.userId._id || member.userId) === userInfo?._id
+            );
+            return {
+                ...data.group,
+                isMember
+            };
+        } catch (error) {
+            return rejectWithValue(error.response?.data || { 
+                error: 'Failed to fetch group details' 
+            });
+        }
+    }
+);
+
+export const createPost = createAsyncThunk(
+  'community/createPost',
+  async ({ groupId, content, images }, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append('content', content);
+      
+      if (images && images.length > 0) {
+        images.forEach(image => {
+          formData.append('images', image);
+        });
+      }
+
+      console.log('Sending post data:', { groupId, content, imageCount: images?.length }); // Debug log
+
+      const { data } = await api.post(`/community/state-groups/${groupId}/posts`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      console.log('Post creation response:', data); // Debug log
+      return data;
+    } catch (error) {
+      console.error('Post creation error:', error.response?.data || error.message);
+      return rejectWithValue(error.response?.data || { error: 'Failed to create post' });
+    }
+  }
 );
 
 const communitySlice = createSlice({
@@ -180,17 +271,25 @@ const communitySlice = createSlice({
                 state.error = action.payload?.error;
             })
             .addCase(addComment.fulfilled, (state, action) => {
-                if (action.payload.success) {
-                    state.currentTopic.comments = action.payload.comments;
-                    state.success = action.payload.message;
+                const { postId, comments } = action.payload;
+                if (state.currentGroup) {
+                    const post = state.currentGroup.posts.find(p => p._id === postId);
+                    if (post) {
+                        post.comments = comments;
+                    }
                 }
             })
             .addCase(addComment.rejected, (state, action) => {
                 state.error = action.payload?.error;
             })
+            .addCase(toggleLike.pending, (state) => {
+                // Don't set loading to true for quick actions
+            })
             .addCase(toggleLike.fulfilled, (state, action) => {
-                if (state.currentTopic) {
-                    state.currentTopic.likes = action.payload.likes;
+                const { postId, likes } = action.payload;
+                const post = state.currentGroup.posts.find(p => p._id === postId);
+                if (post) {
+                    post.likes = likes;
                 }
             })
             .addCase(toggleCommentLike.pending, (state) => {
@@ -200,6 +299,60 @@ const communitySlice = createSlice({
                 state.currentTopic.comments = action.payload.comments;
             })
             .addCase(toggleCommentLike.rejected, (state, action) => {
+                state.error = action.payload?.error;
+            })
+            .addCase(getStateGroups.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getStateGroups.fulfilled, (state, action) => {
+                state.loading = false;
+                state.stateGroups = action.payload;
+                console.log('Updated state groups in Redux:', state.stateGroups); // Debug log
+            })
+            .addCase(getStateGroups.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(joinStateGroup.fulfilled, (state, action) => {
+                if (action.payload.group) {
+                    // Update the specific group in the list
+                    const index = state.stateGroups.findIndex(g => g._id === action.payload.group._id);
+                    if (index !== -1) {
+                        state.stateGroups[index] = action.payload.group;
+                    }
+                }
+                console.log('Join group fulfilled:', action.payload); // Debug log
+            })
+            .addCase(getGroupDetails.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getGroupDetails.fulfilled, (state, action) => {
+                state.loading = false;
+                console.log('Group Details Response:', action.payload); // Debug log
+                state.currentGroup = {
+                    ...action.payload,
+                    isMember: action.payload.isMember || false
+                };
+                state.error = null;
+            })
+            .addCase(getGroupDetails.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(createPost.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(createPost.fulfilled, (state, action) => {
+                state.loading = false;
+                if (state.currentGroup) {
+                    state.currentGroup.posts.unshift(action.payload.post);
+                }
+            })
+            .addCase(createPost.rejected, (state, action) => {
+                state.loading = false;
                 state.error = action.payload?.error;
             });
     }

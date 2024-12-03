@@ -60,7 +60,6 @@ class productController {
           name,
           slug,
           shopName,
-          category: categories[0],
           description: description.trim(),
           stock: parseInt(stock),
           price: parseInt(price),
@@ -139,7 +138,6 @@ class productController {
     let {
         name,
         category,
-        categories,
         description,
         stock,
         price,
@@ -153,16 +151,12 @@ class productController {
     name = name.trim();
     const slug = name.split(" ").join("-");
 
-    region = region ? region.toLowerCase() : '';
-    state = state ? state.toLowerCase() : '';
-
     try {
         const updatedProduct = await productModel.findByIdAndUpdate(
             productId, 
             {
                 name,
-                category: category || categories[0],
-                categories,
+                categories: [category],
                 description,
                 stock,
                 price,
@@ -244,6 +238,21 @@ class productController {
   };
 
   // end method
+
+  get_products = async (req, res) => {
+    try {
+      // Use lean() for better performance when you don't need Mongoose documents
+      const products = await productModel
+        .find({})
+        .select('name price stock images') // Select only needed fields
+        .lean()
+        .limit(20);
+
+      responseReturn(res, 200, { products });
+    } catch (error) {
+      responseReturn(res, 500, { error: error.message });
+    }
+  };
 }
 
 module.exports = new productController();

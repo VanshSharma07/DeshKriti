@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "seed-groups": "node utils/seedStateGroups.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/text-to-speech": "^5.6.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cloudinary": "^1.41.3",
@@ -26,6 +28,7 @@
     "moment": "^2.29.4",
     "mongoose": "^8.8.2",
     "multer": "^1.4.5-lts.1",
+    "openai": "^4.73.1",
     "passport": "^0.7.0",
     "passport-facebook": "^3.0.0",
     "socket.io": "^4.7.2",

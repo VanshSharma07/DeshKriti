@@ -46,7 +46,7 @@ const Title3D = (props) => {
         />
       </motion.mesh>
 
-      <mesh position={[0, 1.2, 1]}>
+      <mesh position={[0, 3, 1]}>
         <Text
           fontSize={2}
           color="#000000"
@@ -62,15 +62,17 @@ const Title3D = (props) => {
       
       <mesh position={[0, -1.2, 1]}>
         <Text
-          fontSize={1.5}
+          fontSize={1.4}
           color="#1e293b"
           anchorX="center"
           anchorY="middle"
           outlineWidth={0.02}
           outlineColor="#1e293b"
           fontWeight={700}
+          maxWidth={20}
+          textAlign="center"
         >
-          Connect with your roots
+          Hover over the states to explore the beauty of India
         </Text>
       </mesh>
     </group>

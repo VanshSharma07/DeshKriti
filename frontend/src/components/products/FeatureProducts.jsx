@@ -73,7 +73,6 @@ const FeatureProducts = ({products}) => {
                         Discover our handpicked selection of premium Indian products
                     </p>
                 </div>
-
                 {/* Enhanced Products Grid */}
                 <div className='grid grid-cols-4 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6'>
                     {products.map((p, i) => (

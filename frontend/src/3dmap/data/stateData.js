@@ -12,10 +12,10 @@ export const stateData = {
     "food": "Rogan Josh, Dum Aloo, Yakhni, Kahwa (Traditional Tea), Modur Pulao, Rajma-Chawal, Kaladi Kulcha",
     "places": "Vaishno Devi, Dal Lake, Gulmarg, Pahalgam, Sonamarg, Mughal Gardens, Shankaracharya Temple, Raghunath Temple, Bhaderwah (Mini Kashmir), Dachigam National Park, Patnitop",
     "song": {
-      name: "jammu kashmir",
-      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      attribution: "folk music by @kashmirtourism"
-    },
+  "name": "Jammu Folk Music",
+  "fileName": "jammu.mp3", // The name of the file in the public directory
+  "attribution": "folk music by @Jammutourism"
+},
     "explore": "#"
   },
   "model_10140": {
@@ -23,6 +23,11 @@ export const stateData = {
     products: "Kullu Shawls, Himachali Caps",
     food: "Siddu, Dham",
     places: "Shimla, Manali, Rohtang Pass",
+    song: {
+      name:"Himachal Folk Song",
+      fileName:"himachal.mp3",
+      attribution:"folk music by @Himachaltourism"
+    },
     explore: "#"
   },
   "model_2636": {
@@ -58,6 +63,11 @@ export const stateData = {
     products: "Blue Pottery, Bandhani",
     food: "Dal Baati Churma, Ghevar",
     places: "Jaipur, Udaipur, Jaisalmer",
+    "song": {
+  "name": "Rajasthan Folk Music",
+  "fileName": "rajasthan.mp3", // The name of the file in the public directory
+  "attribution": "folk music by @Rajasthantourism"
+},
     explore: "#"
   },
   "model_7": {
@@ -121,6 +131,11 @@ export const stateData = {
     products: "Tanjore Paintings, Kanjivaram Sarees",
     food: "Idli, Dosa, Sambhar",
     places: "Chennai, Mahabalipuram, Kodaikanal",
+    "song": {
+  "name": "Tamil Folk Music",
+  "fileName": "tamil.mp3", // The name of the file in the public directory
+  "attribution": "folk music by @Tamilnadutourism"
+},
     explore: "#"
   },
   "model_1287": {

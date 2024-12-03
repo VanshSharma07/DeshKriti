@@ -8,6 +8,9 @@ const reviewModel = require("../../models/reviewModel");
 const {
   mongo: { ObjectId },
 } = require("mongoose");
+const NodeCache = require('node-cache');
+const cache = new NodeCache({ stdTTL: 600 }); // 10 minutes cache
+
 class homeControllers {
   formateProduct = (products) => {
     const productArray = [];
@@ -29,12 +32,21 @@ class homeControllers {
 
   get_categorys = async (req, res) => {
     try {
+      // Check cache first
+      const cachedCategories = cache.get('categories');
+      if (cachedCategories) {
+        return responseReturn(res, 200, { categorys: cachedCategories });
+      }
+
+      // If not in cache, fetch from DB
       const categorys = await category.find({});
-      responseReturn(res, 200, {
-        categorys,
-      });
+      
+      // Store in cache
+      cache.set('categories', categorys);
+      
+      responseReturn(res, 200, { categorys });
     } catch (error) {
-      console.log(error);
+      responseReturn(res, 500, { error: error.message });
     }
   };
   // end method
@@ -108,14 +120,13 @@ class homeControllers {
             searchQuery = {
                 $or: [
                     { name: { $regex: req.query.searchValue, $options: 'i' } },
-                    { description: { $regex: req.query.searchValue, $options: 'i' } },
-                    { category: { $regex: req.query.searchValue, $options: 'i' } }
+                    { description: { $regex: req.query.searchValue, $options: 'i' } }
                 ]
             };
         }
 
-        if (req.query.category) {
-            searchQuery.category = req.query.category;
+        if (req.query.categories && req.query.categories.length > 0) {
+            searchQuery.categories = { $in: req.query.categories };
         }
 
         const products = await productModel.find(searchQuery).sort({

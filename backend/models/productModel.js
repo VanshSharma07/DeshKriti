@@ -13,10 +13,6 @@ const productSchema = new Schema({
         type: String,
         required : true
     },
-    category: {
-        type: String,
-        required : true
-    },
     brand: {
         type: String,
         required : true
@@ -66,13 +62,13 @@ const productSchema = new Schema({
 
 productSchema.index({
     name: 'text',
-    category: 'text',
+    categories: 'text',
     brand: 'text',
     description: 'text'
 },{
     weights: {
         name: 5,
-        category: 4,
+        categories: 4,
         brand: 3,
         description: 2
     }

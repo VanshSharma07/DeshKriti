@@ -10,9 +10,15 @@ module.exports = {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
         },
+        soundWave: {
+          '0%': { height: '0.25rem' },
+          '50%': { height: '1rem' },
+          '100%': { height: '0.25rem' }
+        }
       },
       animation: {
         blink: 'blink 1s step-end infinite',
+        'sound-wave': 'soundWave 0.5s ease-in-out infinite'
       },
     },
     screens: {
@@ -26,4 +32,10 @@ module.exports = {
     },
   },
   plugins: [],
+  safelist: [
+    'snap-y',
+    'snap-mandatory',
+    'snap-start',
+    'snap-always',
+  ],
 }

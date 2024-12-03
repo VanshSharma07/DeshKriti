@@ -9,7 +9,6 @@ class queryProducts {
     categoryQuery = () => {
         if (this.query.category) {
             this.products = this.products.filter(p => 
-                p.category === this.query.category || 
                 p.categories.includes(this.query.category)
             )
         }

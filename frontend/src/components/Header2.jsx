@@ -37,8 +37,8 @@ const Header2 = () => {
   const [categoryShow, setCategoryShow] = useState(true);
 
   const displayName = userInfo ? 
-    `${userInfo.firstName || ''} ${userInfo.lastName || ''}`.trim() : 
-    'Guest';
+    `${userInfo.firstName || ''} ${userInfo.lastName || ''}`.trim() || userInfo.name || 'User' 
+    : 'Guest';
 
   const redirect_card_page = () => {
     if (userInfo) {
@@ -69,17 +69,16 @@ const Header2 = () => {
 
   return (
     <div className="w-full bg-white">
-    
       <div className="w-full relative z-10">
         <div className="mx-auto">
           <div className="h-[80px] md-lg:h-[100px] flex justify-between items-center px-4">
             {/* Logo Section */}
-            <div className="flex mt-4 items-center gap-4">
+            <div className="flex mt-1 items-center gap-4">
               <Link to="/">
                 <img
                   src="http://localhost:3000/images/logo.png"
                   alt="Logo"
-                  className="w-24 h-auto"
+                  className="w-20 h-auto"
                 />
               </Link>
               <div
@@ -154,6 +153,15 @@ const Header2 = () => {
                     </li>
                   </ul>
                 </li>
+                <li>
+                  <Link
+                    className={`p-2 ${
+                      pathname === "/stories" ? "text-[#059473]" : "text-slate-600"
+                    }`}
+                    to="/stories">
+                    Stories
+                  </Link>
+                </li>
               </ul>
 
               {/* Icons and Buttons Section - Aligned Right */}
@@ -189,36 +197,21 @@ const Header2 = () => {
                 </div>
 
                 {/* User Profile Section */}
-                <div className="flex items-center gap-2">
-                  <div className="flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
-                    <span className="text-xl text-green-500">
-                      <FaUserCog />
-                    </span>
-                  </div>
-                  <div className="hidden md:block">
-                    <p className="text-sm font-medium text-slate-700">
-                      Welcome, {displayName}
-                    </p>
-                    {!userInfo ? (
-                      <div className="flex items-center gap-2">
-                        <Link to="/login" className="text-sm text-blue-500 hover:underline">
-                          Login
-                        </Link>
-                        <span className="text-slate-500">/</span>
-                        <Link to="/register" className="text-sm text-blue-500 hover:underline">
-                          Register
-                        </Link>
-                      </div>
-                    ) : (
-                      <Link 
-                        to="/dashboard" 
-                        className="text-sm text-blue-500 hover:underline"
-                      >
-                        Dashboard
-                      </Link>
-                    )}
-                  </div>
-                </div>
+                {userInfo ? (
+                  <Link
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-base text-black border rounded-full hover:bg-blue-500 hover:text-white"
+                    to="/dashboard">
+                    <FaUserCog />
+                    <span>{displayName}</span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-base text-white border rounded-full hover:bg-gray-100">
+                    <IoIosLock />
+                    <span>Login / Signup</span>
+                  </Link>
+                )}
 
                 {/* Register as Seller Button */}
                 <a
@@ -275,22 +268,18 @@ const Header2 = () => {
               {userInfo ? (
                 <Link
                   className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black"
-                  to="/dashboard">
-                  <span>
-                    {" "}
-                    <FaUserCog />{" "}
-                  </span>
-                  <span>{userInfo.name}</span>
+                  to="/dashboard"
+                >
+                  <span><FaUserCog /></span>
+                  <span>{displayName}</span>
                 </Link>
               ) : (
                 <Link
                   className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black"
-                  to="/login">
-                  <span>
-                    {" "}
-                    <IoIosLock />{" "}
-                  </span>
-                  <span>Login </span>
+                  to="/login"
+                >
+                  <span><IoIosLock /></span>
+                  <span>Login</span>
                 </Link>
               )}
             </div>
@@ -359,100 +348,21 @@ const Header2 = () => {
                   </li>
                 </ul>
               </li>
-            </ul>
-
-            {/* <div className="flex justify-start items-center gap-4 text-black">
-              <a href="https://www.facebook.com/fourat.toumi.71/">
-                <FaFacebook />
-              </a>
-              <a href="https://x.com/fourat_toumi_">
-                <FaSquareXTwitter />{" "}
-              </a>
-              <a href="https://www.linkedin.com/in/fourat-toumi-7679232a7/">
-                <FaLinkedin />
-              </a>
-              <a href="https://github.com/ToumiFourat">
-                <FaGithub />{" "}
-              </a>
-            </div> */}
-
-            {/* <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
-              <div className="w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center ">
-                <span>
-                  <FaPhoneAlt />
-                </span>
-              </div>
-              <div className="flex justify-end flex-col gap-1">
-                <h2 className="text-sm font-medium text-slate-700">
-                  +216 70 295 460
-                </h2>
-                <span className="text-xs">Support 24/7</span>
-              </div>
-            </div> */}
-
-            {/* <ul className="flex flex-col justify-start items-start gap-3 text-[#1c1c1c]">
-              <li className="flex justify-start items-center gap-2 text-sm">
-                <span>
-                  <MdMarkEmailUnread />
-                </span>
-                <span>support@bimastore.com</span>
+              <li>
+                <Link
+                  to="/stories"
+                  className={`py-2 block ${
+                    pathname === "/stories" ? "text-[#059473]" : "text-slate-600"
+                  }`}>
+                  Stories
+                </Link>
               </li>
-            </ul> */}
+            </ul>
           </div>
-        </div>
-      </div>
-
-      <div className="w-[85%] lg:w-[90%] mx-auto mt-8">
-        <div className="flex w-full flex-wrap md-lg:gap-8">
-          {/* <div className="w-3/12 md-lg:w-full">
-            <div className="bg-white relative">
-              <div
-                onClick={() => setCategoryShow(!categoryShow)}
-                className="h-[50px] bg-[#059473] text-white flex justify-center md-lg:justify-between md-lg:px-6 items-center gap-3 font-bold text-md cursor-pointer">
-                <div className="flex justify-center items-center gap-3">
-                  <span>
-                    <FaListUl />
-                  </span>
-                  <span>All Category </span>
-                </div>
-                <span className="pt-1">
-                  <IoMdArrowDropdown />
-                </span>
-              </div>
-
-              <div
-                className={`${
-                  categoryShow ? "h-0" : "h-[400px]"
-                } overflow-hidden transition-all md-lg:relative duration-500 absolute z-[99999] bg-[#dbf3ed] w-full border-x`}>
-                <ul className="py-2 text-slate-600 font-medium">
-                  {categorys.map((c, i) => {
-                    return (
-                      <li
-                        key={i}
-                        className="flex justify-start items-center gap-2 px-[24px] py-[6px]">
-                        <img
-                          src={c.image}
-                          className="w-[30px] h-[30px]
-                            rounded-full overflow-hidden"
-                          alt=""
-                        />
-                        <Link
-                          to={`/products?category=${c.name}`}
-                          className="text-sm block">
-                          {c.name}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>
-          </div> */}
-
-         
         </div>
       </div>
     </div>
   );
 };
+
 export default Header2;

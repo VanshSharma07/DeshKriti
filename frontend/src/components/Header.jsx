@@ -207,6 +207,15 @@ const Header = () => {
                     </li>
                   </ul>
                 </li>
+                <li>
+                  <Link
+                    className={`p-2 ${
+                      pathname === "/stories" ? "text-white" : "text-white"
+                    }`}
+                    to="/stories">
+                    Stories
+                  </Link>
+                </li>
               </ul>
 
               {/* Icons and Buttons Section - Aligned Right */}
@@ -388,6 +397,15 @@ const Header = () => {
                       : "text-slate-600"
                   }`}>
                   Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/stories"
+                  className={`py-2 block ${
+                    pathname === "/stories" ? "text-[#059473]" : "text-slate-600"
+                  }`}>
+                  Stories
                 </Link>
               </li>
             </ul>

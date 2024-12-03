@@ -12,6 +12,10 @@ require('dotenv').config();
 const communityRoutes = require('./routes/community/communityRoutes');
 const loanRoutes = require('./routes/loanRoutes');
 const campaignRoutes = require('./routes/dashboard/campaignRoutes');
+const compression = require('compression');
+const storyRoutes = require('./routes/story/storyRoutes');
+const aiChatRoutes = require('./routes/chat/aiChatRoutes');
+const stateGroupRoutes = require('./routes/community/stateGroupRoutes');
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -209,9 +213,14 @@ app.use('/api/community', require('./routes/community'));
 app.use('/api/loan', loanRoutes);
 app.use('/api/dashboard', campaignRoutes);
 app.use('/api', campaignRoutes);
+app.use('/api/story', storyRoutes);
+app.use('/api/ai-chat', aiChatRoutes);
 
 // Community routes
 app.use('/api/community', require('./routes/community'));
+
+// State Group routes
+app.use('/api/community/state-groups', stateGroupRoutes);
 
 // Basic route
 app.get('/', (req, res) => res.send('Hello Server'));
@@ -236,12 +245,16 @@ const startServer = async () => {
         await dbConnect();
         
         // Register models in correct order
-        require('./models/customerModel');  // Register customers model first
-        require('./models/sellerModel');
+        require('./models/sellerModel');  // Register seller model first
+        require('./models/customerModel');
+        require('./models/story/Story');
+        require('./models/story/StoryComment');
         require('./models/community/Topic');
         require('./models/community/Comment');
         require('./models/Campaign');
-        require('./models/UserLocation');  // Register after customers model
+        require('./models/UserLocation');
+        require('./models/community/StateGroup');
+        require('./models/community/StateGroupPost');
 
         server.listen(port, () => {
             console.log(`Server is running on port ${port}`);
@@ -261,3 +274,5 @@ process.on('unhandledRejection', (err) => {
     // server.close(() => process.exit(1));
 });
 module.exports = { app, server, io }; // Export for testing purposes
+
+app.use(compression()); // Add compression middleware

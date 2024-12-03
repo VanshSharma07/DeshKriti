@@ -1,10 +1,12 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Products = ({ title, products }) => {
+  const navigate = useNavigate();
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -22,6 +24,10 @@ const Products = ({ title, products }) => {
       breakpoint: { max: 464, min: 0 },
       items: 1,
     },
+  };
+
+  const handleProductClick = (slug) => {
+    navigate(`/product/details/${slug}`);
   };
 
   const ButtonGroup = ({ next, previous }) => {
@@ -67,10 +73,10 @@ const Products = ({ title, products }) => {
         {products.map((p, i) => (
           <div key={i} className='flex flex-col justify-start gap-3'>
             {p.map((pl, j) => (
-              <Link key={j} 
+              <div key={j} 
                 className='flex justify-start items-center p-3 rounded-xl hover:bg-gray-50 
-                  transition-all duration-300 group/item' 
-                to="#">
+                  transition-all duration-300 group/item cursor-pointer' 
+                onClick={() => handleProductClick(pl.slug)}>
                 <div className='relative w-[100px] h-[100px] rounded-lg overflow-hidden'>
                   <img
                     className='w-full h-full object-cover transform transition-transform 
@@ -95,7 +101,7 @@ const Products = ({ title, products }) => {
                     )}
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         ))}

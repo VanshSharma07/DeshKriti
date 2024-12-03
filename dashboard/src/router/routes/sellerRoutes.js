@@ -17,7 +17,9 @@ const OrderDetails = lazy(()=> import('../../views/seller/OrderDetails'))
 const Pending = lazy(()=> import('./../../views/Pending')) 
 const Deactive = lazy(()=> import('./../../views/Deactive')) 
 const AddBanner = lazy(()=> import('../../views/seller/AddBanner')) 
-
+const AddStory = lazy(()=> import('../../views/seller/AddStory'));
+const ManageStories = lazy(()=> import('../../views/seller/ManageStories'));
+const EditStory = lazy(()=> import('../../views/seller/EditStory'));
 
 export const sellerRoutes = [
     
@@ -124,6 +126,21 @@ export const sellerRoutes = [
         element: <LoanRepayment />,
         role: 'seller'
     },
+    {
+        path: '/seller/dashboard/stories',
+        element: <ManageStories />,
+        role: 'seller'
+    },
+    {
+        path: '/seller/dashboard/story/add',
+        element: <AddStory />,
+        role: 'seller'
+    },
+    {
+        path: '/seller/dashboard/story/edit/:storyId',
+        element: <EditStory />,
+        role: 'seller'
+    }
 
 
 ]

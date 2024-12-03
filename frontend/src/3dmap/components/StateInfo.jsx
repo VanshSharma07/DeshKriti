@@ -18,29 +18,24 @@ const FALLBACK_IMAGES = {
 
 // Reusable Card Component
 const Card = ({ image, title, description, category, className = "" }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className={`bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 max-w-full ${className}`}
-    style={{ width: '100%' }}
-  >
-    {/* Image Section */}
+  <motion.div className="bg-white rounded-lg shadow-lg overflow-hidden">
     <div className="relative overflow-hidden h-64">
       <img
+        loading="lazy"
         src={image}
         alt={title}
-        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
+        className="w-full h-full object-cover"
+        width={400}
+        height={300}
         onError={(e) => {
           e.target.src = FALLBACK_IMAGES[category];
           e.target.onerror = null;
         }}
       />
     </div>
-
-    {/* Content Section */}
     <div className="p-4">
-      <h3 className="text-lg font-semibold mb-2 text-gray-800">{title}</h3>
-      <p className="text-sm text-gray-600">{description}</p>
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p className="text-gray-600">{description}</p>
     </div>
   </motion.div>
 );
