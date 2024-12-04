@@ -1,53 +1,14 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React from 'react';
 import { Html } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlay, FaPause } from 'react-icons/fa';
 
 const MemoizedHtml = React.memo(Html);
 
 const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
   const navigate = useNavigate();
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(new Audio());
-
-  useEffect(() => {
-    return () => {
-      audioRef.current.pause();
-      audioRef.current.src = '';
-    };
-  }, []);
 
   if (!visible || !data) return null;
-
-  const handlePlayClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  
-    // Path to the audio file
-    const songPath = `/songs/${data.song?.fileName}`;
-  
-    if (!data.song?.fileName) {
-      console.error('Audio file not specified in the data object.');
-      return;
-    }
-  
-    try {
-      if (isPlaying) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0; // Reset audio
-      } else {
-        audioRef.current.src = songPath; // Load the audio file
-        audioRef.current
-          .play()
-          .catch((error) => console.error('Audio play failed:', error));
-      }
-      setIsPlaying(!isPlaying);
-    } catch (error) {
-      console.error('Error playing audio:', error);
-    }
-  };
-  
 
   const handleExploreClick = (e) => {
     e.preventDefault();
@@ -210,35 +171,9 @@ const StatePopup = ({ stateName, visible, isClicked, data, position }) => {
                     color: '#f0e68c',
                     fontWeight: '600',
                   }}>
-                    Famous Song:
+                    Regional Song:
                   </span>
                   <span>{data.song.name}</span>
-                  <button
-                    onClick={handlePlayClick}
-                    style={{
-                      background: 'rgba(240, 230, 140, 0.2)',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '30px',
-                      height: '30px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      color: '#f0e68c',
-                      transition: 'all 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = '#f0e68c';
-                      e.target.style.color = 'black';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = 'rgba(240, 230, 140, 0.2)';
-                      e.target.style.color = '#f0e68c';
-                    }}
-                  >
-                    {isPlaying ? <FaPause size={12} /> : <FaPlay size={12} />}
-                  </button>
                 </motion.div>
               )}
 

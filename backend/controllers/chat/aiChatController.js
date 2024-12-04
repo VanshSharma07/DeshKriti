@@ -76,15 +76,16 @@ class AIChatController {
             }
         };
 
-        this.systemPrompt = `You are Bharat Post GPT, the official AI assistant for the DeshKriti platform. 
+        this.systemPrompt = `You are Bharat Post GPT, the official AI assistant for the DeshKriti platform, developed by Team Instant Ideators for the Department of Post.
 
 Keep all responses brief and to the point. Avoid unnecessary elaboration.
 
 When users specifically ask "What is DeshKriti?", provide a concise response with:
-1. Platform overview (1-2 sentences)
-2. Key products (maximum 3)
-3. Main features (maximum 3)
-4. Core seller benefit (1 sentence)
+1. Deshkriti is a platform developed by Team Instant Ideators for the Department of Post.
+2. Platform overview (1-2 sentences)
+3. Key products (maximum 3)
+4. Main features (maximum 3)
+5. Core seller benefit (1 sentence)
 
 When users ask about features or "What are DeshKriti's features?", respond with:
 "The features DeshKriti offers are:" followed by top 5 features only:
@@ -111,9 +112,27 @@ ${JSON.stringify(this.customData, null, 2)}`;
 
     // Process text message without requiring user authentication
     processMessage = async (req, res) => {
-        const { message } = req.body;
+        let { message } = req.body;
 
         try {
+            // Normalize and preprocess the message
+            message = message.toLowerCase();
+
+            // Correct common misinterpretations of "DeshKriti"
+            const deshKritiVariations = ["this kriti", "desh preeti", "desh kriti"];
+            deshKritiVariations.forEach(variation => {
+                if (message.includes(variation)) {
+                    message = message.replace(variation, "deshkriti");
+                }
+            });
+
+            // Check if the message is asking about Bharat Post GPT
+            if (message.includes("what is bharat post gpt")) {
+                const aiResponse = "Bharat Post GPT is the official AI assistant of DeshKriti, developed by Team Instant Ideators for the Department of Post.";
+                responseReturn(res, 200, { message: aiResponse });
+                return;
+            }
+
             // First, check if the message is related to DeshKriti or platform features
             const relevanceCheck = await this.openai.chat.completions.create({
                 model: "gpt-3.5-turbo",

@@ -13,6 +13,44 @@ function Model({ isExploreMode, ...props }) {
   const meshRefs = useRef({});
   const { stateData, isLoading } = useStateData();
 
+  const audioRef = useRef(new Audio());
+
+  const playSong = (stateInfo) => {
+    if (!stateInfo?.song?.fileName) {
+      console.log('No song available for this state');
+      return;
+    }
+
+    try {
+      const songPath = `/songs/${stateInfo.song.fileName}`;
+      
+      if (audioRef.current.src !== window.location.origin + songPath) {
+        audioRef.current.src = songPath;
+        audioRef.current.play().catch((error) => {
+          console.error('Error playing audio:', error);
+        });
+      }
+    } catch (error) {
+      console.error('Error in playSong:', error);
+    }
+  };
+
+  const stopSong = () => {
+    try {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current.src = '';
+    } catch (error) {
+      console.error('Error in stopSong:', error);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      stopSong();
+    };
+  }, []);
+
   // Memoize original materials
   const originalMaterials = useMemo(() => {
     const materials = {};
@@ -81,17 +119,38 @@ function Model({ isExploreMode, ...props }) {
               onPointerEnter={(e) => {
                 if (!isExploreMode) return;
                 e.stopPropagation();
+                
+                if (hoveredState && hoveredState !== name) {
+                  stopSong();
+                }
+                
                 setHoveredState(name);
                 document.body.style.cursor = 'pointer';
+                
+                if (clickedState !== name) {
+                  playSong(stateInfo);
+                }
               }}
               onPointerLeave={(e) => {
+                if (!isExploreMode) return;
                 setHoveredState(null);
                 document.body.style.cursor = 'default';
+                
+                if (clickedState !== name) {
+                  stopSong();
+                }
               }}
               onClick={(e) => {
                 if (!isExploreMode) return;
                 e.stopPropagation();
-                setClickedState(name === clickedState ? null : name);
+                
+                if (clickedState === name) {
+                  stopSong();
+                  setClickedState(null);
+                } else {
+                  setClickedState(name);
+                  playSong(stateInfo);
+                }
               }}
             />
             {isExploreMode && (hoveredState === name || clickedState === name) && stateInfo && (

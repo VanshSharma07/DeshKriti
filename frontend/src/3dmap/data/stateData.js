@@ -12,7 +12,7 @@ export const stateData = {
     "food": "Rogan Josh, Dum Aloo, Yakhni, Kahwa (Traditional Tea), Modur Pulao, Rajma-Chawal, Kaladi Kulcha",
     "places": "Vaishno Devi, Dal Lake, Gulmarg, Pahalgam, Sonamarg, Mughal Gardens, Shankaracharya Temple, Raghunath Temple, Bhaderwah (Mini Kashmir), Dachigam National Park, Patnitop",
     "song": {
-  "name": "Jammu Folk Music",
+  "name": "Bhala Sipahiya Dogariya",
   "fileName": "jammu.mp3", // The name of the file in the public directory
   "attribution": "folk music by @Jammutourism"
 },
@@ -24,7 +24,7 @@ export const stateData = {
     food: "Siddu, Dham",
     places: "Shimla, Manali, Rohtang Pass",
     song: {
-      name:"Himachal Folk Song",
+      name:"Mae ni meriye Chamba kitni ke door",
       fileName:"himachal.mp3",
       attribution:"folk music by @Himachaltourism"
     },
