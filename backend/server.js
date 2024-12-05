@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -16,6 +15,10 @@ const compression = require('compression');
 const storyRoutes = require('./routes/story/storyRoutes');
 const aiChatRoutes = require('./routes/chat/aiChatRoutes');
 const stateGroupRoutes = require('./routes/community/stateGroupRoutes');
+const socialRoutes = require('./routes/social');
+const WebSocketService = require('./services/websocket');
+
+const app = express();
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -34,153 +37,8 @@ const io = socket(server, {
     }
 });
 
-// Socket user management
-let allCustomer = [];
-let allSeller = [];
-let admin = {};
-
-const addUser = (customerId, socketId, userInfo) => {
-    const checkUser = allCustomer.some(u => u.customerId === customerId);
-    if (!checkUser) {
-        allCustomer.push({ customerId, socketId, userInfo });
-    }
-};
-
-const addSeller = (sellerId, socketId, userInfo) => {
-    const checkSeller = allSeller.some(u => u.sellerId === sellerId);
-    if (!checkSeller) {
-        allSeller.push({ sellerId, socketId, userInfo });
-    }
-};
-
-const findCustomer = (customerId) => allCustomer.find(c => c.customerId === customerId);
-const findSeller = (sellerId) => allSeller.find(c => c.sellerId === sellerId);
-const remove = (socketId) => {
-    allCustomer = allCustomer.filter(c => c.socketId !== socketId);
-    allSeller = allSeller.filter(c => c.socketId !== socketId);
-};
-
-const onlineUsers = new Map();
-
-io.on('connection', (socket) => {
-    socket.on('user_online', (userId) => {
-        onlineUsers.set(userId, socket.id);
-        io.emit('online_users', Array.from(onlineUsers.keys()));
-    });
-
-    socket.on('user_offline', (userId) => {
-        onlineUsers.delete(userId);
-        io.emit('online_users', Array.from(onlineUsers.keys()));
-    });
-
-    socket.on('join_community_chat', (userId) => {
-        socket.join(`community_user_${userId}`);
-    });
-
-    socket.on('send_community_message', (data) => {
-        const { receiverId, message } = data;
-        
-        // Emit to receiver
-        socket.to(`community_user_${receiverId}`).emit('receive_community_message', {
-            ...message,
-            status: 'sent'
-        });
-
-        // If receiver is online, mark as delivered
-        if (onlineUsers.has(receiverId)) {
-            socket.to(`community_user_${receiverId}`).emit('message_delivered', {
-                messageId: message._id,
-                senderId: message.senderId
-            });
-        }
-    });
-
-    socket.on('message_delivered', (data) => {
-        const { messageId, senderId } = data;
-        socket.to(`community_user_${senderId}`).emit('message_status_update', {
-            messageId,
-            status: 'delivered'
-        });
-    });
-
-    socket.on('message_seen', (data) => {
-        const { messageId, senderId } = data;
-        socket.to(`community_user_${senderId}`).emit('message_status_update', {
-            messageId,
-            status: 'seen'
-        });
-    });
-
-    socket.on('disconnect', () => {
-        // Find and remove disconnected user
-        for (const [userId, socketId] of onlineUsers.entries()) {
-            if (socketId === socket.id) {
-                onlineUsers.delete(userId);
-                io.emit('online_users', Array.from(onlineUsers.keys()));
-                break;
-            }
-        }
-    });
-
-    socket.on('connection_status_change', async ({ connectionId, status }) => {
-        // Broadcast connection status change to relevant users
-        const connection = await CommunityConnection.findById(connectionId)
-            .populate('senderId', 'firstName lastName image')
-            .populate('receiverId', 'firstName lastName image');
-
-        if (connection) {
-            io.to(`user_${connection.senderId}`).emit('connection_update', {
-                connectionId,
-                status,
-                otherUser: connection.receiverId
-            });
-            io.to(`user_${connection.receiverId}`).emit('connection_update', {
-                connectionId,
-                status,
-                otherUser: connection.senderId
-            });
-        }
-    });
-
-    // Add new community-specific handlers
-    socket.on('join_community_room', (userId) => {
-        socket.join(`community_${userId}`);
-        onlineUsers.set(userId, socket.id);
-        io.emit('community_online_users', Array.from(onlineUsers.keys()));
-    });
-
-    socket.on('send_community_message', (data) => {
-        const { receiverId, senderId, message, senderName } = data;
-        
-        // Emit to both sender and receiver rooms
-        io.to(`community_${receiverId}`).emit('receive_community_message', {
-            senderId,
-            receiverId,
-            message,
-            senderName,
-            createdAt: new Date()
-        });
-    });
-
-    socket.on('add_community_user', (userId, userInfo) => {
-        socket.join(`community_${userId}`);
-        let temp = allCustomer.some(u => u.customerId === userId);
-        if (!temp) {
-            allCustomer.push({ customerId: userId, socketId: socket.id, userInfo });
-        }
-        io.emit('activeCustomer', allCustomer);
-    });
-
-    socket.on('send_community_message', (message) => {
-        const { receiverId } = message;
-        socket.to(`community_${receiverId}`).emit('receive_community_message', message);
-    });
-
-    socket.on('disconnect', () => {
-        allCustomer = allCustomer.filter(u => u.socketId !== socket.id);
-        io.emit('activeCustomer', allCustomer);
-    });
-});
+// WebSocket service initialization
+const wsService = new WebSocketService(server);
 
 // Middleware setup
 app.use(bodyParser.json());
@@ -193,6 +51,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Add this before route registrations
 app.use((req, res, next) => {
     req.io = io;
+    req.wsService = wsService; // Make wsService available to routes
     next();
 });
 
@@ -215,6 +74,7 @@ app.use('/api/dashboard', campaignRoutes);
 app.use('/api', campaignRoutes);
 app.use('/api/story', storyRoutes);
 app.use('/api/ai-chat', aiChatRoutes);
+app.use('/api/social', socialRoutes);
 
 // Community routes
 app.use('/api/community', require('./routes/community'));
@@ -255,6 +115,12 @@ const startServer = async () => {
         require('./models/UserLocation');
         require('./models/community/StateGroup');
         require('./models/community/StateGroupPost');
+
+        // Add this after database connection
+        console.log('Checking UserLocation model...');
+        const UserLocation = require('./models/UserLocation');
+        const sampleLocation = await UserLocation.findOne();
+        console.log('Sample location from DB:', sampleLocation);
 
         server.listen(port, () => {
             console.log(`Server is running on port ${port}`);

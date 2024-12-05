@@ -3,6 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaPaperPlane } from 'react-icons/fa';
 import { BsSoundwave, BsMicFill } from 'react-icons/bs';
 import api from '../../api/api';
+import { useNavigate } from 'react-router-dom';
+
+// Add this custom event function at the top of the file, outside the component
+const triggerGlobalSearch = (searchQuery) => {
+    const searchEvent = new CustomEvent('deshkriti-search', {
+        detail: { searchQuery }
+    });
+    window.dispatchEvent(searchEvent);
+};
 
 const SoundWave = () => (
     <div className="flex items-center gap-[2px] h-4">
@@ -32,6 +41,7 @@ const ChatBot = () => {
     const interimResultRef = useRef('');
     const [audioQueue, setAudioQueue] = useState([]);
     const currentAudioRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (window.webkitSpeechRecognition) {
@@ -155,9 +165,7 @@ const ChatBot = () => {
         if (!messageToSend.trim()) return;
 
         try {
-            // Immediately stop all audio playback
             stopAllAudio();
-            
             setIsLoading(true);
             setMessages(prev => [...prev, { role: 'user', content: messageToSend }]);
             setInputMessage('');
@@ -166,7 +174,17 @@ const ChatBot = () => {
                 message: messageToSend
             });
 
-            if (response.data?.message) {
+            if (response.data?.searchIntent && response.data?.searchQuery) {
+                // Add the AI's response to the chat
+                setMessages(prev => [...prev, {
+                    role: 'assistant',
+                    content: response.data.message
+                }]);
+
+                // Trigger the global search event instead of direct navigation
+                triggerGlobalSearch(response.data.searchQuery);
+            } else if (response.data?.message) {
+                // Handle normal responses as before
                 setMessages(prev => [...prev, {
                     role: 'assistant',
                     content: response.data.message

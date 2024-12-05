@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import FadeLoader from "react-spinners/FadeLoader";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { Country } from 'country-state-city';
+import { Country, State, City } from 'country-state-city';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,17 +23,21 @@ const Register = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    phoneNumber: '',
     country: '',
-    phoneNumber: ''
+    indianState: '',
+    image: ''
   });
 
   const [countries] = useState(Country.getAllCountries());
-  const [coordinates, setCoordinates] = useState([0, 0]);
+  const [indianStates] = useState(State.getStatesOfCountry('IN'));
+  const [coordinates, setCoordinates] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
 
   const inputHandle = (e) => {
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -42,6 +46,17 @@ const Register = () => {
       ...state,
       phoneNumber: value
     });
+  };
+
+  const imageHandle = (e) => {
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setState({
+        ...state,
+        image: file
+      });
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
   const validateForm = () => {
@@ -87,35 +102,55 @@ const Register = () => {
   };
 
   useEffect(() => {
-    // Get user's geolocation when component mounts
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setCoordinates([
+          const coords = [
             position.coords.longitude,
             position.coords.latitude
-          ]);
+          ];
+          setCoordinates(coords);
+          console.log('Got coordinates:', coords);
         },
         (error) => {
           console.error('Error getting location:', error);
-          toast.error('Location access denied. Using default location.');
+          // Use country's capital city coordinates as fallback
+          const countryCode = state.country;
+          if (countryCode) {
+            const capitalCity = City.getCitiesOfCountry(countryCode).find(city => city.isCapital);
+            if (capitalCity) {
+              setCoordinates([parseFloat(capitalCity.longitude), parseFloat(capitalCity.latitude)]);
+            } else {
+              setCoordinates([0, 0]); // Default to [0, 0] if no capital city is found
+            }
+          }
         }
       );
     }
-  }, []);
+  }, [state.country]);
 
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
+    if (!validateForm()) return;
+
+    const formData = new FormData();
+    formData.append('firstName', state.firstName);
+    formData.append('lastName', state.lastName);
+    formData.append('email', state.email);
+    formData.append('password', state.password);
+    formData.append('phoneNumber', state.phoneNumber);
+    formData.append('country', state.country);
+    formData.append('indianState', state.indianState);
+    if (state.image) {
+      formData.append('image', state.image);
     }
     
-    const { confirmPassword, ...registerData } = state;
-    dispatch(customer_register({
-      ...registerData,
-      coordinates
-    }));
+    // Add location data
+    if (coordinates) {
+      formData.append('coordinates', JSON.stringify(coordinates));
+    }
+
+    dispatch(customer_register(formData));
   };
 
   useEffect(() => {
@@ -242,6 +277,45 @@ const Register = () => {
                       inputClass="!w-full"
                       containerClass="phone-input"
                     />
+                  </div>
+
+                  <div className="flex flex-col gap-1 mb-2">
+                    <label htmlFor="indianState">Indian State/Region*</label>
+                    <select
+                      onChange={inputHandle}
+                      value={state.indianState}
+                      name="indianState"
+                      className="px-3 py-2 border border-slate-200 outline-none focus:border-indigo-500 rounded-md"
+                      required
+                    >
+                      <option value="">Select State</option>
+                      {indianStates.map((state) => (
+                        <option key={state.isoCode} value={state.name}>
+                          {state.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col gap-1 mb-2">
+                    <label htmlFor="image">Profile Picture</label>
+                    <input
+                      type="file"
+                      name="image"
+                      id="image"
+                      className="px-3 py-2 border border-slate-200 outline-none focus:border-indigo-500 rounded-md"
+                      onChange={imageHandle}
+                      accept="image/*"
+                    />
+                    {imagePreview && (
+                      <div className="mt-2">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="w-20 h-20 rounded-full object-cover"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <button className="px-8 w-full py-2 bg-[#059473] shadow-lg hover:shadow-green-500/40 text-white rounded-md">

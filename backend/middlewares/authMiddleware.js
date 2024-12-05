@@ -25,7 +25,9 @@ module.exports.authMiddleware = async(req, res, next) => {
         });
         
         req.role = deCodeToken.role;
-        req.id = deCodeToken.id;
+        req.id = deCodeToken.id || deCodeToken._id;
+        req.firstName = deCodeToken.firstName;
+        req.lastName = deCodeToken.lastName;
         next();
     } catch (error) {
         console.error('Token verification failed:', error);

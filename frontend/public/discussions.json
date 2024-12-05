@@ -1,0 +1,571 @@
+{
+  "Dogras": [
+    {
+      "id": 1,
+      "author": "Rohit Sharma",
+      "content": "Celebrating the rich Dogra culture with a traditional dance performance!",
+      "image": "https://currentaffairs.khanglobalstudies.com/wp-content/uploads/2024/04/Jagarna-Dogri-Folk-Dance-of-Jammu-Lokrang-Jaipur-16-1-scaled.jpg",
+      "timestamp": "2024-03-15T14:30:00Z",
+      "comments": [
+        {
+          "author": "Anjali Verma",
+          "content": "Amazing performance! Proud of our heritage."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "author": "Meera Singh",
+      "content": "Does anyone know about the upcoming Dogra festival dates?",
+      "image": "https://images.indianexpress.com/2022/09/Jammu-celebrations.jpg?w=414",
+      "timestamp": "2024-03-14T10:15:00Z",
+      "comments": []
+    },
+    {
+      "id": 3,
+      "author": "Anil Choudhary",
+      "content": "Exploring the architectural beauty of Mubarak Mandi Palace.",
+      "image": "https://www.tourmyindia.com/states/jammu-kashmir/image/mubarak-mandi-palace2.jpg",
+      "timestamp": "2024-03-13T18:40:00Z",
+      "comments": [
+        {
+          "author": "Sunita Gupta",
+          "content": "A gem of Dogra history!"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "author": "Rajesh Sharma",
+      "content": "Showcasing Dogra cuisine at the local food festival.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Traditional_dogra_food-jammu_and_kashmir-001.jpg/2560px-Traditional_dogra_food-jammu_and_kashmir-001.jpg",
+      "timestamp": "2024-03-12T11:25:00Z",
+      "comments": [
+        {
+          "author": "Neha Choudhary",
+          "content": "The Rajma Chawal is unbeatable!"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "author": "Poonam Devi",
+      "content": "Our art class recreated the traditional Basohli paintings.",
+      "image": "https://thedispatch.blob.core.windows.net/thedispatchimages/2023/04/IMG-20220828-WA0001.jpg",
+      "timestamp": "2024-03-11T14:50:00Z",
+      "comments": [
+        {
+          "author": "Deepak Verma",
+          "content": "Such intricate designs! Kudos to your students."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "author": "Vandana Sharma",
+      "content": "Dogra dress workshop: Promoting traditional attire.",
+      "image": "https://jammuvirasat.com/wp-content/uploads/2017/07/Dress-dogra.jpg",
+      "timestamp": "2024-03-10T10:45:00Z",
+      "comments": [
+        {
+          "author": "Nishant Singh",
+          "content": "These dresses reflect our heritage beautifully."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "author": "Shivani Thakur",
+      "content": "Cultural evening showcasing Dogri folk songs.",
+      "image": "https://i.ytimg.com/vi/caPGgXHfBm0/sddefault.jpg",
+      "timestamp": "2024-03-09T17:00:00Z",
+      "comments": [
+        {
+          "author": "Amit Sharma",
+          "content": "Folk music always connects to the soul."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "author": "Sandeep Kumar",
+      "content": "Documenting the traditional marriage rituals of Dogras.",
+      "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4x4Tx5bcOtsPRUjpjIjQGGsz7pBkBzBVsKD4TlzagYmDzKKRHfEtXMpMXqG8tVqNx35Ddd2EBUjsT2PshjhzJKStc-QanHD3nEXJsNHK0dITSRbNbdC2YdZqpLzdvo_w62s-8NdX8aH8/s1600/MOI000022023.jpg",
+      "timestamp": "2024-03-08T09:30:00Z",
+      "comments": [
+        {
+          "author": "Kavita Devi",
+          "content": "Such a vibrant and colorful tradition!"
+        }
+      ]
+    }
+  ],
+  "Rajputana": [
+    {
+      "id": 1,
+      "author": "Vikram Rathore",
+      "content": "Exploring the majestic forts of Rajasthan. Truly a royal experience!",
+      "image": "https://seoimgak.mmtcdn.com/blog/sites/default/files/Fort2.jpg?vhubCodLvkOw14DzNvE71kkio0FJ2xya",
+      "timestamp": "2024-03-15T09:20:00Z",
+      "comments": [
+        {
+          "author": "Priya Kapoor",
+          "content": "Wow! The architecture is stunning."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "author": "Neeraj Singh",
+      "content": "Showcasing Rajputana jewelry at the city museum.",
+      "image": "https://gehnashop.com/cdn/shop/files/royal-rajputana-heavy-antique-gold-choker-necklace-set-for-weddings-by-gehna-shop-gehna-shop-buy-royal-rajputana-heavy-antique-gold-choker-necklace-set-for-weddings-42038829908283.jpg?v=1687984035",
+      "timestamp": "2024-03-14T13:15:00Z",
+      "comments": [
+        {
+          "author": "Surbhi Jain",
+          "content": "These are timeless treasures."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "author": "Poonam Rathore",
+      "content": "Rajputana cuisine is unmatched in its richness.",
+      "image": "https://tb-static.uber.com/prod/image-proc/processed_images/44806f21a9ed0857ad0ea87ce562c10d/16bb0a3ab8ea98cfe8906135767f7bf4.jpeg",
+      "timestamp": "2024-03-13T18:00:00Z",
+      "comments": [
+        {
+          "author": "Kunal Mehta",
+          "content": "The gatte ki sabzi is my favorite!"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "author": "Kavya Chauhan",
+      "content": "Learn about the heroic tales of Maharana Pratap.",
+      "image": "https://www.techniajz.com/uploads/blog_images/5be4c426d0ba8b9d85ae9601f403ebbe-1200x630.jpg",
+      "timestamp": "2024-03-12T16:30:00Z",
+      "comments": [
+        {
+          "author": "Rajesh Sharma",
+          "content": "A true inspiration for generations!"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "author": "Amit Singh",
+      "content": "Attending a workshop on Rajputana sword fighting techniques.",
+      "image": "https://i.ytimg.com/vi/3WB_Oy_ue1c/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLCx75_cQEXGgVfxJ6ELKOS8vDb_tA",
+      "timestamp": "2024-03-11T14:15:00Z",
+      "comments": [
+        {
+          "author": "Deepak Verma",
+          "content": "Such precision and skill!"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "author": "Sneha Sharma",
+      "content": "Celebrating Holi in true Rajputana style!",
+      "image": "https://www.indianexcursions.co/wp-content/uploads/2021/02/holi-colourful-lady-scaled.jpg",
+      "timestamp": "2024-03-10T17:20:00Z",
+      "comments": [
+        {
+          "author": "Nishant Verma",
+          "content": "The energy is contagious!"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "author": "Manoj Rathore",
+      "content": "A look at Rajputana art at the city gallery.",
+      "image": "https://abirpothi.com/wp-content/uploads/2024/05/Indian_Art_-_Rajput_Painting_96ffcca9-c3bc-4be8-ac03-b434bdec41cd.webp",
+      "timestamp": "2024-03-09T15:00:00Z",
+      "comments": [
+        {
+          "author": "Anjali Kapoor",
+          "content": "The detail is mesmerizing."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "author": "Rekha Thakur",
+      "content": "Traditional Rajputana wedding attire on display.",
+      "image": "https://assets.vogue.in/photos/647052158fc75102caa147ec/1:1/w_2400,h_2400,c_limit/Himashweta%20_%20Digvijay%20Singh%20Shekhawat(5).jpg",
+      "timestamp": "2024-03-08T11:30:00Z",
+      "comments": [
+        {
+          "author": "Vikas Jain",
+          "content": "So grand and elegant!"
+        }
+      ]
+    }
+  ],
+    "Kashmiri Pandits": [
+      {
+        "id": 1,
+        "author": "Anupam Raina",
+        "content": "Celebrating Navreh, the Kashmiri New Year, with traditional rituals.",
+        "image": "https://cdndailyexcelsior.b-cdn.net/wp-content/uploads/2023/03/i-1.jpg",
+        "timestamp": "2024-03-15T06:30:00Z",
+        "comments": [
+          {
+            "author": "Sunita Pandita",
+            "content": "Navreh Mubarak! This brings back memories."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "author": "Sandeep Kaul",
+        "content": "Attended a lecture on the Shaivism philosophy in Srinagar.",
+        "image": "https://m.media-amazon.com/images/I/81uanwJxMZL.AC_UF1000,1000_QL80.jpg",
+        "timestamp": "2024-03-14T14:00:00Z",
+        "comments": [
+          {
+            "author": "Pooja Dhar",
+            "content": "Shaivism has such deep spiritual insights. Wonderful!"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "author": "Jyoti Tickoo",
+        "content": "Cooking Dum Aloo for our family gathering today.",
+        "image": "https://www.vegrecipesofindia.com/wp-content/uploads/2012/04/kashmiri-dum-aloo-recipe-11a.jpg",
+        "timestamp": "2024-03-13T12:45:00Z",
+        "comments": [
+          {
+            "author": "Rohit Raina",
+            "content": "Kashmiri Dum Aloo is unbeatable!"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "author": "Ashok Bhat",
+        "content": "Visited the Shankaracharya Temple during my trip to Kashmir.",
+        "image": "https://temple.yatradham.org/public/Product/temple/temple_ifdFTKZI_202409091756240.jpg",
+        "timestamp": "2024-03-12T09:20:00Z",
+        "comments": [
+          {
+            "author": "Kiran Zutshi",
+            "content": "Such a serene and sacred place!"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "author": "Meenakshi Koul",
+        "content": "Teaching my kids the Kashmiri script, Sharada, at home.",
+        "image": "https://swarajya.gumlet.io/swarajya/2017-12/d2d17293-7def-4a38-989d-bf0110ee9cd6/601px-Sharada-Vowels.jpg?w=1200&h=675&auto=format%2Ccompress&fit=max&enlarge=true",
+        "timestamp": "2024-03-11T18:00:00Z",
+        "comments": [
+          {
+            "author": "Vikas Raina",
+            "content": "Preserving our language is so important. Great job!"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "author": "Rajiv Dhar",
+        "content": "Documenting the exquisite craftsmanship of Kashmiri carpets.",
+        "image": "https://verasaa.com/cdn/shop/products/9_fcd15ef7-f824-42f0-808f-52ce1f705181_1024x1024@2x.jpg?v=1665768616",
+        "timestamp": "2024-03-10T15:30:00Z",
+        "comments": [
+          {
+            "author": "Anita Pandita",
+            "content": "These carpets are works of art!"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "author": "Shikha Bhan",
+        "content": "Organized a community meet-up to celebrate our Kashmiri heritage.",
+        "image": "https://jkfilm.jk.gov.in/img/arts-artifacts-img.jpg",
+        "timestamp": "2024-03-09T10:45:00Z",
+        "comments": [
+          {
+            "author": "Arun Kaul",
+            "content": "It's wonderful to see the community come together like this."
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "author": "Neha Razdan",
+        "content": "Learning to play the Santoor from a local maestro.",
+        "image": "https://5.imimg.com/data5/SELLER/Default/2021/1/ZY/QW/NB/3194950/santoor-500x500.jpg",
+        "timestamp": "2024-03-08T19:15:00Z",
+        "comments": [
+          {
+            "author": "Rahul Dhar",
+            "content": "The Santoor has such a divine sound. Keep it up!"
+          }
+        ]
+      }
+    ],
+  
+  "Jatt Community": [
+    {
+      "id": 1,
+      "author": "Gurpreet Kaur",
+      "content": "Celebrating Lohri with friends and family. Such a vibrant festival!",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Lohri_festival.jpg",
+      "timestamp": "2024-03-15T10:00:00Z",
+      "comments": [
+        {
+          "author": "Harjeet Singh",
+          "content": "Lohri is always a reminder of our beautiful traditions."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "author": "Amarjeet Singh",
+      "content": "A glimpse of the Golden Temple during Guru Purab.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Harmandir_Sahib_Golden_Temple.jpg",
+      "timestamp": "2024-03-14T12:45:00Z",
+      "comments": [
+        {
+          "author": "Ravneet Kaur",
+          "content": "Such peace and serenity in this sacred place."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "author": "Ravinder Singh",
+      "content": "Hosting a Punjabi bhangra workshop in the community hall.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Bhangra_Punjab.jpg",
+      "timestamp": "2024-03-13T15:30:00Z",
+      "comments": [
+        {
+          "author": "Manpreet Kaur",
+          "content": "Bhangra always uplifts the spirit!"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "author": "Simranjeet Kaur",
+      "content": "Cooking Makki di Roti and Sarson da Saag for dinner tonight!",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/89/Makki_di_Roti_and_Sarson_da_Saag.jpg",
+      "timestamp": "2024-03-12T18:00:00Z",
+      "comments": [
+        {
+          "author": "Rajinder Singh",
+          "content": "Classic Punjabi comfort food!"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "author": "Baldev Singh",
+      "content": "Exploring the rich history of Maharaja Ranjit Singh at his museum.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Maharaja_Ranjit_Singh.jpg",
+      "timestamp": "2024-03-11T14:50:00Z",
+      "comments": [
+        {
+          "author": "Harshdeep Kaur",
+          "content": "A remarkable leader of Punjab!"
+        }
+      ]
+    }
+  ],
+  "Bengali Literature Lovers": [
+    {
+      "id": 1,
+      "author": "Arindam Ghosh",
+      "content": "Celebrating Durga Puja with our community. Shubho Bijoya!",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Durga_Puja_Kolkata.jpg",
+      "timestamp": "2024-03-15T11:30:00Z",
+      "comments": [
+        {
+          "author": "Ananya Roy",
+          "content": "Durga Puja is the heart of our culture!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "author": "Sohini Das",
+      "content": "Making Sandesh and Rosogolla for the family this weekend.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/80/Rasgulla.jpg",
+      "timestamp": "2024-03-14T17:45:00Z",
+      "comments": [
+        {
+          "author": "Subhankar Sen",
+          "content": "A Bengali meal isn’t complete without sweets!"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "author": "Rajat Banerjee",
+      "content": "Visited the iconic Howrah Bridge. A marvel of engineering!",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Howrah_Bridge_2.jpg",
+      "timestamp": "2024-03-13T09:30:00Z",
+      "comments": [
+        {
+          "author": "Moumita Dey",
+          "content": "Symbolic of Kolkata’s grandeur!"
+        }
+      ]
+    }
+  ],
+  "Marathis": [
+    {
+      "id": 1,
+      "author": "Aniket Deshmukh",
+      "content": "Remembering Chhatrapati Shivaji Maharaj on this auspicious day.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Statue_of_Chhatrapati_Shivaji_Maharaj.jpg",
+      "timestamp": "2024-03-15T10:30:00Z",
+      "comments": [
+        {
+          "author": "Sangita Patil",
+          "content": "The pride of Maharashtra!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "author": "Neha Gokhale",
+      "content": "Traditional Lavani dance performance at the cultural fest.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/39/Lavani_dance.jpg",
+      "timestamp": "2024-03-14T19:20:00Z",
+      "comments": [
+        {
+          "author": "Mahesh Kulkarni",
+          "content": "Lavani always steals the show!"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "author": "Siddharth Jadhav",
+      "content": "Cooking authentic Puran Poli for Gudi Padwa.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/81/Puran_Poli.jpg",
+      "timestamp": "2024-03-13T16:15:00Z",
+      "comments": [
+        {
+          "author": "Priya Thakur",
+          "content": "Perfect for festive celebrations!"
+        }
+      ]
+    }
+  ],
+  "Tamil Classical Arts": [
+    {
+      "id": 1,
+      "author": "Lakshmi Krishnan",
+      "content": "Performed Bharatanatyam at the Natyanjali Festival in Chidambaram.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Bharatanatyam_Performance.jpg",
+      "timestamp": "2024-03-15T18:00:00Z",
+      "comments": [
+        {
+          "author": "Anand Subramanian",
+          "content": "Graceful performance! Proud moment for Tamil culture."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "author": "Rajesh Iyer",
+      "content": "Celebrating Pongal with traditional cooking and family gatherings.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/93/Pongal_Celebration.jpg",
+      "timestamp": "2024-03-14T09:45:00Z",
+      "comments": [
+        {
+          "author": "Meenakshi R",
+          "content": "Pongal o Pongal! Such a heartwarming festival."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "author": "Priya Chandran",
+      "content": "Visited the majestic Brihadeeswarar Temple in Thanjavur. Stunning architecture!",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/22/Brihadeeswarar_Temple.jpg",
+      "timestamp": "2024-03-13T12:30:00Z",
+      "comments": [
+        {
+          "author": "Arjun Natarajan",
+          "content": "One of the greatest treasures of Tamil Nadu!"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "author": "Kavitha Swaminathan",
+      "content": "Cooking Chettinad Chicken Curry for tonight's dinner.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Chettinad_Chicken_Curry.jpg",
+      "timestamp": "2024-03-12T20:00:00Z",
+      "comments": [
+        {
+          "author": "Muthukumar R",
+          "content": "Chettinad cuisine is the best. Mouthwatering!"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "author": "Ganesh V",
+      "content": "Organizing a Carnatic music recital at the Margazhi Festival in Chennai.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Carnatic_Music_Concert.jpg",
+      "timestamp": "2024-03-11T17:15:00Z",
+      "comments": [
+        {
+          "author": "Sowmya R",
+          "content": "Margazhi vibes are unmatched. Great initiative!"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "author": "Revathi Kumar",
+      "content": "Witnessed the traditional Kanchipuram silk weaving process.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/90/Kanchipuram_Silk.jpg",
+      "timestamp": "2024-03-10T15:30:00Z",
+      "comments": [
+        {
+          "author": "Ravi Varadarajan",
+          "content": "Kanchipuram sarees are a testament to Tamil Nadu's craftsmanship."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "author": "Deepa Venkatesh",
+      "content": "Explored the ancient rock-cut temples of Mahabalipuram.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Mahabalipuram_Temple.jpg",
+      "timestamp": "2024-03-09T14:45:00Z",
+      "comments": [
+        {
+          "author": "Vignesh K",
+          "content": "Such intricate carvings. A UNESCO heritage site for a reason!"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "author": "Suresh Balakrishnan",
+      "content": "Traditional kolam designs adorning the streets during Thai Pongal.",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Kolam_Design.jpg",
+      "timestamp": "2024-03-08T07:20:00Z",
+      "comments": [
+        {
+          "author": "Janani M",
+          "content": "Kolams add such beauty to Pongal celebrations."
+        }
+      ]
+    }
+  ]
+}

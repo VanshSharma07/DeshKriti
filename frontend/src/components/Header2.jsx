@@ -14,6 +14,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { BsFillTelephoneInboundFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHandsHelping } from "react-icons/fa";
+import { useTheme } from '@mui/material';
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,6 +36,7 @@ const Header2 = () => {
   const [category, setCategory] = useState("");
   const [showShidebar, setShowSidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true);
+  const theme = useTheme();
 
   const displayName = userInfo ? 
     `${userInfo.firstName || ''} ${userInfo.lastName || ''}`.trim() || userInfo.name || 'User' 
@@ -67,13 +69,37 @@ const Header2 = () => {
     }
   }, [userInfo, dispatch]);
 
+  useEffect(() => {
+    const handleGlobalSearch = (event) => {
+      const { searchQuery } = event.detail;
+      
+      // First clear any existing search
+      setSearchValue('');
+      setCategory('');
+      
+      // Small timeout to ensure state is cleared before setting new value
+      setTimeout(() => {
+        setSearchValue(searchQuery); // Update with new search query
+        navigate(`/products/search?category=${category || ''}&value=${searchQuery}`);
+      }, 50);
+    };
+
+    // Add event listener
+    window.addEventListener('deshkriti-search', handleGlobalSearch);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('deshkriti-search', handleGlobalSearch);
+    };
+  }, [category, navigate]);
+
   return (
-    <div className="w-full bg-white">
+    <div className={`w-full ${theme.palette.mode === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
       <div className="w-full relative z-10">
         <div className="mx-auto">
-          <div className="h-[80px] md-lg:h-[100px] flex justify-between items-center px-4">
+          <div className={`h-[80px] md-h-[100px] flex justify-between items-center px-8 ${theme.palette.mode === 'dark' ? 'text-white' : 'text-black'}`}>
             {/* Logo Section */}
-            <div className="flex mt-1 items-center gap-4">
+            <div className="flex mt-3 items-center gap-8">
               <Link to="/">
                 <img
                   src="http://localhost:3000/images/logo.png"
@@ -81,23 +107,29 @@ const Header2 = () => {
                   className="w-20 h-auto"
                 />
               </Link>
-              <div
-                className="justify-center items-center w-[30px] h-[30px] bg-white text-slate-600 border border-slate-600 rounded-sm cursor-pointer lg:hidden md-lg:flex xl:hidden hidden"
-                onClick={() => setShowSidebar(false)}>
-                <span>
-                  <FaListUl />
-                </span>
-              </div>
+              {/* <span
+                onClick={() => setShowSidebar(false)}
+                className={`justify-center items-center w-[30px] h-[30px] ${
+                  theme.palette.mode === 'dark' ? 'bg-gray-800 text-gray-300' : 'bg-slate-100 text-slate-600'
+                } border border-slate-300 rounded-sm md:hidden lg:flex xl:flex xs:hidden`}>
+                <FaListUl />
+              </span> */}
             </div>
 
             {/* Navigation and User Actions */}
             <div className="flex items-center justify-between flex-1 px-4">
               {/* Navigation Menu */}
-              <ul className="flex items-center gap-8 text-sm font-bold uppercase md-lg:hidden mx-8">
+              <ul className={`flex items-center gap-8 text-sm font-bold uppercase mx-8 md:hidden lg:flex ${
+                theme.palette.mode === 'dark' ? 'text-gray-300' : 'text-slate-600'
+              }`}>
                 <li>
                   <Link
                     className={`p-2 ${
-                      pathname === "/" ? "text-[#059473]" : "text-slate-600"
+                      pathname === "/" 
+                        ? "text-[#059473]" 
+                        : theme.palette.mode === 'dark' 
+                          ? "text-gray-300" 
+                          : "text-slate-600"
                     }`}
                     to="/">
                     Home
@@ -135,7 +167,16 @@ const Header2 = () => {
                     Blog
                   </Link>
                 </li>
-                <li className="relative group">
+                 <li>
+                  <Link
+                    className={`p-2 ${
+                      pathname === "/social" ? "text-[#059473]" : "text-slate-600"
+                    }`}
+                    to="/social">
+                    Community
+                  </Link>
+                </li> 
+                {/* <li className="relative group">
                   <div className="flex items-center gap-1 cursor-pointer p-2 text-slate-600">
                     Community
                     <IoMdArrowDropdown />
@@ -152,8 +193,8 @@ const Header2 = () => {
                       </Link>
                     </li>
                   </ul>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link
                     className={`p-2 ${
                       pathname === "/stories" ? "text-[#059473]" : "text-slate-600"
@@ -161,7 +202,7 @@ const Header2 = () => {
                     to="/stories">
                     Stories
                   </Link>
-                </li>
+                </li> */}
               </ul>
 
               {/* Icons and Buttons Section - Aligned Right */}
@@ -171,7 +212,11 @@ const Header2 = () => {
                   onClick={() =>
                     navigate(userInfo ? "/dashboard/my-wishlist" : "/login")
                   }
-                  className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
+                  className={`relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full ${
+                    theme.palette.mode === 'dark' 
+                      ? 'bg-gray-800 hover:bg-gray-700' 
+                      : 'bg-[#e2e2e2] hover:bg-gray-300'
+                  }`}>
                   <span className="text-xl text-green-500">
                     <FaHeart />
                   </span>
@@ -185,7 +230,11 @@ const Header2 = () => {
                 {/* Cart Icon */}
                 <div
                   onClick={redirect_card_page}
-                  className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
+                  className={`relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full ${
+                    theme.palette.mode === 'dark' 
+                      ? 'bg-gray-800 hover:bg-gray-700' 
+                      : 'bg-[#e2e2e2] hover:bg-gray-300'
+                  }`}>
                   <span className="text-xl text-green-500">
                     <PiShoppingCartFill />
                   </span>
@@ -199,7 +248,11 @@ const Header2 = () => {
                 {/* User Profile Section */}
                 {userInfo ? (
                   <Link
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-base text-black border rounded-full hover:bg-blue-500 hover:text-white"
+                    className={`flex items-center justify-center gap-2 px-4 py-2 text-base border rounded-full ${
+                      theme.palette.mode === 'dark'
+                        ? 'text-white border-gray-700 hover:bg-gray-800'
+                        : 'text-black border-gray-300 hover:bg-blue-500 hover:text-white'
+                    }`}
                     to="/dashboard">
                     <FaUserCog />
                     <span>{displayName}</span>
@@ -207,7 +260,11 @@ const Header2 = () => {
                 ) : (
                   <Link
                     to="/login"
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-base text-white border rounded-full hover:bg-gray-100">
+                    className={`flex items-center justify-center gap-2 px-4 py-2 text-base border rounded-full ${
+                      theme.palette.mode === 'dark'
+                        ? 'text-white border-gray-700 hover:bg-gray-800'
+                        : 'text-white border-gray-300 hover:bg-gray-100'
+                    }`}>
                     <IoIosLock />
                     <span>Login / Signup</span>
                   </Link>

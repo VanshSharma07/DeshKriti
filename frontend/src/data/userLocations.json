@@ -1,0 +1,493 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Priya Sharma",
+      "profilePicture": "https://randomuser.me/api/portraits/women/1.jpg",
+      "currentLocation": {
+        "country": "United States",
+        "city": "New York",
+        "coordinates": [-74.006, 40.7128]
+      },
+      "indianOrigin": {
+        "state": "Maharashtra",
+        "city": "Mumbai"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Rahul Patel",
+      "profilePicture": "https://randomuser.me/api/portraits/men/2.jpg",
+      "currentLocation": {
+        "country": "Canada",
+        "city": "Toronto",
+        "coordinates": [-79.3832, 43.6532]
+      },
+      "indianOrigin": {
+        "state": "Gujarat",
+        "city": "Ahmedabad"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Anjali Gupta",
+      "profilePicture": "https://randomuser.me/api/portraits/women/3.jpg",
+      "currentLocation": {
+        "country": "Australia",
+        "city": "Sydney",
+        "coordinates": [151.2093, -33.8688]
+      },
+      "indianOrigin": {
+        "state": "Karnataka",
+        "city": "Bangalore"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Arjun Singh",
+      "profilePicture": "https://randomuser.me/api/portraits/men/4.jpg",
+      "currentLocation": {
+        "country": "United Kingdom",
+        "city": "London",
+        "coordinates": [-0.1276, 51.5074]
+      },
+      "indianOrigin": {
+        "state": "Punjab",
+        "city": "Amritsar"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Maya Reddy",
+      "profilePicture": "https://randomuser.me/api/portraits/women/5.jpg",
+      "currentLocation": {
+        "country": "Singapore",
+        "coordinates": [103.8198, 1.3521]
+      },
+      "indianOrigin": {
+        "state": "Tamil Nadu",
+        "city": "Chennai"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Vikram Malhotra",
+      "profilePicture": "https://randomuser.me/api/portraits/men/6.jpg",
+      "currentLocation": {
+        "country": "Germany",
+        "city": "Berlin",
+        "coordinates": [13.4050, 52.5200]
+      },
+      "indianOrigin": {
+        "state": "Delhi",
+        "city": "New Delhi"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Neha Reddy",
+      "profilePicture": "https://randomuser.me/api/portraits/women/7.jpg",
+      "currentLocation": {
+        "country": "France",
+        "city": "Paris",
+        "coordinates": [2.3522, 48.8566]
+      },
+      "indianOrigin": {
+        "state": "Telangana",
+        "city": "Hyderabad"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Aditya Kumar",
+      "profilePicture": "https://randomuser.me/api/portraits/men/8.jpg",
+      "currentLocation": {
+        "country": "Japan",
+        "city": "Tokyo",
+        "coordinates": [139.6503, 35.6762]
+      },
+      "indianOrigin": {
+        "state": "Bihar",
+        "city": "Patna"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Kavita Menon",
+      "profilePicture": "https://randomuser.me/api/portraits/women/9.jpg",
+      "currentLocation": {
+        "country": "Netherlands",
+        "city": "Amsterdam",
+        "coordinates": [4.9041, 52.3676]
+      },
+      "indianOrigin": {
+        "state": "Kerala",
+        "city": "Kochi"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Rajesh Verma",
+      "profilePicture": "https://randomuser.me/api/portraits/men/10.jpg",
+      "currentLocation": {
+        "country": "Spain",
+        "city": "Barcelona",
+        "coordinates": [2.1734, 41.3851]
+      },
+      "indianOrigin": {
+        "state": "Rajasthan",
+        "city": "Jaipur"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Meera Iyer",
+      "profilePicture": "https://randomuser.me/api/portraits/women/11.jpg",
+      "currentLocation": {
+        "country": "Sweden",
+        "city": "Stockholm",
+        "coordinates": [18.0686, 59.3293]
+      },
+      "indianOrigin": {
+        "state": "West Bengal",
+        "city": "Kolkata"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Karthik Nair",
+      "profilePicture": "https://randomuser.me/api/portraits/men/12.jpg",
+      "currentLocation": {
+        "country": "Italy",
+        "city": "Rome",
+        "coordinates": [12.4964, 41.9028]
+      },
+      "indianOrigin": {
+        "state": "Madhya Pradesh",
+        "city": "Bhopal"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Pooja Desai",
+      "profilePicture": "https://randomuser.me/api/portraits/women/13.jpg",
+      "currentLocation": {
+        "country": "Switzerland",
+        "city": "Zurich",
+        "coordinates": [8.5417, 47.3769]
+      },
+      "indianOrigin": {
+        "state": "Uttar Pradesh",
+        "city": "Lucknow"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Suresh Kumar",
+      "profilePicture": "https://randomuser.me/api/portraits/men/14.jpg",
+      "currentLocation": {
+        "country": "South Korea",
+        "city": "Seoul",
+        "coordinates": [126.9780, 37.5665]
+      },
+      "indianOrigin": {
+        "state": "Haryana",
+        "city": "Gurugram"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Divya Krishnan",
+      "profilePicture": "https://randomuser.me/api/portraits/women/15.jpg",
+      "currentLocation": {
+        "country": "Norway",
+        "city": "Oslo",
+        "coordinates": [10.7522, 59.9139]
+      },
+      "indianOrigin": {
+        "state": "Tamil Nadu",
+        "city": "Coimbatore"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Sanjay Mehta",
+      "profilePicture": "https://randomuser.me/api/portraits/men/16.jpg",
+      "currentLocation": {
+        "country": "Denmark",
+        "city": "Copenhagen",
+        "coordinates": [12.5683, 55.6761]
+      },
+      "indianOrigin": {
+        "state": "Gujarat",
+        "city": "Surat"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Anita Sharma",
+      "profilePicture": "https://randomuser.me/api/portraits/women/17.jpg",
+      "currentLocation": {
+        "country": "Ireland",
+        "city": "Dublin",
+        "coordinates": [-6.2603, 53.3498]
+      },
+      "indianOrigin": {
+        "state": "Maharashtra",
+        "city": "Pune"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Ravi Kapoor",
+      "profilePicture": "https://randomuser.me/api/portraits/men/18.jpg",
+      "currentLocation": {
+        "country": "New Zealand",
+        "city": "Auckland",
+        "coordinates": [174.7633, -36.8485]
+      },
+      "indianOrigin": {
+        "state": "Karnataka",
+        "city": "Mysore"
+      }
+    },
+    {
+      "id": 19,
+      "name": "Lakshmi Venkatesh",
+      "profilePicture": "https://randomuser.me/api/portraits/women/19.jpg",
+      "currentLocation": {
+        "country": "Belgium",
+        "city": "Brussels",
+        "coordinates": [4.3517, 50.8503]
+      },
+      "indianOrigin": {
+        "state": "Andhra Pradesh",
+        "city": "Visakhapatnam"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Amit Saxena",
+      "profilePicture": "https://randomuser.me/api/portraits/men/20.jpg",
+      "currentLocation": {
+        "country": "Austria",
+        "city": "Vienna",
+        "coordinates": [16.3738, 48.2082]
+      },
+      "indianOrigin": {
+        "state": "Uttarakhand",
+        "city": "Dehradun"
+      }
+    },
+    {
+      "id": 21,
+      "name": "Shreya Joshi",
+      "profilePicture": "https://randomuser.me/api/portraits/women/21.jpg",
+      "currentLocation": {
+        "country": "Finland",
+        "city": "Helsinki",
+        "coordinates": [24.9384, 60.1699]
+      },
+      "indianOrigin": {
+        "state": "Rajasthan",
+        "city": "Udaipur"
+      }
+    },
+    {
+      "id": 22,
+      "name": "Deepak Choudhury",
+      "profilePicture": "https://randomuser.me/api/portraits/men/22.jpg",
+      "currentLocation": {
+        "country": "Portugal",
+        "city": "Lisbon",
+        "coordinates": [-9.1393, 38.7223]
+      },
+      "indianOrigin": {
+        "state": "West Bengal",
+        "city": "Siliguri"
+      }
+    },
+    {
+      "id": 23,
+      "name": "Shweta Pillai",
+      "profilePicture": "https://randomuser.me/api/portraits/women/23.jpg",
+      "currentLocation": {
+        "country": "Greece",
+        "city": "Athens",
+        "coordinates": [23.7275, 37.9838]
+      },
+      "indianOrigin": {
+        "state": "Kerala",
+        "city": "Trivandrum"
+      }
+    },
+    {
+      "id": 24,
+      "name": "Vivek Malhotra",
+      "profilePicture": "https://randomuser.me/api/portraits/men/24.jpg",
+      "currentLocation": {
+        "country": "Brazil",
+        "city": "Sao Paulo",
+        "coordinates": [-46.6333, -23.5505]
+      },
+      "indianOrigin": {
+        "state": "Punjab",
+        "city": "Chandigarh"
+      }
+    },
+    {
+      "id": 25,
+      "name": "Nandini Rao",
+      "profilePicture": "https://randomuser.me/api/portraits/women/25.jpg",
+      "currentLocation": {
+        "country": "Israel",
+        "city": "Tel Aviv",
+        "coordinates": [34.7818, 32.0853]
+      },
+      "indianOrigin": {
+        "state": "Karnataka",
+        "city": "Mangalore"
+      }
+    },
+    {
+      "id": 26,
+      "name": "Amir Khan",
+      "profilePicture": "https://randomuser.me/api/portraits/men/26.jpg",
+      "currentLocation": {
+        "country": "United Arab Emirates",
+        "city": "Dubai",
+        "coordinates": [55.2708, 25.2048]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Srinagar"
+      }
+    },
+    {
+      "id": 27,
+      "name": "Zara Mir",
+      "profilePicture": "https://randomuser.me/api/portraits/women/27.jpg",
+      "currentLocation": {
+        "country": "Saudi Arabia",
+        "city": "Riyadh",
+        "coordinates": [46.6753, 24.7136]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Jammu"
+      }
+    },
+    {
+      "id": 28,
+      "name": "Kabir Shah",
+      "profilePicture": "https://randomuser.me/api/portraits/men/28.jpg",
+      "currentLocation": {
+        "country": "Malaysia",
+        "city": "Kuala Lumpur",
+        "coordinates": [101.6869, 3.1390]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Anantnag"
+      }
+    },
+    {
+      "id": 29,
+      "name": "Rukhsana Bhat",
+      "profilePicture": "https://randomuser.me/api/portraits/women/29.jpg",
+      "currentLocation": {
+        "country": "Qatar",
+        "city": "Doha",
+        "coordinates": [51.5310, 25.2867]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Baramulla"
+      }
+    },
+    {
+      "id": 30,
+      "name": "Irfan Lone",
+      "profilePicture": "https://randomuser.me/api/portraits/men/30.jpg",
+      "currentLocation": {
+        "country": "Turkey",
+        "city": "Istanbul",
+        "coordinates": [28.9784, 41.0082]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Udhampur"
+      }
+    },
+    {
+      "id": 31,
+      "name": "Mehreen Dar",
+      "profilePicture": "https://randomuser.me/api/portraits/women/31.jpg",
+      "currentLocation": {
+        "country": "Indonesia",
+        "city": "Jakarta",
+        "coordinates": [106.8456, -6.2088]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Kupwara"
+      }
+    },
+    {
+      "id": 32,
+      "name": "Sajad Ahmad",
+      "profilePicture": "https://randomuser.me/api/portraits/men/32.jpg",
+      "currentLocation": {
+        "country": "South Africa",
+        "city": "Cape Town",
+        "coordinates": [18.4241, -33.9249]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Sopore"
+      }
+    },
+    {
+      "id": 33,
+      "name": "Saima Malik",
+      "profilePicture": "https://randomuser.me/api/portraits/women/33.jpg",
+      "currentLocation": {
+        "country": "Russia",
+        "city": "Moscow",
+        "coordinates": [37.6173, 55.7558]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Kathua"
+      }
+    },
+    {
+      "id": 34,
+      "name": "Yasir Wani",
+      "profilePicture": "https://randomuser.me/api/portraits/men/34.jpg",
+      "currentLocation": {
+        "country": "Thailand",
+        "city": "Bangkok",
+        "coordinates": [100.5018, 13.7563]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Pulwama"
+      }
+    },
+    {
+      "id": 35,
+      "name": "Nadia Shah",
+      "profilePicture": "https://randomuser.me/api/portraits/women/35.jpg",
+      "currentLocation": {
+        "country": "Egypt",
+        "city": "Cairo",
+        "coordinates": [31.2357, 30.0444]
+      },
+      "indianOrigin": {
+        "state": "Jammu and Kashmir",
+        "city": "Rajouri"
+      }
+    }
+  ]
+} 

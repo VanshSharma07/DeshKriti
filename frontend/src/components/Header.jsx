@@ -106,6 +106,31 @@ const Header = () => {
     `${userInfo.firstName} ${userInfo.lastName}`.trim() : 
     'Guest';
 
+  // Add this new useEffect to listen for search events
+  useEffect(() => {
+    const handleGlobalSearch = (event) => {
+      const { searchQuery } = event.detail;
+      
+      // First clear any existing search
+      setSearchValue('');
+      setCategory('');
+      
+      // Small timeout to ensure state is cleared before setting new value
+      setTimeout(() => {
+        setSearchValue(searchQuery); // Update with new search query
+        navigate(`/products/search?category=${category || ''}&value=${searchQuery}`);
+      }, 50);
+    };
+
+    // Add event listener
+    window.addEventListener('deshkriti-search', handleGlobalSearch);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('deshkriti-search', handleGlobalSearch);
+    };
+  }, [category, navigate]);
+
   return (
     <div className="w-full h-auto ">
       {/* Background Video */}
@@ -157,6 +182,7 @@ const Header = () => {
                     Home
                   </Link>
                 </li>
+                
                 <li className="relative group">
                   <div className="flex items-center gap-1 cursor-pointer p-2 text-white">
                     Store
@@ -189,7 +215,16 @@ const Header = () => {
                     Blog
                   </Link>
                 </li>
-                <li className="relative group">
+                <li>
+                  <Link
+                    className={`p-2 ${
+                      pathname === "/social" ? "text-white" : "text-white"
+                    }`}
+                    to="/social">
+                    Community
+                  </Link>
+                </li>
+                {/* <li className="relative group">
                   <div className="flex items-center gap-1 cursor-pointer p-2 text-white">
                     Community
                     <IoMdArrowDropdown />
@@ -206,8 +241,8 @@ const Header = () => {
                       </Link>
                     </li>
                   </ul>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link
                     className={`p-2 ${
                       pathname === "/stories" ? "text-white" : "text-white"
@@ -215,7 +250,7 @@ const Header = () => {
                     to="/stories">
                     Stories
                   </Link>
-                </li>
+                </li> */}
               </ul>
 
               {/* Icons and Buttons Section - Aligned Right */}

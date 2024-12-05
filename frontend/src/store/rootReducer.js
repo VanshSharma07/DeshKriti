@@ -11,6 +11,8 @@ import communityMessageReducer from './reducers/communityMessageSlice';
 import communityConnectionReducer from './reducers/communityConnectionReducer';
 import storyReducer from './reducers/storyReducer';
 import surveyReducer from "./reducers/surveyReducer";
+import themeReducer from './slices/themeSlice';
+import socialReducer from "../state/social/socialSlice";
 
 const rootReducer = {
     home: homeReducer,
@@ -25,7 +27,9 @@ const rootReducer = {
     communityMessage: communityMessageReducer,
     communityConnection: communityConnectionReducer,
     story: storyReducer,
-    survey: surveyReducer
+    survey: surveyReducer,
+    theme: themeReducer,
+    social: socialReducer
 }   
 
 export default rootReducer;

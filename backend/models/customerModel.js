@@ -31,6 +31,22 @@ const customerSchema = new Schema({
         type: String,
         required: true,
         default: 'manually'
+    },
+    followersCount: {
+        type: Number,
+        default: 0
+    },
+    followingCount: {
+        type: Number,
+        default: 0
+    },
+    profilePicture: {
+        url: String,
+        public_id: String
+    },
+    indianState: {
+        type: String,
+        required: true
     }
 }, { timestamps: true })
 

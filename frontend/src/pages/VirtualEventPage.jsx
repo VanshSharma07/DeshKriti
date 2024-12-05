@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import EventCard from '../components/EventCard';
 import Header2 from '../components/Header2';
 import api from '../api/api';
+import Navbar from '../social/components/Navbar';
+import Footer from '../components/Footer';
+import { Box, Typography, useTheme } from '@mui/material';
 
 const VirtualEventPage = () => {
   const [events, setEvents] = useState([]);
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -22,34 +26,67 @@ const VirtualEventPage = () => {
   return (
     <>
       <Header2 />
-      <div className="min-h-screen bg-gray-50 py-16">
-        <div className="container mx-auto px-6">
-          <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
+      <Navbar />
+      <Box 
+        sx={{
+          minHeight: '100vh',
+          bgcolor: theme.palette.background.default,
+          py: 8
+        }}
+      >
+        <Box sx={{ maxWidth: '1200px', mx: 'auto', px: 3 }}>
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              fontWeight: 'bold', 
+              textAlign: 'center', 
+              color: theme.palette.text.primary, 
+              mb: 6 
+            }}
+          >
             Upcoming Virtual Events
-          </h1>
+          </Typography>
           
           {/* Horizontal Scrollable Container */}
-          <div className="relative">
+          <Box sx={{ position: 'relative' }}>
             {/* Scroll Container */}
-            <div className="flex justify-evenly overflow-x-auto gap-8 pb-8 scrollbar-hide">
+            <Box 
+              sx={{ 
+                display: 'flex', 
+                justifyContent: 'space-evenly', 
+                overflowX: 'auto', 
+                gap: 4, 
+                pb: 4,
+                '&::-webkit-scrollbar': { display: 'none' } // Hide scrollbar
+              }}
+            >
               {/* Event Cards */}
               {events.map((event) => (
-                <div key={event._id} className="flex-none">
+                <Box key={event._id} sx={{ flex: '0 0 auto' }}>
                   <EventCard event={event} />
-                </div>
+                </Box>
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
           {events.length === 0 && (
-            <div className="text-center text-gray-500 mt-8 text-lg">
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                textAlign: 'center', 
+                color: theme.palette.text.secondary, 
+                mt: 4 
+              }}
+            >
               No upcoming events at the moment.
-            </div>
+            </Typography>
           )}
-        </div>
-      </div>
+        </Box>
+      </Box>
+      <Footer />
     </>
   );
 };
 
 export default VirtualEventPage;
+

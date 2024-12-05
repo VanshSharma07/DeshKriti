@@ -1,16 +1,56 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api/api';
 
+export const updateUserLocation = createAsyncThunk(
+  'communityMap/updateUserLocation',
+  async (locationData, { rejectWithValue }) => {
+    try {
+      const { data } = await api.put('/community/map/location', locationData);
+      return data.location;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 
+        'Failed to update location'
+      );
+    }
+  }
+);
+
 export const fetchUserLocations = createAsyncThunk(
   'communityMap/fetchUserLocations',
   async (_, { rejectWithValue }) => {
     try {
+      console.log('Fetching user locations...');
       const { data } = await api.get('/community/map/locations');
-      console.log('Fetched locations data:', data);
-      return data.locations;
+      console.log('Response data:', data);
+      
+      if (!data?.locations) {
+        console.error('Invalid response format:', data);
+        return rejectWithValue('Invalid response format');
+      }
+
+      // Validate locations data
+      const validLocations = data.locations.filter(loc => {
+        if (!loc.location?.coordinates) {
+          console.error('Location missing coordinates:', loc);
+          return false;
+        }
+        if (!loc.userId) {
+          console.error('Location missing userId:', loc);
+          return false;
+        }
+        return true;
+      });
+
+      console.log('Valid locations:', validLocations.length);
+      return validLocations;
     } catch (error) {
       console.error('Error fetching locations:', error);
-      return rejectWithValue(error.response?.data || 'Failed to fetch locations');
+      return rejectWithValue(
+        error.response?.data?.message || 
+        error.message || 
+        'Failed to fetch locations'
+      );
     }
   }
 );
@@ -38,7 +78,8 @@ const communityMapSlice = createSlice({
     filteredLocations: [],
     selectedUser: null,
     loading: false,
-    error: null
+    error: null,
+    updateSuccess: false
   },
   reducers: {
     setSelectedUser: (state, action) => {
@@ -75,6 +116,20 @@ const communityMapSlice = createSlice({
       })
       .addCase(filterLocations.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateUserLocation.pending, (state) => {
+        state.loading = true;
+        state.updateSuccess = false;
+      })
+      .addCase(updateUserLocation.fulfilled, (state) => {
+        state.loading = false;
+        state.updateSuccess = true;
+        state.error = null;
+      })
+      .addCase(updateUserLocation.rejected, (state, action) => {
+        state.loading = false;
+        state.updateSuccess = false;
         state.error = action.payload;
       });
   }

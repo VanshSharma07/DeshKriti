@@ -5,24 +5,33 @@ import { useDispatch } from 'react-redux';
 import { setSelectedUser } from '../../../store/reducers/communityMapReducer';
 
 const UserPin = ({ user, isCurrentUser }) => {
+  console.log('UserPin render:', { user, isCurrentUser });
+
   const dispatch = useDispatch();
-  const { userId: userDetails, location } = user;
 
-  console.log('UserPin rendering for:', {
-    name: `${userDetails.firstName} ${userDetails.lastName}`,
-    coordinates: location.coordinates,
-    country: location.country
-  });
-
-  if (!location.coordinates || !Array.isArray(location.coordinates) || location.coordinates.length !== 2) {
-    console.error('Invalid coordinates for user:', userDetails.firstName, location.coordinates);
+  // Validate user data
+  if (!user?.userId || !user?.location?.coordinates) {
+    console.error('Invalid user data:', user);
     return null;
   }
 
-  const [longitude, latitude] = location.coordinates;
-  const position = [latitude, longitude];
+  const { userId: userDetails, location } = user;
+  console.log('User details:', userDetails);
+  console.log('Location:', location);
 
-  // Create marker icon
+  // Ensure coordinates are valid numbers and in the correct format [lat, lng]
+  const coordinates = location.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length !== 2 ||
+      !Number.isFinite(coordinates[0]) || !Number.isFinite(coordinates[1])) {
+    console.error('Invalid coordinates for user:', userDetails?.firstName, coordinates);
+    return null;
+  }
+
+  // Leaflet expects coordinates as [lat, lng], but some APIs return [lng, lat]
+  // Make sure we're using the correct order
+  const position = [coordinates[1], coordinates[0]]; // Convert from [lng, lat] to [lat, lng]
+
+  // Create custom marker icon
   const createCustomIcon = (isCurrentUser) => {
     return L.divIcon({
       className: 'custom-div-icon',

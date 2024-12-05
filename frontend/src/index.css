@@ -16,17 +16,9 @@
   padding: 20px 45px !important;
 }
 
-body {
-  background: linear-gradient(
-    to right,
-    rgba(255, 153, 51, 0.3), /* #FF9933 with 90% opacity */
-    rgba(255, 255, 255, 0.3), /* #FFFFFF with 40% opacity */
-    rgba(19, 136, 8, 0.3)     /* #138808 with 90% opacity */
-  );
-  background-attachment: fixed; /* Optional: keeps the gradient fixed during scrolling */
-  background-size: cover; /* Ensures it covers the entire body */
-  padding: 16px 0; /* Equivalent to `py-16` in Tailwind */
-}
+ body {
+  background-color: #f5f5f5;
+} 
 
 .react-multi-carousel-dot-list {
   bottom: -50px;
@@ -62,4 +54,43 @@ body {
   .mobile-menu-overlay {
     @apply fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300;
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.group:hover .shimmer {
+  animation: shimmer 2s infinite;
 }

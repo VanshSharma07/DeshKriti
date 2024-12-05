@@ -3,12 +3,12 @@ const { Schema, model } = require('mongoose');
 const communityMessageSchema = new Schema({
   senderId: {
     type: Schema.Types.ObjectId,
-    ref: 'customers',
+    ref: 'customer',
     required: true
   },
   receiverId: {
     type: Schema.Types.ObjectId,
-    ref: 'customers',
+    ref: 'customer',
     required: true
   },
   message: {
