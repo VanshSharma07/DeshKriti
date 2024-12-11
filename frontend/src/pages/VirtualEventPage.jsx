@@ -24,67 +24,33 @@ const VirtualEventPage = () => {
   }, []);
 
   return (
-    <>
-      <Header2 />
+    <div className='min-h-screen bg-gray-50'>
       <Navbar />
-      <Box 
-        sx={{
-          minHeight: '100vh',
-          bgcolor: theme.palette.background.default,
-          py: 8
-        }}
-      >
-        <Box sx={{ maxWidth: '1200px', mx: 'auto', px: 3 }}>
-          <Typography 
-            variant="h4" 
-            sx={{ 
-              fontWeight: 'bold', 
-              textAlign: 'center', 
-              color: theme.palette.text.primary, 
-              mb: 6 
-            }}
-          >
-            Upcoming Virtual Events
-          </Typography>
-          
-          {/* Horizontal Scrollable Container */}
-          <Box sx={{ position: 'relative' }}>
-            {/* Scroll Container */}
-            <Box 
-              sx={{ 
-                display: 'flex', 
-                justifyContent: 'space-evenly', 
-                overflowX: 'auto', 
-                gap: 4, 
-                pb: 4,
-                '&::-webkit-scrollbar': { display: 'none' } // Hide scrollbar
-              }}
-            >
-              {/* Event Cards */}
-              {events.map((event) => (
-                <Box key={event._id} sx={{ flex: '0 0 auto' }}>
-                  <EventCard event={event} />
-                </Box>
-              ))}
-            </Box>
-          </Box>
+      <Header2 title="Virtual Events" />
 
-          {events.length === 0 && (
+      <Box className='px-4 lg:px-8 py-8'>
+        <Typography variant="h4" className='text-gray-700 font-semibold mb-6'>
+          Upcoming Virtual Events
+        </Typography>
+
+        <Box className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {events.length > 0 ? (
+            events.map(event => (
+              <EventCard key={event.id} event={event} />
+            ))
+          ) : (
             <Typography 
               variant="body1" 
-              sx={{ 
-                textAlign: 'center', 
-                color: theme.palette.text.secondary, 
-                mt: 4 
-              }}
+              className='text-center text-gray-500 mt-4'
             >
               No upcoming events at the moment.
             </Typography>
           )}
         </Box>
       </Box>
+
       <Footer />
-    </>
+    </div>
   );
 };
 

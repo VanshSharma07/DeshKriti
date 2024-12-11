@@ -47,56 +47,40 @@ const decodeToken = (token) => {
 
 export const authReducer = createSlice({
     name: 'auth',
-    initialState:{
-        loader : false,
-        userInfo : decodeToken(localStorage.getItem('customerToken')),
-        errorMessage : '',
+    initialState: {
+        loader: false,
+        userInfo: decodeToken(localStorage.getItem('customerToken')),
+        errorMessage: '',
         successMessage: '',
-
     },
-    reducers : {
-        messageClear : (state,_) => {
+    reducers: {
+        messageClear: (state) => {
             state.errorMessage = ""
             state.successMessage = ""
         },
-        user_reset: (state,_) => {
+        user_reset: (state) => {
             state.userInfo = ""
+        },
+        updateUserInfo: (state) => {
+            state.userInfo = decodeToken(localStorage.getItem('customerToken'))
         }
     },
     extraReducers: (builder) => {
         builder
-        .addCase(customer_register.pending, (state, { payload }) => {
-            state.loader = true;
-        })
-        .addCase(customer_register.rejected, (state, { payload }) => {
-            const userInfo = decodeToken(payload.token)
-            state.errorMessage = payload.error;
-            state.loader = false;
-            state.userInfo=userInfo
-        })
-        .addCase(customer_register.fulfilled, (state, { payload }) => {
-            state.successMessage = payload.message;
-            state.loader = false;
-        })
-        .addCase(customer_login.pending, (state, { payload }) => {
-            state.loader = true;
-        })
-        .addCase(customer_login.rejected, (state, { payload }) => {
-            state.errorMessage = payload.error;
-            state.loader = false;
-        })
-        .addCase(customer_login.fulfilled, (state, { payload }) => {
-            
-            state.successMessage = payload.message;
-            state.loader = false;
-        })
-        
-
-        
-        
- 
-
+            .addCase(customer_login.fulfilled, (state, { payload }) => {
+                const userInfo = decodeToken(payload.token)
+                state.successMessage = payload.message
+                state.loader = false
+                state.userInfo = userInfo
+            })
+            .addCase(customer_register.fulfilled, (state, { payload }) => {
+                const userInfo = decodeToken(payload.token)
+                state.successMessage = payload.message
+                state.loader = false
+                state.userInfo = userInfo
+            })
     }
 })
-export const {messageClear,user_reset} = authReducer.actions
+
+export const { messageClear, user_reset, updateUserInfo } = authReducer.actions
 export default authReducer.reducer

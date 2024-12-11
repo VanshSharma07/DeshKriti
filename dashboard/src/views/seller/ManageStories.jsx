@@ -97,105 +97,115 @@ const ManageStories = () => {
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
-            <div className='w-full p-4 bg-[#283046] rounded-md'>
-                <div className='flex justify-between items-center mb-5'>
-                    <h2 className='text-xl font-semibold text-[#d0d2d6]'>Manage Stories</h2>
-                    <Link 
-                        to='/seller/dashboard/story/add'
-                        className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md'
-                    >
-                        Add New Story
-                    </Link>
+            <div className='bg-white p-6 rounded-lg shadow-md'>
+                <div className='flex flex-wrap justify-between items-center mb-6 gap-4'>
+                    <h1 className='text-2xl font-semibold text-gray-700'>Manage Stories</h1>
+                    <div className='flex items-center gap-4'>
+                        <Link 
+                            to="/seller/dashboard/add-story" 
+                            className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all flex items-center gap-2'
+                        >
+                            <span>Add New Story</span>
+                            <span className='text-xl'>+</span>
+                        </Link>
+                        <Search 
+                            setParPage={setPerPage}
+                            setSearchValue={setSearchValue}
+                            searchValue={searchValue}
+                        />
+                    </div>
                 </div>
 
-                <Search 
-                    setPerPage={setPerPage}
-                    setSearchValue={setSearchValue}
-                    searchValue={searchValue}
-                />
+                <div className='overflow-x-auto'>
+                    <table className='w-full whitespace-nowrap'>
+                        <thead>
+                            <tr className='bg-gray-50 border-b border-gray-100'>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Title</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Category</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Status</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Date</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {stories.map((story, index) => (
+                                <tr key={story._id} className='border-b border-gray-50 hover:bg-gray-50'>
+                                    <td className='py-3 px-4'>
+                                        <div className='flex items-center gap-3'>
+                                            <img 
+                                                src={story.image} 
+                                                alt={story.title} 
+                                                className='w-12 h-12 rounded-lg object-cover'
+                                            />
+                                            <div>
+                                                <h2 className='text-gray-700 font-medium'>{story.title}</h2>
+                                                <p className='text-sm text-gray-500'>{story.excerpt.substring(0, 50)}...</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className='py-3 px-4 text-gray-600'>{story.category}</td>
+                                    <td className='py-3 px-4'>
+                                        <span className={`px-3 py-1 rounded-full text-xs ${
+                                            story.status === 'published' 
+                                                ? 'bg-green-100 text-green-600' 
+                                                : 'bg-yellow-100 text-yellow-600'
+                                        }`}>
+                                            {story.status}
+                                        </span>
+                                    </td>
+                                    <td className='py-3 px-4 text-gray-600'>
+                                        {moment(story.createdAt).format('MMM DD, YYYY')}
+                                    </td>
+                                    <td className='py-3 px-4'>
+                                        <div className='flex items-center gap-3'>
+                                            <button
+                                                onClick={() => setSelectedStory(story)}
+                                                className='text-blue-500 hover:text-blue-600'
+                                            >
+                                                <FaEye size={18} />
+                                            </button>
+                                            <Link 
+                                                to={`/seller/dashboard/edit-story/${story._id}`}
+                                                className='text-green-500 hover:text-green-600'
+                                            >
+                                                <FaEdit size={18} />
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDelete(story._id)}
+                                                className='text-red-500 hover:text-red-600'
+                                            >
+                                                <FaTrash size={18} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
-                {loading ? (
-                    <div className='flex justify-center items-center h-48'>
-                        <span className='text-[#d0d2d6]'>Loading...</span>
+                {stories.length > 0 && (
+                    <div className='mt-4 flex justify-end'>
+                        <Pagination
+                            pageNumber={pageNumber}
+                            setPageNumber={setPageNumber}
+                            totalItems={totalStories}
+                            perPage={perPage}
+                            showingText={true}
+                        />
                     </div>
-                ) : (
-                    <>
-                        <div className='relative overflow-x-auto'>
-                            <table className='w-full text-sm text-left text-[#d0d2d6]'>
-                                <thead className='text-xs text-[#d0d2d6] uppercase border-b border-slate-700'>
-                                    <tr>
-                                        <th scope='col' className='py-3 px-4'>No</th>
-                                        <th scope='col' className='py-3 px-4'>Thumbnail</th>
-                                        <th scope='col' className='py-3 px-4'>Title</th>
-                                        <th scope='col' className='py-3 px-4'>Views</th>
-                                        <th scope='col' className='py-3 px-4'>Likes</th>
-                                        <th scope='col' className='py-3 px-4'>Date</th>
-                                        <th scope='col' className='py-3 px-4'>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {stories.map((story, index) => (
-                                        <tr key={story._id} className='border-b border-slate-700'>
-                                            <td className='py-3 px-4'>{index + 1}</td>
-                                            <td className='py-3 px-4'>
-                                                <img 
-                                                    src={story.thumbnail} 
-                                                    alt={story.title} 
-                                                    className='w-16 h-12 object-cover rounded'
-                                                />
-                                            </td>
-                                            <td className='py-3 px-4'>{story.title}</td>
-                                            <td className='py-3 px-4'>{story.views?.length || 0}</td>
-                                            <td className='py-3 px-4'>{story.likes?.length || 0}</td>
-                                            <td className='py-3 px-4'>
-                                                {moment(story.createdAt).format('DD/MM/YYYY')}
-                                            </td>
-                                            <td className='py-3 px-4'>
-                                                <div className='flex gap-2'>
-                                                    <button
-                                                        onClick={() => setSelectedStory(story)}
-                                                        className='p-2 bg-green-500 rounded-md hover:bg-green-600'
-                                                    >
-                                                        <FaEye />
-                                                    </button>
-                                                    <Link 
-                                                        to={`/seller/dashboard/story/edit/${story._id}`}
-                                                        className='p-2 bg-yellow-500 rounded-md hover:bg-yellow-600'
-                                                    >
-                                                        <FaEdit />
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDelete(story._id)}
-                                                        className='p-2 bg-red-500 rounded-md hover:bg-red-600'
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                )}
 
-                        {stories.length > 0 && (
-                            <div className="mt-4">
-                                <Pagination
-                                    pageNumber={pageNumber}
-                                    setPageNumber={setPageNumber}
-                                    totalItems={totalStories}
-                                    perPage={perPage}
-                                    showingText={true}
-                                />
-                            </div>
-                        )}
+                {loading && (
+                    <div className='flex justify-center items-center h-40'>
+                        <div className='animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent'></div>
+                    </div>
+                )}
 
-                        {stories.length === 0 && !loading && (
-                            <div className='text-center py-8'>
-                                <p className='text-[#d0d2d6]'>No stories found</p>
-                            </div>
-                        )}
-                    </>
+                {stories.length === 0 && !loading && (
+                    <div className='text-center py-8'>
+                        <p className='text-gray-500'>No stories found</p>
+                    </div>
                 )}
             </div>
 

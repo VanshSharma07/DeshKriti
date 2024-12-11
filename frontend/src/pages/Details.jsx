@@ -476,33 +476,43 @@ const Details = () => {
               {relatedProducts.map((p, i) => {
                 return (
                   <SwiperSlide key={i}>
-                    <Link to={`/product/details/${p.slug}`} className="block">
-                      <div className="relative h-[270px]">
-                        <div className="relative w-[800px] h-[800px]">
+                    <Link 
+                      to={`/product/details/${p.slug}`} 
+                      className="block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+                    >
+                      <div className="relative h-[270px] overflow-hidden rounded-t-lg">
+                        <div className="relative w-full h-full">
                           <img
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                             src={p.images[0]}
-                            alt=""
+                            alt={p.name}
                           />
-                          <div className="absolute h-full w-full top-0 left-0 bg-[#000] opacity-25 hover:opacity-50 transition-all duration-500"></div>
+                          <div className="absolute h-full w-full top-0 left-0 bg-black opacity-0 hover:opacity-20 transition-opacity duration-300"></div>
                         </div>
 
                         {p.discount !== 0 && (
-                          <div className="flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2">
-                            {p.discount}%
+                          <div className="flex justify-center items-center absolute text-white w-[45px] h-[45px] rounded-full bg-red-500 font-semibold text-sm left-3 top-3 shadow-lg">
+                            -{p.discount}%
                           </div>
                         )}
                       </div>
 
-                      <div className="p-4 flex flex-col gap-1">
-                        <h2 className="text-slate-600 text-lg font-bold">
-                          {p.name}{" "}
+                      <div className="p-5 flex flex-col gap-2">
+                        <h2 className="text-slate-700 text-lg font-bold hover:text-[#059473] transition-colors duration-300 line-clamp-1">
+                          {p.name}
                         </h2>
-                        <div className="flex justify-start items-center gap-3">
-                          <h2 className="text-lg font-bold text-slate-600">
-                            {p.price} INR
-                          </h2>
-                          <div className="flex">
+                        <div className="flex justify-between items-center">
+                          <div className="flex flex-col">
+                            <h2 className="text-xl font-bold text-[#059473]">
+                              {p.price} INR
+                            </h2>
+                            {p.discount !== 0 && (
+                              <span className="text-sm text-gray-500 line-through">
+                                {Math.floor(p.price * (1 + p.discount/100))} INR
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex bg-gray-50 p-1 rounded">
                             <Rating ratings={p.rating} />
                           </div>
                         </div>

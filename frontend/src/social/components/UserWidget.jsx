@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   ManageAccountsOutlined,
   LocationOnOutlined,
@@ -8,11 +9,11 @@ import UserImage from "./UserImage";
 import FlexBetween from "./FlexBetween";
 import WidgetWrapper from "./WidgetWrapper";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchUserProfile, fetchUserConnections } from "../../state/social/socialSlice";
 
-const UserWidget = ({ userId: propUserId }) => {
+const UserWidget = ({ propUserId }) => {
+  const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { palette } = useTheme();
@@ -33,13 +34,15 @@ const UserWidget = ({ userId: propUserId }) => {
       dispatch(fetchUserProfile(userId));
       dispatch(fetchUserConnections(userId));
     }
-  }, [dispatch, userId]);
+  }, [userId, dispatch]);
 
-  console.log('Current Profile Data:', {
-    currentProfile,
-    location: currentProfile?.location,
-    country: currentProfile?.country
-  });
+  // Get the correct image data
+  const getUserImage = (profile) => {
+    console.log("Processing user data for image:", profile);
+    if (profile?.profilePicture?.url) return profile.profilePicture;
+    if (profile?.image) return profile.image;
+    return null;
+  };
 
   const handleEditProfile = () => {
     navigate(`/social/profile/edit/${userId}`);
@@ -53,7 +56,7 @@ const UserWidget = ({ userId: propUserId }) => {
     <WidgetWrapper>
       <FlexBetween gap="0.5rem" pb="1.1rem">
         <FlexBetween gap="1rem">
-          <UserImage image={currentProfile.profilePicture || currentProfile.image} />
+          <UserImage image={getUserImage(currentProfile)} />
           <Box>
             <Typography
               variant="h4"
@@ -70,13 +73,15 @@ const UserWidget = ({ userId: propUserId }) => {
               {`${currentProfile.firstName} ${currentProfile.lastName}`}
             </Typography>
             <Typography color={medium}>
-              {connections.counts.followers} followers
+              {connections?.counts?.followers || 0} followers
             </Typography>
           </Box>
         </FlexBetween>
-        <IconButton onClick={handleEditProfile}>
-          <ManageAccountsOutlined />
-        </IconButton>
+        {userId === currentUser?.id && (
+          <IconButton onClick={handleEditProfile}>
+            <ManageAccountsOutlined />
+          </IconButton>
+        )}
       </FlexBetween>
 
       <Divider />
@@ -94,23 +99,6 @@ const UserWidget = ({ userId: propUserId }) => {
             {currentProfile.occupation || "Occupation not set"}
           </Typography>
         </Box>
-      </Box>
-
-      <Divider />
-
-      <Box p="1rem 0">
-        <FlexBetween mb="0.5rem">
-          <Typography color={medium}>Following</Typography>
-          <Typography color={main} fontWeight="500">
-            {connections.counts.following}
-          </Typography>
-        </FlexBetween>
-        <FlexBetween>
-          <Typography color={medium}>Followers</Typography>
-          <Typography color={main} fontWeight="500">
-            {connections.counts.followers}
-          </Typography>
-        </FlexBetween>
       </Box>
     </WidgetWrapper>
   );

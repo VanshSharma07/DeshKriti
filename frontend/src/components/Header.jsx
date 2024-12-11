@@ -271,15 +271,17 @@ const Header = () => {
                   )}
                 </div>
 
-                {/* Cart Icon */}
+                {/* Cart Icon - Replaced with Truck Logo */}
                 <div
                   onClick={redirect_card_page}
-                  className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2] hover:bg-gray-300">
-                  <span className="text-xl text-green-500">
-                    <PiShoppingCartFill />
-                  </span>
+                  className="relative flex justify-center items-center cursor-pointer w-[100px] h-[100px] rounded-full">
+                  <img 
+                    src="/images/truckLogo.png" 
+                    alt="Delivery Truck" 
+                    className="w-[70px] h-[70px] object-contain transition-transform duration-300 hover:scale-110"
+                  />
                   {card_product_count !== 0 && (
-                    <div className="w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+                    <div className="w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center top-0 right-0">
                       {card_product_count}
                     </div>
                   )}

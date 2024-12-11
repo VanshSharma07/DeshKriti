@@ -29,7 +29,7 @@ const MainLayout = () => {
     },[userInfo])
     const [showSidebar, setShowSidebar] = useState(false)
     return ( 
-        <div className='bg-[#cdcae9] w-full min-h-screen'>
+        <div className='bg-[#F5F5F5] w-full min-h-screen'>
             <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
 

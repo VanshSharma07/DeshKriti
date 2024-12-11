@@ -46,64 +46,83 @@ const LoanRequests = () => {
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
-            <h1 className='text-[20px] font-bold mb-3'>Loan Requests</h1>
-            <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
-                <Search 
-                    setParPage={setParPage} 
-                    setSearchValue={setSearchValue} 
-                    searchValue={searchValue} 
-                />
-                <div className='relative overflow-x-auto'>
-                    <table className='w-full text-sm text-left text-[#d0d2d6]'>
-                        <thead className='text-sm text-[#d0d2d6] uppercase border-b border-slate-700'>
-                            <tr>
-                                <th scope='col' className='py-3 px-4'>No</th>
-                                <th scope='col' className='py-3 px-4'>Seller</th>
-                                <th scope='col' className='py-3 px-4'>Amount</th>
-                                <th scope='col' className='py-3 px-4'>Purpose</th>
-                                <th scope='col' className='py-3 px-4'>Date</th>
-                                <th scope='col' className='py-3 px-4'>Status</th>
-                                <th scope='col' className='py-3 px-4'>Action</th>
+            <div className='bg-white p-6 rounded-lg shadow-md'>
+                {/* Header Section */}
+                <div className='flex flex-wrap justify-between items-center mb-6 gap-4'>
+                    <h1 className='text-2xl font-semibold text-gray-700'>Loan Requests</h1>
+                    <div className='flex items-center gap-4'>
+                        <Search 
+                            setParPage={setParPage}
+                            setSearchValue={setSearchValue}
+                            searchValue={searchValue}
+                        />
+                    </div>
+                </div>
+
+                {/* Loan Requests List */}
+                <div className='overflow-x-auto'>
+                    <table className='w-full whitespace-nowrap'>
+                        <thead>
+                            <tr className='bg-gray-50 border-b border-gray-100'>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Seller</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Amount</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Purpose</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Status</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {loanRequests.map((request, index) => (
-                                <tr key={request._id}>
-                                    <td scope='row' className='py-3 px-4'>{index + 1}</td>
-                                    <td scope='row' className='py-3 px-4'>{request.seller?.name}</td>
-                                    <td scope='row' className='py-3 px-4'>{request.amount} INR</td>
-                                    <td scope='row' className='py-3 px-4'>{request.purpose}</td>
-                                    <td scope='row' className='py-3 px-4'>
-                                        {moment(request.createdAt).format('LL')}
+                            {loanRequests.map((loan) => (
+                                <tr key={loan._id} className='border-b border-gray-50 hover:bg-gray-50'>
+                                    <td className='py-3 px-4'>
+                                        <div className='flex items-center gap-3'>
+                                            <img 
+                                                src={loan.seller.image} 
+                                                alt={loan.seller.name} 
+                                                className='w-10 h-10 rounded-full object-cover'
+                                            />
+                                            <div>
+                                                <h2 className='text-gray-700 font-medium'>{loan.seller.name}</h2>
+                                                <p className='text-sm text-gray-500'>{loan.seller.email}</p>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td scope='row' className='py-3 px-4'>
-                                        <span className={`py-1 px-3 rounded-md ${
-                                            request.status === 'pending' ? 'bg-yellow-500' :
-                                            request.status === 'approved' ? 'bg-green-500' :
-                                            'bg-red-500'
-                                        } text-white`}>
-                                            {request.status}
+                                    <td className='py-3 px-4 text-gray-700 font-medium'>
+                                        {loan.amount} INR
+                                    </td>
+                                    <td className='py-3 px-4 text-gray-600'>
+                                        {loan.purpose.substring(0, 30)}...
+                                    </td>
+                                    <td className='py-3 px-4'>
+                                        <span className={`px-3 py-1 rounded-full text-xs ${
+                                            loan.status === 'approved' 
+                                                ? 'bg-green-100 text-green-600'
+                                                : loan.status === 'rejected'
+                                                ? 'bg-red-100 text-red-600'
+                                                : 'bg-yellow-100 text-yellow-600'
+                                        }`}>
+                                            {loan.status}
                                         </span>
                                     </td>
-                                    <td scope='row' className='py-3 px-4'>
-                                        <div className='flex gap-2'>
+                                    <td className='py-3 px-4'>
+                                        <div className='flex items-center gap-2'>
                                             <button
-                                                onClick={() => setShowDetails(request)}
-                                                className='bg-blue-500 hover:shadow-blue-500/50 hover:shadow-lg text-white rounded px-3 py-1'
+                                                onClick={() => setShowDetails(loan)}
+                                                className='text-blue-500 hover:text-blue-600'
                                             >
                                                 View Details
                                             </button>
-                                            {request.status === 'pending' && (
+                                            {loan.status === 'pending' && (
                                                 <>
                                                     <button
-                                                        onClick={() => handleStatusUpdate(request._id, 'approved')}
-                                                        className='bg-green-500 hover:shadow-green-500/50 hover:shadow-lg text-white rounded px-3 py-1'
+                                                        onClick={() => handleStatusUpdate(loan._id, 'approved')}
+                                                        className='bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm'
                                                     >
                                                         Approve
                                                     </button>
                                                     <button
-                                                        onClick={() => handleStatusUpdate(request._id, 'rejected')}
-                                                        className='bg-red-500 hover:shadow-red-500/50 hover:shadow-lg text-white rounded px-3 py-1'
+                                                        onClick={() => handleStatusUpdate(loan._id, 'rejected')}
+                                                        className='bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm'
                                                     >
                                                         Reject
                                                     </button>
@@ -116,19 +135,23 @@ const LoanRequests = () => {
                         </tbody>
                     </table>
                 </div>
-                <Pagination 
-                    currentPage={currentPage}
-                    totalItems={totalRequests}
-                    parPage={parPage}
-                    setCurrentPage={setCurrentPage}
-                />
-                {showDetails && (
-                    <LoanDetailsModal 
-                        loan={showDetails} 
-                        onClose={() => setShowDetails(null)} 
+
+                {/* Pagination */}
+                <div className='mt-4 flex justify-end'>
+                    <Pagination 
+                        currentPage={currentPage}
+                        totalItems={totalRequests}
+                        parPage={parPage}
+                        setCurrentPage={setCurrentPage}
                     />
-                )}
+                </div>
             </div>
+            {showDetails && (
+                <LoanDetailsModal 
+                    loan={showDetails} 
+                    onClose={() => setShowDetails(null)} 
+                />
+            )}
         </div>
     );
 };

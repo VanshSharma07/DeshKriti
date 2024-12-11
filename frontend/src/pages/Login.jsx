@@ -12,10 +12,10 @@ import Header2 from "../components/Header2";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { loader, errorMessage, successMessage, userInfo } = useSelector(
     (state) => state.auth
   );
-  const dispatch = useDispatch();
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -35,15 +35,13 @@ const Login = () => {
     if (successMessage) {
       toast.success(successMessage);
       dispatch(messageClear());
+      navigate("/");
     }
     if (errorMessage) {
       toast.error(errorMessage);
       dispatch(messageClear());
     }
-    if (userInfo) {
-      navigate("/");
-    }
-  }, [successMessage, errorMessage]);
+  }, [successMessage, errorMessage, userInfo]);
 
   return (
     <div>

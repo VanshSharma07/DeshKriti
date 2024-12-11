@@ -114,47 +114,43 @@ const SellerDashboard = () => {
   return (
     <div className="px-2 md:px-7 py-5">
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7">
-        <div className="flex justify-between items-center p-5 bg-[#fae8e8] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
-            <h2 className="text-3xl font-bold">{totalSale} INR</h2>
-            <span className="text-md font-medium">Total Salse</span>
+        <div className="flex justify-between items-center p-5 bg-white rounded-lg shadow-md border border-blue-100">
+          <div className="flex flex-col justify-start items-start">
+            <h2 className="text-3xl font-bold text-gray-700">{totalSale} INR</h2>
+            <span className="text-sm font-medium text-gray-500">Total Sales</span>
           </div>
-
-          <div className="w-[40px] h-[47px] rounded-full bg-[#fa0305] flex justify-center items-center text-xl">
-            <MdCurrencyExchange className="text-[#fae8e8] shadow-lg" />
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center p-5 bg-[#fde2ff] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
-            <h2 className="text-3xl font-bold">{totalProduct}</h2>
-            <span className="text-md font-medium">Products</span>
-          </div>
-
-          <div className="w-[40px] h-[47px] rounded-full bg-[#760077] flex justify-center items-center text-xl">
-            <MdProductionQuantityLimits className="text-[#fae8e8] shadow-lg" />
+          <div className="w-[40px] h-[47px] rounded-full bg-blue-500 flex justify-center items-center text-xl">
+            <MdCurrencyExchange className="text-white" />
           </div>
         </div>
 
-        <div className="flex justify-between items-center p-5 bg-[#e9feea] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
-            <h2 className="text-3xl font-bold">{totalOrder}</h2>
-            <span className="text-md font-medium">Orders</span>
+        <div className="flex justify-between items-center p-5 bg-white rounded-lg shadow-md border border-blue-100">
+          <div className="flex flex-col justify-start items-start">
+            <h2 className="text-3xl font-bold text-gray-700">{totalOrder}</h2>
+            <span className="text-sm font-medium text-gray-500">Orders</span>
           </div>
-
-          <div className="w-[40px] h-[47px] rounded-full bg-[#038000] flex justify-center items-center text-xl">
-            <FaCartShopping className="text-[#fae8e8] shadow-lg" />
+          <div className="w-[40px] h-[47px] rounded-full bg-blue-500 flex justify-center items-center text-xl">
+            <FaCartShopping className="text-white" />
           </div>
         </div>
 
-        <div className="flex justify-between items-center p-5 bg-[#ecebff] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
-            <h2 className="text-3xl font-bold">{totalPendingOrder}</h2>
-            <span className="text-md font-medium">Pending Orders</span>
+        <div className="flex justify-between items-center p-5 bg-white rounded-lg shadow-md border border-blue-100">
+          <div className="flex flex-col justify-start items-start">
+            <h2 className="text-3xl font-bold text-gray-700">{totalProduct}</h2>
+            <span className="text-sm font-medium text-gray-500">Products</span>
           </div>
+          <div className="w-[40px] h-[47px] rounded-full bg-blue-500 flex justify-center items-center text-xl">
+            <MdProductionQuantityLimits className="text-white" />
+          </div>
+        </div>
 
-          <div className="w-[40px] h-[47px] rounded-full bg-[#0200f8] flex justify-center items-center text-xl">
-            <FaCartShopping className="text-[#fae8e8] shadow-lg" />
+        <div className="flex justify-between items-center p-5 bg-white rounded-lg shadow-md border border-blue-100">
+          <div className="flex flex-col justify-start items-start">
+            <h2 className="text-3xl font-bold text-gray-700">{totalPendingOrder}</h2>
+            <span className="text-sm font-medium text-gray-500">Pending Orders</span>
+          </div>
+          <div className="w-[40px] h-[47px] rounded-full bg-blue-500 flex justify-center items-center text-xl">
+            <FaUsers className="text-white" />
           </div>
         </div>
       </div>
@@ -172,22 +168,17 @@ const SellerDashboard = () => {
               }}
               series={state.series}
               type="bar"
-              height={350}
+              height={300}
             />
           </div>
         </div>
 
         <div className="w-full lg:w-5/12 lg:pl-4 mt-6 lg:mt-0">
-          <div className="w-full bg-[#6a5fdf] p-4 rounded-md text-[#d0d2d6]">
-            <div className="flex justify-between items-center">
-              <h2 className="font-semibold text-lg text-[#d0d2d6] pb-3">
-                Recent Customer Message
-              </h2>
-              <Link className="font-semibold text-sm text-[#d0d2d6]">
-                View All
-              </Link>
+          <div className="w-full bg-white shadow-lg rounded-lg p-4">
+            <div className="flex justify-between items-center border-b pb-3">
+              <h2 className="font-semibold text-lg text-gray-700">Recent Messages</h2>
+              <Link className="text-sm text-blue-500 hover:text-blue-600">View All</Link>
             </div>
-
             <div className="flex flex-col gap-2 pt-6 text-[#d0d2d6]">
               <ol className="relative border-1 border-slate-600 ml-4">
                 {recentMessage.map((m, i) => (

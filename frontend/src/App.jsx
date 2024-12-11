@@ -61,6 +61,7 @@ import StateGroupsPage from './components/community/StateGroupsPage';
 import MapViewPage from './components/community/MapViewPage';
 import News from './pages/News';
 import DiscussionPage from './components/community/groups/DiscussionPage';
+import ARGallery from './pages/ARGallery';
 
 // Import MainPage using lazy loading
 const MainPage = React.lazy(() => import('./3dmap/pages/MainPage'));
@@ -163,9 +164,10 @@ function App() {
                 <Route path='/map-view' element={<MapViewPage />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/discussions/:subgroupName" element={<DiscussionPage />} />
+                <Route path='/ar-gallery' element={<ARGallery />} />
               </Routes>
             </Suspense>
-            <ChatBot />
+            {/* <ChatBot /> */}
           </BrowserRouter>
         </StateDataProvider>
       </ThemeProvider>

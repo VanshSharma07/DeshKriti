@@ -22,87 +22,108 @@ const Sellers = () => {
     },[searchValue,currentPage,parPage])
     return (
         <div className='px-2 lg:px-7 pt-5'>
-             <h1 className='text-[20px] font-bold mb-3'>Seller </h1>
-             <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
+             <div className='bg-white p-6 rounded-lg shadow-md'>
             
-             <div className='flex justify-between items-center'>
-                    <select onChange={(e) => setParPage(parseInt(e.target.value))} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'>
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option> 
-                    </select>
-                    <input onChange={e => setSearchValue(e.target.value)} value={searchValue} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='search' /> 
+             <div className='flex flex-wrap justify-between items-center mb-6 gap-4'>
+                    <h1 className='text-2xl font-semibold text-gray-700'>Active Sellers</h1>
+                    <div className='flex items-center gap-4'>
+                        <select 
+                            onChange={(e) => setParPage(parseInt(e.target.value))} 
+                            className='px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 text-gray-600'
+                        >
+                            <option value="5">5 per page</option>
+                            <option value="10">10 per page</option>
+                            <option value="15">15 per page</option>
+                        </select>
+                        <input 
+                            type="text"
+                            placeholder='Search sellers...'
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            className='px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 text-gray-600'
+                        />
+                    </div>
                 </div>
 
-                <div className='relative overflow-x-auto'>
-    <table className='w-full text-sm text-left text-[#d0d2d6]'>
-        <thead className='text-sm text-[#d0d2d6] uppercase border-b border-slate-700'>
-        <tr>
-            <th scope='col' className='py-3 px-4'>No</th>
-            <th scope='col' className='py-3 px-4'>Image</th>
-            <th scope='col' className='py-3 px-4'>Name</th>
-            <th scope='col' className='py-3 px-4'>Shop Name</th> 
-            <th scope='col' className='py-3 px-4'>Payment Status</th> 
-            <th scope='col' className='py-3 px-4'>Email</th> 
-            <th scope='col' className='py-3 px-4'>Région </th> 
-            <th scope='col' className='py-3 px-4'>Gouvernorat</th> 
-            <th scope='col' className='py-3 px-4'>Action</th> 
-        </tr>
+                <div className='overflow-x-auto'>
+    <table className='w-full whitespace-nowrap'>
+        <thead>
+          <tr className='bg-gray-50 border-b border-gray-100'>
+            <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Seller</th>
+            <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Shop Info</th>
+            <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Status</th>
+            <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Payment Status</th>
+            <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Action</th>
+          </tr>
         </thead>
-
         <tbody>
-            {
-                sellers.map((d, i) => <tr key={i}>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{i+1}</td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                    <img className='w-[45px] h-[45px]' src={d.image} alt="" />
-                </td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.name} </td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.shopInfo?.shopName}</td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                    <span>{d.payment}</span> </td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.email} </td>
+          {sellers.map((seller, i) => (
+            <tr key={i} className='border-b border-gray-50 hover:bg-gray-50'>
+              <td className='py-3 px-4'>
+                <div className='flex items-center gap-3'>
+                  <img 
+                    src={seller.image} 
+                    alt={seller.name} 
+                    className='w-12 h-12 rounded-full object-cover'
+                  />
+                  <div>
+                    <h2 className='text-gray-700 font-medium'>{seller.name}</h2>
+                    <p className='text-sm text-gray-500'>{seller.email}</p>
+                  </div>
+                </div>
+              </td>
+              <td className='py-3 px-4'>
+                <div>
+                  <h3 className='text-gray-700'>{seller.shopInfo?.shopName}</h3>
+                  <p className='text-sm text-gray-500'>{seller.shopInfo?.division}</p>
+                </div>
+              </td>
+              <td className='py-3 px-4'>
+                <span className={`px-3 py-1 rounded-full text-xs ${
+                  seller.status === 'active' 
+                    ? 'bg-green-100 text-green-600' 
+                    : 'bg-yellow-100 text-yellow-600'
+                }`}>
+                  {seller.status}
+                </span>
+              </td>
+              <td className='py-3 px-4'>
+                <span className={`px-3 py-1 rounded-full text-xs ${
+                  seller.payment === 'active' 
+                    ? 'bg-green-100 text-green-600' 
+                    : 'bg-red-100 text-red-600'
+                }`}>
+                  {seller.payment}
+                </span>
+              </td>
+              <td className='py-3 px-4'>
+                <Link 
+                  to={`/admin/dashboard/seller/details/${seller._id}`}
+                  className='bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm transition-all'
+                >
+                  View Details
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.shopInfo?.division} </td>
-
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.shopInfo?.district} </td>
-                 
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                    <div className='flex justify-start items-center gap-4'>
-                    <Link to={`/admin/dashboard/seller/details/${d._id}`} className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'> <FaEye /> </Link> 
-                    
-                    </div>
-                    
-                    </td>
-            </tr> )
-            }
-
-            
-        </tbody> 
-    </table> 
-    </div>  
-    {
-        totalSeller <= parPage ?  <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
-        <Pagination 
-            pageNumber = {currentPage}
-            setPageNumber = {setCurrentPage}
-            totalItem = {totalSeller}
-            parPage = {parPage}
-            showItem = {3}
+    {/* Pagination */}
+    {totalSeller > parPage && (
+      <div className='mt-4 flex justify-end'>
+        <Pagination
+          pageNumber={currentPage}
+          setPageNumber={setCurrentPage}
+          totalItem={totalSeller}
+          parPage={parPage}
+          showItem={3}
         />
-        </div> : ""
-    }
-
-   
-
-
-
-
-
-
-             </div>
-            
-        </div>
+      </div>
+    )}
+  </div>
+</div>
     );
 };
 

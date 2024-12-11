@@ -18,6 +18,30 @@ const Friend = ({
   onClick,
   hideActions = false
 }) => {
+  console.log("Friend Component - Received Image Data:", {
+    type: typeof userPicturePath,
+    value: userPicturePath
+  });
+
+  const getImageData = (imagePath) => {
+    // If it's already a profilePicture object with url
+    if (typeof imagePath === 'object' && imagePath?.url) {
+      return imagePath;
+    }
+    
+    // If it's a profilePicture nested object
+    if (imagePath?.profilePicture?.url) {
+      return imagePath.profilePicture;
+    }
+    
+    // If it's a direct string URL
+    if (typeof imagePath === 'string') {
+      return { url: imagePath };
+    }
+    
+    return null;
+  };
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.auth.userInfo);
@@ -140,12 +164,20 @@ const Friend = ({
           width: '100%'
         }}
       >
-        <UserImage image={userPicturePath} size="55px" />
+        <UserImage 
+          image={getImageData(userPicturePath)} 
+          size="55px" 
+        />
         <Box>
           <Typography
             color={main}
             variant="h5"
             fontWeight="500"
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
           >
             {name}
           </Typography>

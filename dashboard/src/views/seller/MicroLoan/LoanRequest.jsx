@@ -57,68 +57,68 @@ const LoanRequest = () => {
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
-            <div className='w-full p-4 bg-[#283046] rounded-md'>
-                <h2 className='text-xl font-semibold text-white mb-4'>Request Microloan</h2>
+            <div className='bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto'>
+                <h1 className='text-2xl font-semibold text-gray-700 mb-6'>Request Micro Loan</h1>
+
                 <form onSubmit={handleSubmit}>
-                    <div className='flex flex-col gap-3 mb-3'>
-                        <label htmlFor='amount' className='text-white'>Loan Amount (INR)</label>
-                        <input 
-                            type='number'
-                            id='amount'
-                            min="1000"
-                            max="100000"
-                            className='px-3 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-white'
-                            value={formData.amount}
-                            onChange={(e) => setFormData({...formData, amount: e.target.value})}
-                            required
-                            disabled={loader}
-                        />
-                    </div>
-                    <div className='flex flex-col gap-3 mb-3'>
-                        <label htmlFor='repaymentPeriod' className='text-white'>Repayment Period (Months)</label>
-                        <select
-                            id='repaymentPeriod'
-                            className='px-3 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-white'
-                            value={formData.repaymentPeriod}
-                            onChange={(e) => setFormData({...formData, repaymentPeriod: e.target.value})}
-                            disabled={loader}
-                        >
-                            <option value="3">3 Months</option>
-                            <option value="6">6 Months</option>
-                            <option value="12">12 Months</option>
-                        </select>
-                    </div>
-                    <div className='flex flex-col gap-3 mb-3'>
-                        <label htmlFor='purpose' className='text-white'>Purpose</label>
-                        <textarea
-                            id='purpose'
-                            className='px-3 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-white'
-                            value={formData.purpose}
-                            onChange={(e) => setFormData({...formData, purpose: e.target.value})}
-                            required
-                            disabled={loader}
-                            rows={3}
-                            placeholder='Briefly describe the purpose of your loan request'
-                        />
-                    </div>
-                    <div className='flex flex-col gap-3 mb-3'>
-                        <label htmlFor='businessPlan' className='text-white'>Business Plan</label>
-                        <textarea
-                            id='businessPlan'
-                            className='px-3 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-white'
-                            value={formData.businessPlan}
-                            onChange={(e) => setFormData({...formData, businessPlan: e.target.value})}
-                            required
-                            disabled={loader}
-                            rows={6}
-                            placeholder='Provide a detailed business plan'
-                        />
-                    </div>
-                    <div className='mt-4'>
+                    <div className='space-y-6'>
+                        <div>
+                            <label className='block text-gray-600 mb-2'>Loan Amount (INR)</label>
+                            <input
+                                type='number'
+                                name='amount'
+                                value={formData.amount}
+                                onChange={(e) => setFormData({...formData, amount: e.target.value})}
+                                className='w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400'
+                                placeholder='Enter amount'
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label className='block text-gray-600 mb-2'>Purpose of Loan</label>
+                            <input
+                                type='text'
+                                name='purpose'
+                                value={formData.purpose}
+                                onChange={(e) => setFormData({...formData, purpose: e.target.value})}
+                                className='w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400'
+                                placeholder='Brief purpose of the loan'
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label className='block text-gray-600 mb-2'>Repayment Period</label>
+                            <select
+                                name='repaymentPeriod'
+                                value={formData.repaymentPeriod}
+                                onChange={(e) => setFormData({...formData, repaymentPeriod: e.target.value})}
+                                className='w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400'
+                            >
+                                <option value='3'>3 months</option>
+                                <option value='6'>6 months</option>
+                                <option value='12'>12 months</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className='block text-gray-600 mb-2'>Business Plan</label>
+                            <textarea
+                                name='businessPlan'
+                                value={formData.businessPlan}
+                                onChange={(e) => setFormData({...formData, businessPlan: e.target.value})}
+                                rows='4'
+                                className='w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400'
+                                placeholder='Detailed business plan and how you plan to use the loan'
+                                required
+                            />
+                        </div>
+
                         <button
                             type='submit'
                             disabled={loader}
-                            className='bg-blue-500 hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-md px-7 py-2 w-full'
+                            className='w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all disabled:bg-blue-300'
                         >
                             {loader ? 'Processing...' : 'Submit Request'}
                         </button>

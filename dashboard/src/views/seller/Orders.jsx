@@ -27,64 +27,76 @@ const Orders = () => {
     },[searchValue,currentPage,parPage])
     return (
         <div className='px-2 lg:px-7 pt-5'>
-            <h1 className='text-[#000000] font-semibold text-lg mb-3'>Orders</h1>
+            <div className='w-full bg-white p-4 rounded-lg shadow-md'>
+                <div className='flex justify-between items-center mb-6'>
+                    <h1 className='text-xl font-semibold text-gray-700'>Orders Management</h1>
+                    <Search 
+                        setParPage={setParPage} 
+                        setSearchValue={setSearchValue} 
+                        searchValue={searchValue} 
+                    />
+                </div>
 
-         <div className='w-full p-4 bg-[#6a5fdf] rounded-md'> 
-         <Search setParPage={setParPage} setSearchValue={setSearchValue} searchValue={searchValue} />
+                <div className='w-full overflow-x-auto'>
+                    <table className='w-full whitespace-nowrap'>
+                        <thead>
+                            <tr className='bg-gray-50 border-b border-gray-100'>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Order ID</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Price</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Payment Status</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Order Status</th>
+                                <th className='py-3 px-4 text-left text-sm font-semibold text-gray-600'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {myOrders.map((order, i) => (
+                                <tr key={i} className='border-b border-gray-50 hover:bg-gray-50'>
+                                    <td className='py-3 px-4 text-sm text-gray-700'>#{order._id}</td>
+                                    <td className='py-3 px-4 text-sm text-gray-700'>{order.price} INR</td>
+                                    <td className='py-3 px-4'>
+                                        <span className={`px-3 py-1 rounded-full text-xs ${
+                                            order.payment_status === 'paid' 
+                                                ? 'bg-green-100 text-green-600' 
+                                                : 'bg-yellow-100 text-yellow-600'
+                                        }`}>
+                                            {order.payment_status}
+                                        </span>
+                                    </td>
+                                    <td className='py-3 px-4'>
+                                        <span className={`px-3 py-1 rounded-full text-xs ${
+                                            order.delivery_status === 'delivered' 
+                                                ? 'bg-green-100 text-green-600'
+                                                : 'bg-blue-100 text-blue-600'
+                                        }`}>
+                                            {order.delivery_status}
+                                        </span>
+                                    </td>
+                                    <td className='py-3 px-4'>
+                                        <Link 
+                                            to={`/seller/dashboard/order/details/${order._id}`}
+                                            className='bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm transition-all'
+                                        >
+                                            View Details
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
-
-         <div className='relative overflow-x-auto mt-5'>
-    <table className='w-full text-sm text-left text-[#d0d2d6]'>
-        <thead className='text-sm text-[#d0d2d6] uppercase border-b border-slate-700'>
-        <tr>
-             
-            <th scope='col' className='py-3 px-4'>Order Id</th>
-            <th scope='col' className='py-3 px-4'>Price</th>
-            <th scope='col' className='py-3 px-4'>Payment Status</th>
-            <th scope='col' className='py-3 px-4'>Order Status</th> 
-            <th scope='col' className='py-3 px-4'>Action</th> 
-        </tr>
-        </thead>
-
-        <tbody>
-            {
-                myOrders.map((d, i) => <tr key={i}>
-                 
-                 <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>#{d._id}</td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.price} TND</td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.payment_status} </td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.delivery_status}</td> 
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.date}</td> 
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                    <div className='flex justify-start items-center gap-4'>
-                   
-                    <Link to={`/seller/dashboard/order/details/${d._id}`} className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'> <FaEye/> </Link>
-                   
+                {totalOrder > parPage && (
+                    <div className='mt-4 flex justify-end'>
+                        <Pagination
+                            pageNumber={currentPage}
+                            setPageNumber={setCurrentPage}
+                            totalItem={totalOrder}
+                            parPage={parPage}
+                            showItem={3}
+                        />
                     </div>
-                    
-                    </td>
-            </tr> )
-            }
-
-            
-        </tbody> 
-    </table> 
-    </div>  
-
-    {
-        totalOrder <= parPage ? "" : <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
-        <Pagination 
-            pageNumber = {currentPage}
-            setPageNumber = {setCurrentPage}
-            totalItem = {totalOrder}
-            parPage = {parPage}
-            showItem = {3}
-        />
-        </div>
-}
-
-           
-         </div>
+                )}
+            </div>
         </div>
     );
 };

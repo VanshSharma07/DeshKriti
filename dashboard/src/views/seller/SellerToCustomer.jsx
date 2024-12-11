@@ -106,14 +106,23 @@ const SellerToCustomer = () => {
     <div className='w-full md:w-[calc(100%-200px)] md:pl-4'>
         <div className='flex justify-between items-center'>
             {
-                sellerId && <div className='flex justify-start items-center gap-3'>
-           <div className='relative'>
-           <img className='w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full' src="http://localhost:3001/images/man.png" alt="" />
-         <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
-        </div>
-        <h2 className='text-base text-white font-semibold'>{currentCustomer.name}</h2>
-
-                </div>
+                sellerId && currentCustomer ? (
+                    <div className='flex justify-start items-center gap-3'>
+                        <div className='relative'>
+                            <img 
+                                className='w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full' 
+                                src="http://localhost:3001/images/man.png" 
+                                alt="" 
+                            />
+                            <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
+                        </div>
+                        <h2 className='text-base text-white font-semibold'>
+                            {currentCustomer.name || 'Unknown Customer'}
+                        </h2>
+                    </div>
+                ) : (
+                    <div className='text-white'>Loading customer details...</div>
+                )
             }
 
             <div onClick={()=> setShow(!show)} className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'>

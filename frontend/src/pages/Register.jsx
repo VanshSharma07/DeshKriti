@@ -163,7 +163,7 @@ const Register = () => {
       toast.error(errorMessage);
       dispatch(messageClear());
     }
-  }, [successMessage, errorMessage, dispatch, navigate]);
+  }, [successMessage, errorMessage, userInfo]);
 
   return (
     <div>

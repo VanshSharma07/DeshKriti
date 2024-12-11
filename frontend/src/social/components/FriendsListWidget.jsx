@@ -66,6 +66,11 @@ const FriendsListWidget = ({ userId }) => {
     return () => window.removeEventListener('refreshFriendsList', handleRefresh);
   }, [userId, currentUser]);
 
+  const formatFriendData = (friend) => ({
+    ...friend,
+    userPicturePath: friend.profilePicture || { url: friend.image }
+  });
+
   if (loading) {
     return (
       <WidgetWrapper>
@@ -113,10 +118,10 @@ const FriendsListWidget = ({ userId }) => {
               friendId={friend._id}
               name={`${friend.firstName} ${friend.lastName}`}
               subtitle={friend.location}
-              userPicturePath={friend.image}
+              userPicturePath={formatFriendData(friend).userPicturePath}
               connectionStatus={friend.connectionStatus}
               requestId={friend.requestId}
-              onStatusChange={getFriends} // Refresh list when status changes
+              onStatusChange={getFriends}
             />
           ))
         ) : (
