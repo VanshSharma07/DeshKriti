@@ -56,13 +56,39 @@ export const get_order_details = createAsyncThunk(
 )
 // End Method 
 
+export const get_seller_order = createAsyncThunk(
+    'order/get_seller_order',
+    async(orderId, {rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.get(`/seller/order/get-order/${orderId}`);
+            return fulfillWithValue(data);
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const seller_order_status_update = createAsyncThunk(
+    'order/seller_order_status_update',
+    async({orderId, info}, {rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.put(`/seller/order/order-status-update/${orderId}`, info);
+            return fulfillWithValue(data);
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 export const orderReducer = createSlice({
     name: 'order',
     initialState:{
         myOrders : [],
         errorMessage: '',
+        successMessage: '',
         shipping_fee: 0,
-        myOrder : {}
+        myOrder : {},
+        order: null
 
     },
     reducers : {
@@ -79,6 +105,15 @@ export const orderReducer = createSlice({
         })
         .addCase(get_order_details.fulfilled, (state, { payload }) => { 
             state.myOrder = payload.order; 
+        })
+        .addCase(get_seller_order.fulfilled, (state, {payload}) => {
+            state.order = payload.order;
+        })
+        .addCase(seller_order_status_update.fulfilled, (state, {payload}) => {
+            state.successMessage = payload.message;
+        })
+        .addCase(seller_order_status_update.rejected, (state, {payload}) => {
+            state.errorMessage = payload.message;
         })
  
 

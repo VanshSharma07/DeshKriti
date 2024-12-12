@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBack } from 'react-icons/io5';
-import { FaSpinner, FaArrowUp } from 'react-icons/fa';
+import { FaSpinner, FaArrowUp, FaSearch } from 'react-icons/fa';
 import { detailedStateData } from '../data/stateData';
 import Header2 from '../../components/Header2';
 
@@ -16,30 +16,65 @@ const FALLBACK_IMAGES = {
   heritage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQu3gBB7SFMDzGhF1EJtCXFZQ9HmvFkSR_DA&s"
 };
 
-// Reusable Card Component
-const Card = ({ image, title, description, category, className = "" }) => (
-  <motion.div className="bg-white rounded-lg shadow-lg overflow-hidden">
-    <div className="relative overflow-hidden h-64">
-      <img
-        loading="lazy"
-        src={image}
-        alt={title}
-        className="w-full h-full object-cover"
-        width={400}
-        height={300}
-        onError={(e) => {
-          e.target.src = FALLBACK_IMAGES[category];
-          e.target.onerror = null;
-        }}
-      />
-    </div>
-    <div className="p-4">
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-    </div>
-  </motion.div>
-);
+// Add this custom event function at the top of the file, outside the component
+const triggerGlobalSearch = (searchQuery) => {
+  const searchEvent = new CustomEvent('deshkriti-search', {
+    detail: { searchQuery }
+  });
+  window.dispatchEvent(searchEvent);
+};
 
+// Reusable Card Component
+const Card = ({ image, title, description, category, className = "" }) => {
+  const handleProductSearch = () => {
+    if (category === 'product') {
+      // Create a search query with product name
+      const searchQuery = `${title}`;
+      triggerGlobalSearch(searchQuery);
+    }
+  };
+
+  return (
+    <motion.div 
+      className={`group relative bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 cursor-pointer ${className}`}
+      onClick={category === 'product' ? handleProductSearch : undefined}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <div className="relative overflow-hidden h-64">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
+          width={400}
+          height={300}
+          onError={(e) => {
+            e.target.src = FALLBACK_IMAGES[category];
+            e.target.onerror = null;
+          }}
+        />
+        {category === 'product' && (
+          <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div className="text-white flex items-center gap-2">
+              <FaSearch className="text-xl" />
+              <span>Search to Buy</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="p-6">
+        <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
+        <p className="text-gray-600 text-sm line-clamp-2">{description}</p>
+        {category === 'product' && (
+          <div className="mt-4 flex items-center text-blue-500 text-sm font-medium">
+            <FaSearch className="mr-2" />
+          
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
 
 // Section Title Component
 const SectionTitle = ({ children }) => (

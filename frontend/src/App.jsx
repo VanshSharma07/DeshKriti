@@ -167,7 +167,7 @@ function App() {
                 <Route path='/ar-gallery' element={<ARGallery />} />
               </Routes>
             </Suspense>
-            {/* <ChatBot /> */}
+            <ChatBot />
           </BrowserRouter>
         </StateDataProvider>
       </ThemeProvider>

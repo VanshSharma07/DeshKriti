@@ -9,38 +9,84 @@ const ARGallery = () => {
     {
       id: 1,
       name: 'Himachali Caps (Kullu Caps)',
-      image: 'http://res.cloudinary.com/drsw89roc/image/upload/v1733218308/products/vsfma9qi9xcno7750n60.webp',
-      qrCode: 'http://res.cloudinary.com/drsw89roc/image/upload/v1733218309/products/unschcybruy2eqgtaxv1.png',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfbiqA772HkvJE7o24Qnd7PK9Pi5tx_F9PsQ&s',
+      qrCode: '/images/ar/Himachali Cap.png',
       description: 'Experience the intricate details of Banarasi weaving in AR'
     },
     {
       id: 2,
       name: 'Handcrafted Pottery',
-      image: 'https://example.com/pottery-image.jpg',
-      qrCode: 'https://example.com/pottery-qr.png',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsBV7IOlPziHPGxPgJ8jILafg3XBxE6JuUmA&s',
+      qrCode: '/images/ar/Diya.png',
       description: 'View this authentic Indian pottery in your space'
     },
-    // Add more products as needed
+    {
+      id: 3,
+      name: 'Ganesha',
+      image: 'https://panchakritya.com/cdn/shop/articles/lord_ganesha_painting.jpg?v=1713711271',
+      qrCode: '/images/ar/Ganesha.png',
+      description: 'Bring the Hindu deity Ganesha into your space'
+    },
+    {
+      id: 4,
+      name: 'Athangudi Tiles',
+      image: 'https://www.joinpaperplanes.com/wp-content/uploads/2022/04/Untitled-design.png',
+      qrCode: '/images/ar/Athangudi Tiles.png',
+      description: 'Explore the beauty of traditional Athangudi tiles'
+    },
+    {
+      id: 5,
+      name: 'Necklace',
+      image: 'https://st4.depositphotos.com/6056438/27543/i/450/depositphotos_275439654-stock-photo-indian-traditional-gold-necklace-lakshmi.jpg',
+      qrCode: '/images/ar/Necklace.png',
+      description: 'Visualize this intricate Indian necklace in your space'
+    },
+    {
+      id: 6,
+      name: 'Sitar',
+      image: 'https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_01fa79a8-eaf9-11e7-ba01-0264b08f54bd.jpg',
+      qrCode: '/images/ar/Sitar.png',
+      description: 'Experience the classic Indian musical instrument, the Sitar'
+    }
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header2 />
-      
+
       {/* Hero Section */}
-      <section className='bg-[url("http://localhost:3000/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
-        <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
-          <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
-            <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">AR Product Gallery</h2>
-              <div className="flex justify-center items-center gap-2 text-2xl w-full">
-                <Link to="/">Home</Link>
-                <span className="pt-1">
-                  <IoIosArrowForward />
-                </span>
-                <span>AR Gallery</span>
-              </div>
-            </div>
+      <section className="relative h-[220px] mt-6 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url("/images/banner/arbanner.png")' }}
+        >
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
+          <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
+            <motion.h2 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl font-bold"
+            >
+              AR Product Gallery
+            </motion.h2>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex justify-center items-center gap-2 text-2xl w-full"
+            >
+              <Link to="/" className="hover:text-blue-300 transition-colors">Home</Link>
+              <span className="pt-1">
+                <IoIosArrowForward />
+              </span>
+              <span>AR Gallery</span>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -91,11 +137,11 @@ const ARGallery = () => {
                   </div>
                   
                   {/* QR Code */}
-                  <div className="p-4 flex flex-col items-center justify-center bg-gray-50">
+                  <div className="p-4 flex flex-col contain items-center justify-center bg-gray-50">
                     <img
                       src={product.qrCode}
                       alt={`QR code for ${product.name}`}
-                      className="w-48 h-48"
+                      className="w-78 h-78"
                     />
                     <p className="text-center mt-4 text-sm text-gray-600">
                       Scan to view in AR
@@ -151,4 +197,4 @@ const ARGallery = () => {
   );
 };
 
-export default ARGallery; 
+export default ARGallery;

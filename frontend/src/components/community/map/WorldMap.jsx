@@ -14,7 +14,7 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-const WorldMap = () => {
+const WorldMap = ({ setIsLoading }) => {
     const dispatch = useDispatch();
     const { userLocations, filteredLocations, loading, error } = useSelector(state => state.communityMap);
     const { userInfo } = useSelector(state => state.auth);
@@ -23,17 +23,20 @@ const WorldMap = () => {
     useEffect(() => {
         const loadLocations = async () => {
             try {
+                setIsLoading(true);
                 console.log('Loading locations...');
                 const result = await dispatch(fetchUserLocations()).unwrap();
                 console.log('Loaded locations:', result);
                 setMapKey(prev => prev + 1);
             } catch (error) {
                 console.error('Error loading locations:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         loadLocations();
-    }, [dispatch]);
+    }, [dispatch, setIsLoading]);
 
     useEffect(() => {
         if (filteredLocations?.length > 0) {

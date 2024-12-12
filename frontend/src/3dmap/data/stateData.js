@@ -395,7 +395,7 @@ export const detailedStateData = {
         {
           "name": "Dry Fruits",
           "description": "Premium quality almonds, walnuts, and dried apricots from Kashmir.",
-          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTjhMclIcDFeUZ5Nlpe-qxGsRv99Q56v4R9g&s"
+          "imageUrl": "https://sindhidryfruits.live/cdn/shop/articles/1154896831-170667a.png?v=1720667576"
         }
       ]
     },
@@ -415,7 +415,7 @@ export const detailedStateData = {
         {
           "name": "Hemis Festival",
           "description": "A Buddhist celebration in Ladakh with colorful mask dances.",
-          "imageUrl": "https://static.toiimg.com/thumb/73373610.cms?imgsize=1512706&width=800&height=800"
+          "imageUrl": "https://www.oyorooms.com/blog/wp-content/uploads/2018/08/cover-1.jpg"
         }
       ],
       "traditions": [
@@ -448,7 +448,7 @@ export const detailedStateData = {
         {
           "name": "Modur Pulao",
           "description": "Sweet saffron rice cooked with dry fruits.",
-          "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa4OIzTj8oE3a90FPFuAilCgsuAV10z6t5Tg&s"
+          "imageUrl": "https://www.archanaskitchen.com/images/archanaskitchen/0-Archanas-Kitchen-Recipes/2017/2-feb/Kashmiri_Modur_Pulao_With_Pomegranate_-1.jpg"
         },
         {
           "name": "Rajma-Chawal",
@@ -474,7 +474,7 @@ export const detailedStateData = {
     {
       "name": "Leh Palace",
       "description": "9-story palace in Leh built in the 17th century.",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Leh_Palace.jpg"
+      "imageUrl": "https://www.indiatravel.app/wp-content/uploads/2024/03/places-to-visit-in-leh.jpg"
     },
     {
       "name": "Mubarak Mandi Palace",
@@ -551,37 +551,37 @@ export const detailedStateData = {
     {
       "name": "Leh",
       "description": "Adventure hub with stunning landscapes and monasteries.",
-      "imageUrl": "https://www.planetware.com/photos-large/IND/india-ladakh-leh-town.jpg"
+      "imageUrl": "https://www.indiatravel.app/wp-content/uploads/2024/03/places-to-visit-in-leh.jpg"
     },
     {
       "name": "Akhnoor Fort",
       "description": "Historical fort on the banks of the Chenab River, with a blend of Mughal and Sikh architecture.",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Rj_UA7xCS9JbsCS3P0olh_GBtKSKrCoA2g&s"
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Fort_at_Akhnoor_2013-09-05_12-15-20.jpg"
     },
     {
       "name": "Bagh-e-Bahu",
       "description": "A stunning garden surrounding the historic Bahu Fort, known for fountains, lush greenery, and views of the Tawi River.",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjt_b6zvmKMkB8R_93RCV1obMUp2Rf3RPqcQ&s"
+      "imageUrl": "https://www.holidify.com/images/cmsuploads/compressed/bagh-e-bahu_20180301153124.jpg"
     },
     {
       "name": "Bawe Wali Mata Temple",
       "description": "Famous Hindu temple dedicated to Goddess Mahakali, located inside Bahu Fort.",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCchsmNhPwvlyh6BJrlUVtd-Etk9Tz9b8NFg&s"
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRol0Z1Grz56cTIpmCWwC01K2a0qPd1hHaa3A&s"
     },
     {
       "name": "Patnitop",
       "description": "Hilltop destination known for its natural beauty, adventure sports, and snow in winter.",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Patnitop_Valley_View.jpg"
+      "imageUrl": "https://i0.wp.com/travelshoebum.com/wp-content/uploads/2018/03/dsc_7289.jpg?fit=4928%2C3264&ssl=1"
     },
     {
       "name": "Bhaderwah",
       "description": "Also known as 'Mini Kashmir', famous for its verdant meadows, forests, and adventure tourism.",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqTUMnHEcUk7KXspw6QOj9IlRnKKik7eaDDw&s"
+      "imageUrl": "https://www.holidify.com/images/bgImages/BHADERWAH.jpg"
     },
     {
       "name": "Mansar Lake",
       "description": "Sacred lake surrounded by forested hills, with boating and wildlife attractions.",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7Yl_W8Kt8SUvXX3ihp0LfRGOyL9NdLwb48w&s"
+      "imageUrl": "https://www.jktdc.co.in/img/places/mansar.jpg"
     },
     {
       "name": "Surinsar Lake",

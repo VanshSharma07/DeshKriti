@@ -27,88 +27,85 @@ const SellerDashboard = () => {
     series: [
       {
         name: "Orders",
-        data: [23, 34, 45, 56, 76, 34, 23, 76, 87, 78, 34, 45],
+        type: 'area',
+        data: [23, 34, 45, 56, 76, 34, 23, 76, 87, 78, 34, 45]
       },
       {
         name: "Revenue",
-        data: [67, 39, 45, 56, 90, 56, 23, 56, 87, 78, 67, 78],
+        type: 'line',
+        data: [67, 39, 45, 56, 90, 56, 23, 56, 87, 78, 67, 78]
       },
       {
         name: "Sales",
-        data: [34, 39, 56, 56, 80, 67, 23, 56, 98, 78, 45, 56],
+        type: 'line',
+        data: [34, 39, 56, 56, 80, 67, 23, 56, 98, 78, 45, 56]
       },
+      {
+        name: "Products",
+        type: 'line',
+        data: [45, 32, 68, 54, 72, 45, 43, 67, 89, 96, 58, 87]
+      }
     ],
     options: {
-      color: ["#181ee8", "#181ee8"],
-      plotOptions: {
-        radius: 30,
-      },
       chart: {
-        background: "transparent",
-        foreColor: "#d0d2d6",
+        background: 'transparent',
+        toolbar: {
+          show: false
+        }
       },
+      stroke: {
+        curve: 'smooth',
+        width: [0, 3, 3, 3]
+      },
+      fill: {
+        type: ['gradient', 'solid', 'solid', 'solid'],
+        gradient: {
+          shade: 'light',
+          type: 'vertical',
+          shadeIntensity: 0.5,
+          opacityFrom: 0.8,
+          opacityTo: 0.2,
+        }
+      },
+      colors: ['#4f46e5', '#059473', '#f97316', '#8b5cf6'],
       dataLabels: {
-        enabled: false,
+        enabled: false
       },
-      strock: {
-        show: true,
-        curve: ["smooth", "straight", "stepline"],
-        lineCap: "butt",
-        colors: "#f0f0f0",
-        width: 0.5,
-        dashArray: 0,
+      grid: {
+        borderColor: '#f1f1f1',
+        strokeDashArray: 3
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apl",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: {
+          style: {
+            colors: '#64748b'
+          }
+        }
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: '#64748b'
+          }
+        }
       },
       legend: {
-        position: "top",
+        position: 'top',
+        horizontalAlign: 'right',
+        labels: {
+          colors: '#64748b'
+        }
       },
-      responsive: [
-        {
-          breakpoint: 565,
-          yaxis: {
-            categories: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apl",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ],
-          },
-          options: {
-            plotOptions: {
-              bar: {
-                horizontal: true,
-              },
-            },
-            chart: {
-              height: "550px",
-            },
-          },
-        },
-      ],
-    },
+      tooltip: {
+        theme: 'dark',
+        y: {
+          formatter: function (val) {
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          }
+        }
+      }
+    }
   };
 
   return (
@@ -159,16 +156,10 @@ const SellerDashboard = () => {
         <div className="w-full lg:w-7/12 lg:pr-3">
           <div className="w-full bg-white shadow-lg rounded-lg p-4">
             <Chart
-              options={{
-                ...state.options,
-                theme: {
-                  mode: 'light',
-                  palette: 'palette8'
-                }
-              }}
+              options={state.options}
               series={state.series}
-              type="bar"
-              height={300}
+              type="line"
+              height={350}
             />
           </div>
         </div>
