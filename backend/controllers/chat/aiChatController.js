@@ -1,275 +1,314 @@
-const { OpenAI } = require('openai');
-const textToSpeech = require('@google-cloud/text-to-speech');
+const { HfInference } = require('@huggingface/inference');
 const AIChatHistory = require('../../models/chat/AIChatHistory');
 const { responseReturn } = require('../../utiles/response');
 
 class AIChatController {
     constructor() {
-        // Initialize OpenAI with the new SDK
-        this.openai = new OpenAI({
-            apiKey: process.env.OPENAI_API_KEY
-        });
-        
-        // Custom knowledge base
-        this.customData = {
-            platform_info: {
-                about: "Deshkriti is a platform developed by Team Instant Ideators for the Department of Posts, bridges Indian artisans and MSME sellers with the global diaspora. It fulfills the demand for authentic Indian products, fostering connections to cultural roots.",
-                
-                products: [
-                    "Regional and traditional items",
-                    "Pooja essentials",
-                    "State-specific popular products",
-                    "Indian arts",
-                    "Wedding attire",
-                    "Indian sweets"
-                ],
+        this.hf = new HfInference(process.env.HUGGINGFACE_TOKEN);
+        this.model = 'microsoft/DialoGPT-large';
 
-                key_features: [
-                    {
-                        name: "AI-Powered Discovery",
-                        description: "Tailored recommendations based on cultural background, location, and trends"
-                    },
-                    {
-                        name: "Quality & Shipping",
-                        description: "Vetted products with flat-rate global shipping through India Post"
-                    },
-                    {
-                        name: "Festive Shopping",
-                        description: "Wishlist, festival pre-orders, and event-centric filters"
-                    },
-                    {
-                        name: "Interactive 3D Culture Map",
-                        description: "Explore state-wise stories, traditions, and products"
-                    },
-                    {
-                        name: "Virtual Events",
-                        description: "Host and attend global Indian cultural events"
-                    },
-                    {
-                        name: "Community Forum",
-                        description: "Share experiences and engage with the diaspora worldwide"
-                    },
-                    {
-                        name: "AR Product View",
-                        description: "Experience products in 3D through Augmented Reality"
-                    },
-                    {
-                        name: "Help India Portal",
-                        description: "Support India via donations, campaigns, and volunteering"
-                    },
-                    {
-                        name: "Region-Based Filters",
-                        description: "Discover India's diversity through state-wise product categories"
-                    }
-                ],
+        // Enhanced predefined responses
+        this.responses = {
+            bharat_post_gpt: `Bharat Post GPT is an AI assistant developed for DeshKriti and India Post to help users:
 
-                seller_benefits: [
-                    {
-                        name: "Empowerment",
-                        description: "Easy onboarding, training, and actionable analytics"
-                    },
-                    {
-                        name: "Sustainability",
-                        description: "Promote eco-friendly and fair-trade-certified products"
-                    }
-                ]
-            }
+• Learn about Indian culture, traditions, and festivals
+• Discover authentic Indian products and crafts
+• Understand regional customs and heritage
+• Navigate the DeshKriti platform
+• Connect with Indian artisans and sellers`,
+
+            deshkriti: `DeshKriti is a platform by Team Instant Ideators for India Post that:
+
+• Connects Indian artisans with global customers
+• Offers authentic traditional products
+• Provides cultural discovery through AI
+• Features an interactive 3D Culture Map
+• Enables global shipping via India Post`,
+
+            festivals: `Major Indian festivals include:
+
+• Diwali - Festival of lights
+• Holi - Spring festival of colors
+• Durga Puja - Nine-day celebration
+• Ganesh Chaturthi - Lord Ganesha's festival
+• Navratri - Nine nights of celebration`,
+
+            help: `I can help you with:
+
+• Information about Indian festivals and traditions
+• Details about traditional products and crafts
+• Knowledge about regional customs
+• Navigation of DeshKriti platform
+• Cultural heritage information`,
+
+            culture_map: `DeshKriti's 3D Culture Map is an interactive feature that:
+
+• Provides immersive exploration of India's cultural diversity
+• Showcases regional festivals, traditions, and customs
+• Displays local arts, crafts, and traditional products
+• Offers virtual tours of cultural landmarks
+• Connects users with local artisans and their stories`,
+
+            about_india: `India is a diverse nation characterized by:
+
+• Rich cultural heritage spanning over 5000 years
+• 28 states and 8 union territories, each with unique traditions
+• Over 1600 languages with 22 official languages
+• Various art forms, dance styles, and music traditions
+• Diverse cuisines, festivals, and customs across regions`,
+
+            products: `DeshKriti offers authentic Indian products including:
+
+• Traditional Handicrafts - Regional artworks and sculptures
+• Textiles - Handloom sarees, shawls, and fabrics
+• Festival Items - Religious and ceremonial products
+• Home Decor - Traditional art pieces and furnishings
+• Wellness Products - Ayurvedic and natural items`,
+
+            shipping: `DeshKriti's shipping through India Post ensures:
+
+• Pan-India coverage through 155,000+ post offices
+• International shipping to 190+ countries
+• Secure packaging for delicate items
+• Real-time tracking and delivery updates
+• Customs clearance assistance for international orders`,
+
+            community: `DeshKriti's community features include:
+
+• Cultural Forums - Connect with art enthusiasts
+• Artisan Stories - Learn about traditional crafts
+• Virtual Events - Participate in cultural celebrations
+• Knowledge Sharing - Learn about regional traditions
+• Direct Communication - Chat with sellers and artists`,
+
+            become_seller: `To become a seller on DeshKriti:
+
+• Register as a verified seller
+• Submit necessary documentation
+• Complete KYC verification
+• List authentic Indian products
+• Maintain quality standards`,
+
+            seller_requirements: `DeshKriti seller requirements:
+
+• Valid business registration/artisan ID
+• GST registration (if applicable)
+• Bank account details
+• Quality certification for products
+• Proof of authentic traditional items`,
+
+            seller_benefits: `DeshKriti helps local sellers by:
+
+• Providing global market access
+• Offering India Post shipping integration
+• Marketing traditional products
+• Handling digital payments
+• Providing business analytics
+• Offering seller training programs`
         };
-
-        this.systemPrompt = `You are Bharat Post GPT, the official AI assistant for the DeshKriti platform, developed by Team Instant Ideators for the Department of Post.
-
-Keep all responses brief and to the point. Avoid unnecessary elaboration.
-
-When users specifically ask "What is DeshKriti?", provide a concise response with:
-- Deshkriti is a platform developed by Team Instant Ideators for the Department of Post.
-- Platform overview (1-2 sentences)
-- Key products (maximum 3)
-- Main features (maximum 3)
-- Core seller benefit (1 sentence)
-
-When users ask about features or "What are DeshKriti's features?", respond with:
-"The features DeshKriti offers are:" followed by top 5 features only:
-• Feature Name - Brief description (max 8 words)
-
-For specific feature questions, provide a single, focused explanation.
-
-When listing items or places:
-- Limit to 5 most important items
-- Use bullet points
-- Name - Brief description
-- No markdown symbols
-
-Always maintain a friendly tone while being concise.
-
-Here is your complete knowledge base:
-${JSON.stringify(this.customData, null, 2)}`;
-
-        // Initialize Google Text-to-Speech
-        this.ttsClient = new textToSpeech.TextToSpeechClient({
-            keyFilename: process.env.GOOGLE_CLOUD_CREDENTIALS
-        });
     }
 
-    // Process text message without requiring user authentication
     processMessage = async (req, res) => {
-        let { message } = req.body;
-
         try {
-            // Normalize and preprocess the message
-            message = message.toLowerCase();
-
-            // Correct common misinterpretations of "DeshKriti"
-            const deshKritiVariations = ["this kriti", "desh preeti", "desh kriti"];
-            deshKritiVariations.forEach(variation => {
-                if (message.includes(variation)) {
-                    message = message.replace(variation, "deshkriti");
-                }
-            });
-
-            // Check if the message is asking about Bharat Post GPT
-            if (message.includes("what is bharat post gpt")) {
-                const aiResponse = "Bharat Post GPT is the official AI assistant of DeshKriti, developed by Team Instant Ideators for the Department of Post.";
-                responseReturn(res, 200, { message: aiResponse });
-                return;
+            if (!req.body || !req.body.message) {
+                return responseReturn(res, 400, { error: 'Message is required' });
             }
 
-            // Add a check for search-related keywords
-            const searchKeywords = ['order', 'buy', 'purchase', 'find', 'search', 'looking for', 'where can i get'];
-            const hasSearchIntent = searchKeywords.some(keyword => message.toLowerCase().includes(keyword));
+            let { message } = req.body;
+            message = message.toLowerCase().trim();
 
-            if (hasSearchIntent) {
-                // Get the search query from GPT
-                const searchIntentCompletion = await this.openai.chat.completions.create({
-                    model: "gpt-3.5-turbo",
-                    messages: [
-                        {
-                            role: "system",
-                            content: "Extract the product or item to search for from the user's message. Respond with a JSON object containing type: 'search_intent' and searchQuery: 'the product to search for'"
-                        },
-                        {
-                            role: "user",
-                            content: message
-                        }
-                    ],
-                    temperature: 0.3,
-                    max_tokens: 100
+            // Check for purchase/order intent
+            const purchaseIntents = ['want to buy', 'want to order', 'order', 'place order', 'purchase', 'buy'];
+            const hasOrderIntent = purchaseIntents.some(intent => message.includes(intent));
+
+            if (hasOrderIntent) {
+                // Extract product name by removing purchase intent phrases
+                let productQuery = message;
+                purchaseIntents.forEach(intent => {
+                    productQuery = productQuery.replace(intent, '');
+                });
+                
+                // Clean up the product query
+                productQuery = productQuery
+                    .replace(/i|please|can|you/gi, '')
+                    .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+                    .trim();
+
+                // Common product name corrections with proper formatting
+                const productCorrections = {
+                    // Silk Sarees variations
+                    'kanchpuram': 'Kanchipuram',
+                    'kanjivaram': 'Kanchipuram',
+                    'kanjeevaram': 'Kanchipuram',
+                    'kanchipuram saree': 'Kanchipuram Silk Sarees',
+                    'kanchipuram sarees': 'Kanchipuram Silk Sarees',
+                    'silk saree': 'Silk Sarees',
+                    'silk sarees': 'Silk Sarees',
+                    
+                    // Shawls variations
+                    'pashmna': 'Pashmina',
+                    'pashmeena': 'Pashmina',
+                    'shwal': 'Shawl',
+                    'shwals': 'Shawls',
+                    
+                    // Other products
+                    'handloom': 'Handloom',
+                    'handicraft': 'Handicrafts',
+                    'traditional': 'Traditional',
+                    'saree': 'Sarees'
+                };
+
+                // Apply corrections (case-insensitive)
+                Object.entries(productCorrections).forEach(([incorrect, correct]) => {
+                    const regex = new RegExp(incorrect, 'gi');
+                    productQuery = productQuery.replace(regex, correct);
                 });
 
-                const response = searchIntentCompletion.choices[0].message.content;
-                try {
-                    const searchData = JSON.parse(response);
-                    if (searchData.type === 'search_intent' && searchData.searchQuery) {
-                        return responseReturn(res, 200, {
-                            message: `I'll help you search for "${searchData.searchQuery}"`,
-                            searchIntent: true,
-                            searchQuery: searchData.searchQuery
-                        });
-                    }
-                } catch (e) {
-                    // If JSON parsing fails, continue with normal processing
+                // Ensure proper formatting for specific product categories
+                if (productQuery.toLowerCase().includes('kanchipuram') && 
+                    productQuery.toLowerCase().includes('saree')) {
+                    productQuery = 'Kanchipuram Silk Sarees';
+                }
+
+                return responseReturn(res, 200, { 
+                    message: `I'll help you find ${productQuery}. Let me search for it in our product catalog.`,
+                    action: 'search',
+                    searchQuery: productQuery
+                });
+            }
+
+            // Direct matches for DeshKriti queries first
+            if ((message.includes('what') || message.includes('tell')) && 
+                (message.includes('deshkriti') || message.includes('desh kriti'))) {
+                return responseReturn(res, 200, { message: this.responses.deshkriti });
+            }
+
+            // Priority patterns for common queries
+            const priorityPatterns = [
+                {
+                    keys: ['what', 'deshkriti'],
+                    response: 'deshkriti'
+                },
+                {
+                    keys: ['about', 'deshkriti'],
+                    response: 'deshkriti'
+                },
+                {
+                    keys: ['desh', 'kriti'],
+                    response: 'deshkriti'
+                },
+                {
+                    keys: ['india post', 'delivery'],
+                    response: 'shipping'
+                },
+                {
+                    keys: ['shipping', 'delivery'],
+                    response: 'shipping'
+                },
+                {
+                    keys: ['cultural', 'forum'],
+                    response: 'community'
+                },
+                {
+                    keys: ['become', 'seller'],
+                    response: 'become_seller'
+                },
+                {
+                    keys: ['bharat', 'post', 'gpt'],
+                    response: 'bharat_post_gpt'
+                }
+            ];
+
+            // Check priority patterns first
+            for (const pattern of priorityPatterns) {
+                if (pattern.keys.every(key => message.includes(key))) {
+                    return responseReturn(res, 200, { message: this.responses[pattern.response] });
                 }
             }
 
-            // First, check if the message is related to DeshKriti or platform features
-            const relevanceCheck = await this.openai.chat.completions.create({
-                model: "gpt-3.5-turbo",
-                messages: [
-                    {
-                        role: "system",
-                        content: "You are a classifier. Respond with 'true' if the query is about DeshKriti, its features, products, or Indian cultural marketplace. Respond with 'false' for any other topics."
-                    },
-                    {
-                        role: "user",
-                        content: message
-                    }
+            // Keep existing patterns
+            const patterns = {
+                bharat_post_gpt: [
+                    ['what', 'bharat', 'post', 'gpt'],
+                    ['who', 'are', 'you'],
+                    ['what', 'assistant']
                 ],
-                temperature: 0.3,
-                max_tokens: 10
-            });
-
-            const isRelevantToPlatform = relevanceCheck.choices[0].message.content.toLowerCase().includes('true');
-
-            // If relevant to platform, use custom knowledge base
-            if (isRelevantToPlatform) {
-                const completion = await this.openai.chat.completions.create({
-                    model: "gpt-3.5-turbo",
-                    messages: [
-                        { 
-                            role: "system", 
-                            content: this.systemPrompt
-                        },
-                        {
-                            role: "user",
-                            content: message
-                        }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 500
-                });
-
-                const aiResponse = completion.choices[0].message.content;
-                responseReturn(res, 200, { message: aiResponse });
-            } 
-            // For non-platform queries, use general AI response
-            else {
-                const completion = await this.openai.chat.completions.create({
-                    model: "gpt-3.5-turbo",
-                    messages: [
-                        {
-                            role: "system",
-                            content: "You are a helpful AI assistant. Provide informative and accurate responses while maintaining a professional tone."
-                        },
-                        {
-                            role: "user",
-                            content: message
-                        }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 500
-                });
-
-                const aiResponse = completion.choices[0].message.content;
-                responseReturn(res, 200, { message: aiResponse });
-            }
-        } catch (error) {
-            console.error('AI Chat Error:', error);
-            responseReturn(res, 500, { error: 'Failed to process message. Please try again.' });
-        }
-    }
-
-    // Convert text to speech
-    textToSpeech = async (req, res) => {
-        const { text } = req.body;
-
-        try {
-            const request = {
-                input: { text },
-                voice: { 
-                    languageCode: 'en-IN',
-                    ssmlGender: 'FEMALE',
-                    name: 'en-IN-Standard-A'
-                },
-                audioConfig: { 
-                    audioEncoding: 'MP3',
-                    pitch: 0,
-                    speakingRate: 1.0,
-                    effectsProfileId: ['handset-class-device']
-                },
+                deshkriti: [
+                    ['what', 'deshkriti'],
+                    ['about', 'deshkriti'],
+                    ['tell', 'deshkriti'],
+                    ['what', 'platform']
+                ],
+                community: [
+                    ['community', 'feature'],
+                    ['cultural', 'forum'],
+                    ['connect', 'artisan']
+                ],
+                culture_map: [
+                    ['3d', 'map'],
+                    ['culture', 'map'],
+                    ['explore', 'culture']
+                ],
+                about_india: [
+                    ['about', 'india'],
+                    ['indian', 'culture'],
+                    ['india', 'unique']
+                ],
+                products: [
+                    ['what', 'product'],
+                    ['can', 'buy'],
+                    ['traditional', 'product']
+                ],
+                shipping: [
+                    ['shipping', 'work'],
+                    ['delivery'],
+                    ['india', 'post']
+                ],
+                seller_requirements: [
+                    ['seller', 'requirement'],
+                    ['document', 'need'],
+                    ['become', 'seller']
+                ],
+                seller_benefits: [
+                    ['help', 'seller'],
+                    ['seller', 'benefit'],
+                    ['advantage', 'seller']
+                ],
+                festivals: [
+                    ['festival'],
+                    ['celebration'],
+                    ['traditional', 'festival']
+                ]
             };
 
-            const [response] = await this.ttsClient.synthesizeSpeech(request);
-            const audioContent = response.audioContent;
+            // Check existing patterns
+            for (const [responseKey, patternGroup] of Object.entries(patterns)) {
+                if (patternGroup.some(pattern => 
+                    pattern.every(word => message.includes(word)))) {
+                    return responseReturn(res, 200, { message: this.responses[responseKey] });
+                }
+            }
 
-            responseReturn(res, 200, { 
-                audioContent: audioContent.toString('base64')
-            });
+            // Context-based matching
+            if (message.includes('deshkriti') || message.includes('desh kriti')) {
+                return responseReturn(res, 200, { message: this.responses.deshkriti });
+            }
+
+            if (message.includes('india') && !message.includes('post')) {
+                return responseReturn(res, 200, { message: this.responses.about_india });
+            }
+
+            // If no specific pattern matches, return the help message
+            return responseReturn(res, 200, { message: this.responses.help });
+
         } catch (error) {
-            console.error('Text-to-Speech Error:', error);
-            responseReturn(res, 500, { error: 'Failed to convert text to speech. Please try again.' });
+            console.error('AI Chat Error:', error);
+            return responseReturn(res, 500, { 
+                error: "I apologize, but I'm having trouble right now. Please try again." 
+            });
         }
     }
 
-    // Clear chat history
     clearHistory = async (req, res) => {
         const userId = req.id;
         
