@@ -1,8 +1,9 @@
-import { lazy } from "react";   
+import { lazy, Suspense } from "react";   
 import LoanManagement from "../../views/seller/LoanManagement";
 import LoanRequest from "../../views/seller/MicroLoan/LoanRequest";
 import LoanDetails from "../../views/seller/LoanDetails";
 import LoanRepayment from "../../views/seller/LoanRepayment";
+
 const SellerDashboard = lazy(()=> import('../../views/seller/SellerDashboard'))   
 const AddProduct = lazy(()=> import('../../views/seller/AddProduct'))   
 const Products = lazy(()=> import('../../views/seller/Products')) 
@@ -20,6 +21,8 @@ const AddBanner = lazy(()=> import('../../views/seller/AddBanner'))
 const AddStory = lazy(()=> import('../../views/seller/AddStory'));
 const ManageStories = lazy(()=> import('../../views/seller/ManageStories'));
 const EditStory = lazy(()=> import('../../views/seller/EditStory'));
+
+const PostOffices = lazy(() => import('../../views/seller/PostOffices'));
 
 export const sellerRoutes = [
     
@@ -132,14 +135,24 @@ export const sellerRoutes = [
         role: 'seller'
     },
     {
-        path: '/seller/dashboard/story/add',
+        path: '/seller/dashboard/add-story',
         element: <AddStory />,
         role: 'seller'
     },
     {
-        path: '/seller/dashboard/story/edit/:storyId',
+        path: '/seller/dashboard/edit-story/:storyId',
         element: <EditStory />,
         role: 'seller'
+    },
+    {
+        path: '/seller/dashboard/post-offices',
+        element: (
+            <Suspense fallback={<div>Loading...</div>}>
+                <PostOffices />
+            </Suspense>
+        ),
+        role: 'seller',
+        status: 'active'
     }
 
 

@@ -16,6 +16,7 @@ import { MdCurrencyExchange } from 'react-icons/md';
 import { MdDashboard } from 'react-icons/md';
 import { FaHandHoldingHeart } from 'react-icons/fa';
 import { MdVideoLibrary } from 'react-icons/md';
+import { MdLocationOn } from 'react-icons/md';
 
 export const allNav = [
   {
@@ -211,5 +212,12 @@ export const allNav = [
         path: '/seller/dashboard/stories'
       }
     ]
+  },
+  {
+    id: 22,
+    title: "Locate Post Offices",
+    icon: <MdLocationOn />,
+    role: "seller",
+    path: "/seller/dashboard/post-offices",
   }
 ];
